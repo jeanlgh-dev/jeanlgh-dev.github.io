@@ -1,316 +1,683 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glacerie d'Arlon — Glaces Artisanales</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Glacerie d'Arlon — Artisans Glaciers depuis 1962</title>
+<meta name="description" content="Glaces artisanales premium a Arlon. Fabriquees chaque matin depuis trois generations, avec des ingredients locaux et naturels."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#f7f3ec;--cream:#ede8df;--warm:#d4c9b5;
+  --dark:#1a1612;--brown:#3d2f1f;--gold:#c9a96e;--gold-l:#e8d5a8;
+  --rose:#d4a0a0;--pistache:#7a9e7e;--text:#2a2018;--muted:#7a6e5f;
+  --radius:28px;--font-d:'Cormorant',Georgia,serif;--font-b:'Jost',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--ivory);color:var(--text);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.5}
+#cursor{width:10px;height:10px;background:var(--gold);border-radius:50%;
+  position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);
+  transition:width .25s,height .25s;mix-blend-mode:multiply}
+#cursor-ring{width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;
+  position:fixed;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);
+  transition:width .25s,height .25s,opacity .25s;opacity:.5}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.6rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,padding .3s}
+nav.scrolled{background:rgba(247,243,236,.88);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);padding:1rem 4rem;
+  border-bottom:1px solid rgba(201,169,110,.15)}
+.nav-logo{font-family:var(--font-d);font-size:1.5rem;font-weight:400;
+  color:var(--dark);text-decoration:none;letter-spacing:.04em}
+.nav-logo em{font-style:italic;color:var(--gold)}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{text-decoration:none;font-size:.75rem;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--dark);border:1px solid rgba(42,32,24,.3);
+  padding:.55rem 1.4rem;border-radius:40px;transition:all .25s}
+.nav-cta:hover{background:var(--dark);color:var(--ivory)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--dark);transition:all .3s}
+.nav-mob{display:none;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--ivory);z-index:490;align-items:center;justify-content:center;gap:2rem}
+.nav-mob.open{display:flex}
+.nav-mob a{font-family:var(--font-d);font-size:2.8rem;font-weight:300;
+  color:var(--dark);text-decoration:none;transition:color .2s}
+.nav-mob a:hover{color:var(--gold)}
+.nav-mob-close{position:absolute;top:2rem;right:3rem;font-size:2rem;
+  cursor:none;background:none;border:none;color:var(--muted)}
+
+/* HERO */
+.hero{position:relative;height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-photo{position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(247,243,236,.93) 42%,rgba(247,243,236,.15) 100%),
+    url('https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=1800&q=85&fit=crop') center/cover no-repeat;
+  will-change:transform}
+.hero-content{position:relative;z-index:2;padding:0 6rem;max-width:700px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);background:rgba(201,169,110,.1);border:1px solid rgba(201,169,110,.3);
+  padding:.4rem 1rem;border-radius:30px;margin-bottom:2rem}
+.hero-title{font-family:var(--font-d);font-size:clamp(3.2rem,6vw,5.8rem);
+  font-weight:300;line-height:1.0;color:var(--dark);margin-bottom:1.8rem}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:1.05rem;font-weight:200;color:var(--muted);
+  line-height:1.75;margin-bottom:3rem;letter-spacing:.02em}
+.hero-actions{display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center}
+.btn-dark{display:inline-block;background:var(--dark);color:var(--ivory);
+  text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;padding:1rem 2.4rem;border-radius:40px;
+  transition:background .25s,transform .2s,box-shadow .25s}
+.btn-dark:hover{background:var(--gold);transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(201,169,110,.35)}
+.btn-ghost{display:inline-block;background:transparent;color:var(--text);
+  text-decoration:none;font-size:.75rem;font-weight:400;letter-spacing:.12em;
+  text-transform:uppercase;padding:1rem 2.4rem;border-radius:40px;
+  border:1px solid var(--warm);transition:all .25s}
+.btn-ghost:hover{border-color:var(--dark);color:var(--dark)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.hero-scroll span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--warm)}
+.scroll-line{width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:sline 1.8s ease-in-out infinite}
+@keyframes sline{0%{opacity:1;transform:scaleY(1) translateY(0)}
+  100%{opacity:0;transform:scaleY(0.3) translateY(20px)}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(40px);
+  transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+  transition-delay:var(--d,0ms)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-50px);
+  transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
+.reveal-l.in{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(50px);
+  transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
+.reveal-r.in{opacity:1;transform:translateX(0)}
+.reveal-sc{opacity:0;transform:scale(.93);
+  transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+  transition-delay:var(--d,0ms)}
+.reveal-sc.in{opacity:1;transform:scale(1)}
+
+/* UTILS */
+.container{max-width:1180px;margin:0 auto;padding:0 4rem}
+.s-tag{display:inline-block;font-size:.66rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.s-title{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.6rem);
+  font-weight:300;line-height:1.1;color:var(--dark)}
+.s-title em{font-style:italic;color:var(--gold)}
+.s-sub{font-size:1rem;font-weight:200;color:var(--muted);line-height:1.8;margin-top:.8rem}
+.sec-center{text-align:center}
+section{position:relative;z-index:1}
+
+/* STRIP */
+.strip{padding:5rem 0;background:var(--dark);position:relative;overflow:hidden}
+.strip::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(201,169,110,.1) 0%,transparent 60%)}
+.strip-grid{display:grid;grid-template-columns:repeat(4,1fr);
+  border-left:1px solid rgba(255,255,255,.06)}
+.strip-item{padding:3rem 2rem;border-right:1px solid rgba(255,255,255,.06);text-align:center}
+.strip-num{font-family:var(--font-d);font-size:4rem;font-weight:300;
+  color:var(--gold);display:block;line-height:1}
+.strip-label{font-size:.7rem;font-weight:400;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(247,243,236,.4);margin-top:.5rem;display:block}
+
+/* STORY */
+.story{padding:10rem 0;background:var(--ivory)}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.story-visual{position:relative}
+.story-img{width:100%;aspect-ratio:3/4;border-radius:var(--radius);overflow:hidden}
+.story-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.story-img:hover img{transform:scale(1.04)}
+.story-img-2{position:absolute;bottom:-2.5rem;right:-2.5rem;width:52%;aspect-ratio:1;
+  border-radius:var(--radius);overflow:hidden;border:5px solid var(--ivory);
+  box-shadow:0 24px 50px rgba(26,22,18,.15)}
+.story-img-2 img{width:100%;height:100%;object-fit:cover}
+.story-year{position:absolute;top:2rem;left:-1.5rem;background:var(--gold);
+  color:var(--ivory);font-family:var(--font-d);font-size:1.1rem;font-weight:400;
+  padding:.55rem 1.2rem;border-radius:30px;box-shadow:0 8px 24px rgba(201,169,110,.4)}
+.story-text{margin-top:1.6rem;font-size:1rem;font-weight:200;color:var(--muted);line-height:1.9}
+.story-sign{font-family:var(--font-d);font-size:2.4rem;font-style:italic;
+  font-weight:300;color:var(--gold);margin-top:2rem}
+
+/* ICE SCROLL */
+.ice-section{height:300vh;position:relative;background:var(--dark)}
+.ice-sticky{position:sticky;top:0;height:100vh;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ice-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(201,169,110,.07) 0%,transparent 65%)}
+.ice-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;
+  gap:6rem;align-items:center;max-width:1100px;padding:0 4rem;width:100%}
+.ice-wrap{display:flex;align-items:center;justify-content:center}
+#iceSvg{width:clamp(240px,26vw,400px);
+  filter:drop-shadow(0 40px 80px rgba(201,169,110,.3));
+  transform-origin:50% 65%;will-change:transform}
+.ice-txt .s-tag{color:var(--gold-l)}
+.ice-txt .s-title{color:#f7f3ec}
+.ice-steps{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem}
+.istep{display:flex;align-items:flex-start;gap:1.2rem;opacity:.3;transition:opacity .4s}
+.istep.on{opacity:1}
+.istep-n{font-family:var(--font-d);font-size:1.8rem;font-weight:300;
+  color:var(--gold);min-width:2rem;line-height:1}
+.istep-t h4{font-size:.88rem;font-weight:400;color:#f7f3ec;margin-bottom:.25rem}
+.istep-t p{font-size:.8rem;font-weight:200;color:rgba(247,243,236,.45);line-height:1.65}
+
+/* MARQUEE */
+.marquee{padding:2.5rem 0;background:var(--gold);overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-block;animation:marquee 18s linear infinite}
+.marquee-inner span{font-family:var(--font-d);font-size:1.6rem;font-weight:300;
+  font-style:italic;color:var(--dark);padding:0 2.5rem}
+.marquee-inner span::before{content:'\2736';margin-right:2.5rem;font-style:normal;font-size:1rem}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* PARFUMS */
+.parfums{padding:10rem 0;background:var(--ivory)}
+.parfums-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  align-items:end;margin-bottom:5rem}
+.parfums-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.pcard{border-radius:var(--radius);overflow:hidden;background:var(--cream);
+  border:1px solid rgba(201,169,110,.1);
+  transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;cursor:none}
+.pcard:hover{transform:translateY(-14px) scale(1.01);
+  box-shadow:0 32px 64px rgba(26,22,18,.12)}
+.pcard-img{width:100%;aspect-ratio:3/4;overflow:hidden}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block}
+.pcard:hover .pcard-img img{transform:scale(1.08)}
+.pcard-body{padding:1.6rem 1.4rem 2rem}
+.pcard-name{font-family:var(--font-d);font-size:1.3rem;font-weight:400;
+  color:var(--dark);margin-bottom:.4rem}
+.pcard-desc{font-size:.8rem;font-weight:200;color:var(--muted);
+  line-height:1.65;margin-bottom:1rem}
+.pcard-price{font-family:var(--font-d);font-size:1.5rem;font-weight:300;color:var(--gold)}
+.pcard-price span{font-size:.72rem;color:var(--muted);font-family:var(--font-b)}
+
+/* ENGAGEMENTS */
+.eng-sec{padding:10rem 0;background:var(--cream)}
+.eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:5rem}
+.ecard{padding:3rem 2.5rem;border-radius:var(--radius);background:var(--ivory);
+  border:1px solid rgba(201,169,110,.1);
+  transition:transform .35s,box-shadow .35s;text-align:center}
+.ecard:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(26,22,18,.08)}
+.ecard-ic{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;margin:0 auto 1.8rem;font-size:2.2rem}
+.ecard h3{font-family:var(--font-d);font-size:1.5rem;font-weight:400;
+  color:var(--dark);margin-bottom:.8rem}
+.ecard p{font-size:.88rem;font-weight:200;color:var(--muted);line-height:1.8}
+
+/* GALERIE */
+.galerie{padding:10rem 0;background:var(--ivory)}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto;gap:1.2rem;margin-top:4rem}
+.gitem{border-radius:var(--radius);overflow:hidden;position:relative;cursor:none}
+.gitem:nth-child(1){grid-row:span 2}
+.gitem:nth-child(4){grid-column:span 2}
+.gitem img{width:100%;height:100%;min-height:280px;object-fit:cover;
+  transition:transform .6s ease;display:block}
+.gitem:hover img{transform:scale(1.06)}
+.gitem-ov{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(26,22,18,.6) 0%,transparent 50%);
+  opacity:0;transition:opacity .35s;display:flex;align-items:flex-end;padding:1.5rem}
+.gitem:hover .gitem-ov{opacity:1}
+.gitem-ov span{font-family:var(--font-d);font-size:1.2rem;font-weight:300;
+  font-style:italic;color:#f7f3ec}
+
+/* HERITAGE */
+.heritage{padding:10rem 0;background:var(--dark);position:relative;overflow:hidden}
+.heritage::before{content:'';position:absolute;top:-20%;right:-5%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(201,169,110,.07) 0%,transparent 60%)}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.htext .s-tag{color:var(--gold-l)}
+.htext .s-title{color:#f7f3ec}
+.hp{font-size:1rem;font-weight:200;color:rgba(247,243,236,.5);
+  line-height:1.9;margin-top:1.5rem}
+.hp+.hp{margin-top:1rem}
+.hquote{margin-top:2.5rem;padding:2rem 2rem 2rem 2.5rem;
+  border-left:2px solid var(--gold)}
+.hquote p{font-family:var(--font-d);font-size:1.5rem;font-style:italic;
+  font-weight:300;color:#f7f3ec;line-height:1.5}
+.hquote cite{display:block;margin-top:.8rem;font-size:.72rem;font-weight:300;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-style:normal}
+.htl{display:flex;flex-direction:column}
+.htl-item{display:flex;gap:2rem;align-items:flex-start;
+  padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.htl-item:last-child{border-bottom:none}
+.htl-year{font-family:var(--font-d);font-size:1.6rem;font-weight:300;
+  color:var(--gold);min-width:5rem;line-height:1.1}
+.htl-content h4{font-size:.78rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(247,243,236,.65);margin-bottom:.35rem}
+.htl-content p{font-size:.85rem;font-weight:200;
+  color:rgba(247,243,236,.32);line-height:1.65}
+
+/* CONTACT */
+.contact{padding:10rem 0;background:var(--cream)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;align-items:start}
+.cinfo{display:flex;flex-direction:column;gap:2.5rem}
+.cblock{display:flex;gap:1.2rem;align-items:flex-start}
+.cic{width:48px;height:48px;background:var(--ivory);border-radius:14px;
+  border:1px solid rgba(201,169,110,.2);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;font-size:1.15rem}
+.cblock h4{font-size:.68rem;font-weight:500;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.cblock p{font-size:.95rem;font-weight:200;color:var(--muted);line-height:1.65}
+.cblock em{font-style:normal;font-size:.8rem;color:var(--warm)}
+.cmap{border-radius:var(--radius);overflow:hidden;
+  box-shadow:0 20px 60px rgba(26,22,18,.12)}
+.cmap iframe{display:block;width:100%;height:480px;border:0}
+.btn-call{display:inline-flex;align-items:center;gap:.5rem;margin-top:.9rem;
+  background:var(--dark);color:var(--ivory);text-decoration:none;
+  font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  padding:.75rem 1.6rem;border-radius:30px;transition:background .25s,transform .2s}
+.btn-call:hover{background:var(--gold);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:5rem 4rem 3rem;
+  border-top:1px solid rgba(201,169,110,.1)}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;
+  margin-bottom:4rem;padding-bottom:4rem;
+  border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-brand .nav-logo{display:block;margin-bottom:1rem;color:#f7f3ec}
+.ft-brand p{font-size:.85rem;font-weight:200;color:rgba(247,243,236,.3);
+  line-height:1.8;max-width:300px}
+.ft-col h5{font-size:.68rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.ft-col a{display:block;font-size:.83rem;font-weight:200;
+  color:rgba(247,243,236,.35);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
+.ft-col a:hover{color:var(--gold)}
+.ft-bot{display:flex;align-items:center;justify-content:space-between}
+.ft-bot p{font-size:.72rem;color:rgba(247,243,236,.18)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .container{padding:0 2.5rem}
+  nav,nav.scrolled{padding-left:2rem;padding-right:2rem}
+  .hero-content{padding:0 3rem}
+  .story-grid,.hgrid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+  .story-img-2{width:42%}
+  .parfums-grid{grid-template-columns:repeat(2,1fr)}
+  .parfums-intro{grid-template-columns:1fr}
+  .ice-content{grid-template-columns:1fr;text-align:center}
+  .strip-grid{grid-template-columns:repeat(2,1fr)}
+  .ft-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .nav-burger{display:flex}
+  nav,nav.scrolled{padding:1.2rem 1.5rem}
+  .hero-content{padding:0 1.5rem}
+  .container{padding:0 1.5rem}
+  .parfums-grid{grid-template-columns:1fr 1fr}
+  .eng-grid{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr 1fr}
+  .gitem:nth-child(1){grid-row:auto}
+  .gitem:nth-child(4){grid-column:auto}
+  .strip-grid{grid-template-columns:1fr 1fr}
+  .ft-top{grid-template-columns:1fr}
+  .ft-bot{flex-direction:column;gap:1rem;text-align:center}
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+}
+@media(max-width:480px){
+  .parfums-grid{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .ice-section{height:200vh}
+}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">🍦 Glacerie d'Arlon</a>
-      <ul class="nav-links">
-        <li><a href="#parfums">Parfums</a></li>
-        <li><a href="#engagements">Engagements</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="nav-mobile" id="navMobile">
-      <a href="#parfums" onclick="toggleNav()">Parfums</a>
-      <a href="#engagements" onclick="toggleNav()">Engagements</a>
-      <a href="#galerie" onclick="toggleNav()">Galerie</a>
-      <a href="#contact" onclick="toggleNav()">Contact</a>
-    </div>
-  </nav>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-bg" id="heroBg">
-      <svg class="hero-blob" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <radialGradient id="bg1" cx="30%" cy="40%" r="55%">
-            <stop offset="0%" stop-color="#d4edda" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#fce4ec" stop-opacity="0.2"/>
-          </radialGradient>
-          <radialGradient id="bg2" cx="75%" cy="65%" r="45%">
-            <stop offset="0%" stop-color="#fce4ec" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#fff9c4" stop-opacity="0.1"/>
-          </radialGradient>
-        </defs>
-        <ellipse cx="270" cy="320" rx="320" ry="280" fill="url(#bg1)"/>
-        <ellipse cx="670" cy="420" rx="260" ry="220" fill="url(#bg2)"/>
-      </svg>
-      <!-- Grande illustration glace SVG -->
-      <div class="hero-ice-wrap" id="heroIce">
-        <svg class="hero-ice" viewBox="0 0 280 440" xmlns="http://www.w3.org/2000/svg">
-          <!-- Cornet -->
-          <polygon points="140,430 58,190 222,190" fill="#f5c58a" stroke="#e0a84a" stroke-width="1.5"/>
-          <line x1="140" y1="430" x2="112" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
-          <line x1="140" y1="430" x2="168" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
-          <line x1="140" y1="430" x2="90" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
-          <line x1="140" y1="430" x2="190" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
-          <!-- Boule rose (gauche bas) -->
-          <circle cx="118" cy="192" r="52" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.2"/>
-          <circle cx="100" cy="176" r="14" fill="#fce4ec" opacity="0.55"/>
-          <circle cx="130" cy="182" r="6" fill="#fce4ec" opacity="0.35"/>
-          <!-- Boule pistache (droite bas) -->
-          <circle cx="168" cy="178" r="50" fill="#c8e6c9" stroke="#a5d6a7" stroke-width="1.2"/>
-          <circle cx="152" cy="163" r="13" fill="#e8f5e9" opacity="0.55"/>
-          <!-- Boule vanille (centre haut) -->
-          <circle cx="140" cy="138" r="54" fill="#fff9c4" stroke="#fff176" stroke-width="1.2"/>
-          <circle cx="122" cy="120" r="15" fill="#fffde7" opacity="0.65"/>
-          <circle cx="155" cy="128" r="7" fill="#fffde7" opacity="0.45"/>
-          <!-- Petite touche déco -->
-          <path d="M186 196 Q193 214 185 228" stroke="#f48fb1" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
-          <circle cx="100" cy="215" r="3.5" fill="#a5d6a7" opacity="0.5"/>
-          <circle cx="178" cy="148" r="3" fill="#fff176" opacity="0.6"/>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Glacerie <em>d'Arlon</em></a>
+  <ul class="nav-links">
+    <li><a href="#parfums">Parfums</a></li>
+    <li><a href="#histoire">Histoire</a></li>
+    <li><a href="#galerie">Galerie</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Nous visiter</a>
+  <button class="nav-burger" onclick="openMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mob" id="navMob">
+  <button class="nav-mob-close" onclick="closeMob()">&#x2715;</button>
+  <a href="#parfums" onclick="closeMob()">Parfums</a>
+  <a href="#histoire" onclick="closeMob()">Histoire</a>
+  <a href="#galerie" onclick="closeMob()">Galerie</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-photo" id="heroPar"></div>
+  <div class="hero-content">
+    <div class="hero-badge">&#x2736; Arlon &middot; Belgique &middot; Depuis 1962</div>
+    <h1 class="hero-title">L'art&nbsp;glac&eacute;,<br/>transmis de<br/><em>g&eacute;n&eacute;ration<br/>en g&eacute;n&eacute;ration</em></h1>
+    <p class="hero-sub">Chaque matin, dans notre atelier du centre d'Arlon,<br/>nous fa&ccedil;onnons des glaces artisanales avec des ingr&eacute;dients<br/>soigneusement s&eacute;lectionn&eacute;s aupr&egrave;s de producteurs locaux.</p>
+    <div class="hero-actions">
+      <a href="#parfums" class="btn-dark">D&eacute;couvrir nos parfums</a>
+      <a href="#histoire" class="btn-ghost">Notre histoire</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>D&eacute;filer</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="container">
+    <div class="strip-grid">
+      <div class="strip-item reveal" style="--d:0ms"><span class="strip-num">62</span><span class="strip-label">Ans d'artisanat</span></div>
+      <div class="strip-item reveal" style="--d:100ms"><span class="strip-num">3</span><span class="strip-label">G&eacute;n&eacute;rations</span></div>
+      <div class="strip-item reveal" style="--d:200ms"><span class="strip-num">28+</span><span class="strip-label">Parfums uniques</span></div>
+      <div class="strip-item reveal" style="--d:300ms"><span class="strip-num">100%</span><span class="strip-label">Ingr&eacute;dients naturels</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTOIRE -->
+<section class="story" id="histoire">
+  <div class="container">
+    <div class="story-grid">
+      <div class="reveal-l">
+        <div class="story-year">1962</div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&q=85&fit=crop" alt="Atelier glacerie" loading="lazy"/>
+        </div>
+        <div class="story-img-2">
+          <img src="https://images.unsplash.com/photo-1587241321921-91a834d6d191?w=500&q=85&fit=crop" alt="Ingredients frais" loading="lazy"/>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="s-tag">Notre histoire</div>
+        <h2 class="s-title">N&eacute;e d'une passion,<br/>nourrie par <em>l'amour</em></h2>
+        <p class="story-text">Tout a commenc&eacute; en 1962, quand Henri Fontaine, de retour d'un voyage en Sicile, rapporta dans ses bagages une obsession : la glace artisanale. &Eacute;merveill&eacute; par les <em>gelaterie</em> de Palerme, il s'installa dans une petite boutique de la rue des Faubourgs &agrave; Arlon, arm&eacute; d'un turbineur en cuivre et d'une recette secr&egrave;te de pistache.</p>
+        <p class="story-text">Ses mains, gerc&eacute;es par le froid des marbres, p&eacute;trissaient chaque matin les cr&egrave;mes avec une patience de moine. Les fraises venaient du jardin de sa belle-m&egrave;re &agrave; &Eacute;talle. Les gousses de vanille arrivaient dans une bo&icirc;te en bois depuis Madagascar &mdash; une folie, pour l'&eacute;poque.</p>
+        <p class="story-text">Aujourd'hui, c'est sa petite-fille Lucie qui ouvre l'atelier chaque matin &agrave; 5h30. Elle a &eacute;tudi&eacute; &agrave; l'&Eacute;cole des Arts du Go&ucirc;t &agrave; Lyon, travaill&eacute; chez Berthillon &agrave; Paris &mdash; et elle est revenue &agrave; Arlon. Parce qu'il y a des racines qu'on ne trahit pas.</p>
+        <div class="story-sign">Lucie Fontaine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLACE QUI TOURNE -->
+<section class="ice-section" id="iceScroll">
+  <div class="ice-sticky">
+    <div class="ice-bg"></div>
+    <div class="ice-content">
+      <div class="ice-wrap">
+        <svg id="iceSvg" viewBox="0 0 320 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="g-rose" cx="38%" cy="35%" r="62%">
+              <stop offset="0%" stop-color="#fce4ec"/><stop offset="60%" stop-color="#f48fb1"/><stop offset="100%" stop-color="#e57399"/>
+            </radialGradient>
+            <radialGradient id="g-pist" cx="38%" cy="35%" r="62%">
+              <stop offset="0%" stop-color="#e8f5e9"/><stop offset="60%" stop-color="#81c784"/><stop offset="100%" stop-color="#5a9e5e"/>
+            </radialGradient>
+            <radialGradient id="g-van" cx="38%" cy="35%" r="62%">
+              <stop offset="0%" stop-color="#fffde7"/><stop offset="60%" stop-color="#fff176"/><stop offset="100%" stop-color="#f9d13e"/>
+            </radialGradient>
+            <radialGradient id="g-choc" cx="38%" cy="35%" r="62%">
+              <stop offset="0%" stop-color="#efebe9"/><stop offset="60%" stop-color="#a1887f"/><stop offset="100%" stop-color="#6d4c41"/>
+            </radialGradient>
+            <radialGradient id="g-myrt" cx="38%" cy="35%" r="62%">
+              <stop offset="0%" stop-color="#e8eaf6"/><stop offset="60%" stop-color="#7986cb"/><stop offset="100%" stop-color="#4a5699"/>
+            </radialGradient>
+            <linearGradient id="g-cornet" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5c58a"/><stop offset="50%" stop-color="#e8a855"/><stop offset="100%" stop-color="#c47e2a"/>
+            </linearGradient>
+            <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.22)"/></filter>
+          </defs>
+          <polygon points="160,510 55,220 265,220" fill="url(#g-cornet)"/>
+          <line x1="160" y1="510" x2="100" y2="280" stroke="#c47e2a" stroke-width="1.2" opacity=".5"/>
+          <line x1="160" y1="510" x2="130" y2="315" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
+          <line x1="160" y1="510" x2="160" y2="295" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
+          <line x1="160" y1="510" x2="190" y2="315" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
+          <line x1="160" y1="510" x2="220" y2="280" stroke="#c47e2a" stroke-width="1.2" opacity=".5"/>
+          <line x1="75" y1="370" x2="248" y2="370" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
+          <line x1="62" y1="318" x2="260" y2="318" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
+          <line x1="55" y1="268" x2="267" y2="268" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
+          <circle cx="112" cy="226" r="58" fill="url(#g-choc)" filter="url(#shadow)"/>
+          <circle cx="93" cy="206" r="16" fill="#efebe9" opacity=".4"/>
+          <circle cx="212" cy="218" r="56" fill="url(#g-myrt)" filter="url(#shadow)"/>
+          <circle cx="196" cy="199" r="14" fill="#e8eaf6" opacity=".4"/>
+          <circle cx="124" cy="178" r="60" fill="url(#g-pist)" filter="url(#shadow)"/>
+          <circle cx="103" cy="156" r="18" fill="#e8f5e9" opacity=".45"/>
+          <circle cx="200" cy="170" r="58" fill="url(#g-rose)" filter="url(#shadow)"/>
+          <circle cx="181" cy="150" r="17" fill="#fce4ec" opacity=".5"/>
+          <circle cx="160" cy="118" r="66" fill="url(#g-van)" filter="url(#shadow)"/>
+          <circle cx="135" cy="94" r="22" fill="#fffde7" opacity=".55"/>
+          <circle cx="175" cy="105" r="10" fill="#fffde7" opacity=".4"/>
+          <path d="M215 195 Q224 218 216 234" stroke="#e57399" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".65"/>
+          <ellipse cx="148" cy="138" rx="5" ry="3" fill="#5a9e5e" opacity=".7" transform="rotate(-25 148 138)"/>
+          <ellipse cx="175" cy="128" rx="4" ry="2.5" fill="#5a9e5e" opacity=".6" transform="rotate(15 175 128)"/>
+          <ellipse cx="162" cy="100" rx="4" ry="2.5" fill="#5a9e5e" opacity=".5" transform="rotate(-10 162 100)"/>
         </svg>
       </div>
-    </div>
-
-    <div class="hero-content reveal-hero">
-      <span class="hero-tag">✦ Arlon, Belgique</span>
-      <h1 class="hero-title">Glaces artisanales,<br/><em>fraîches et naturelles</em></h1>
-      <p class="hero-subtitle">Fabriquées chaque matin dans notre atelier,<br/>avec des fruits de saison et des ingrédients locaux.</p>
-      <a href="#parfums" class="btn-primary">Voir nos parfums</a>
-    </div>
-
-    <div class="scroll-hint">
-      <div class="scroll-dot"></div>
-    </div>
-  </section>
-
-  <!-- PARFUMS -->
-  <section class="parfums" id="parfums">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Nos créations</span>
-        <h2 class="section-title">Les <em>parfums</em> du moment</h2>
-        <p class="section-sub">Chaque parfum est une histoire — choisissez la vôtre.</p>
-      </div>
-      <div class="parfums-grid">
-
-        <div class="parfum-card reveal" style="--delay:0ms">
-          <div class="parfum-icon" style="--c1:#fce4ec;--c2:#f8bbd9;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+      <div class="ice-txt">
+        <div class="s-tag">Le savoir-faire</div>
+        <h2 class="s-title">Cinq boules,<br/><em>cinq histoires</em></h2>
+        <div class="ice-steps">
+          <div class="istep on" data-s="0">
+            <div class="istep-n">01</div>
+            <div class="istep-t"><h4>La s&eacute;lection des fruits</h4><p>Fraises d'&Eacute;talle, myrtilles des Fagnes, mangues Alphonso de Mumbai. Chaque parfum commence par une s&eacute;lection rigoureuse.</p></div>
           </div>
-          <div class="parfum-body">
-            <h3>Fraise des bois</h3>
-            <p>Fraises sauvages d'Ardenne, légèrement acidulées, d'une fraîcheur absolue.</p>
-            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          <div class="istep" data-s="1">
+            <div class="istep-n">02</div>
+            <div class="istep-t"><h4>La pr&eacute;paration &agrave; l'atelier</h4><p>D&egrave;s 5h30, les bases sont pr&eacute;par&eacute;es &agrave; froid. Pas de raccourcis &mdash; chaque cr&egrave;me repose le temps qu'il faut.</p></div>
+          </div>
+          <div class="istep" data-s="2">
+            <div class="istep-n">03</div>
+            <div class="istep-t"><h4>Le turbinage artisanal</h4><p>Nos turbineurs travaillent &agrave; basse vitesse pour pr&eacute;server les ar&ocirc;mes et cr&eacute;er une texture velout&eacute;e unique.</p></div>
+          </div>
+          <div class="istep" data-s="3">
+            <div class="istep-n">04</div>
+            <div class="istep-t"><h4>La d&eacute;gustation, chaque jour</h4><p>Lucie go&ucirc;te chaque bac avant ouverture. Si ce n'est pas parfait, ce n'est pas servi. Simplicit&eacute; du principe, exigence du geste.</p></div>
           </div>
         </div>
-
-        <div class="parfum-card reveal" style="--delay:80ms">
-          <div class="parfum-icon" style="--c1:#e8f5e9;--c2:#c8e6c9;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Pistache d'Italie</h3>
-            <p>Pistaches de Sicile, texture veloutée, goût intense et légèrement grillé.</p>
-            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:160ms">
-          <div class="parfum-icon" style="--c1:#fffde7;--c2:#fff9c4;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Vanille Bourbon</h3>
-            <p>Gousses de Madagascar, crème entière, douceur irréprochable et classique.</p>
-            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:240ms">
-          <div class="parfum-icon" style="--c1:#efebe9;--c2:#d7ccc8;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Chocolat noir 70%</h3>
-            <p>Cacao grand cru d'Équateur, fondant et intense pour les vrais amateurs.</p>
-            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:320ms">
-          <div class="parfum-icon" style="--c1:#e3f2fd;--c2:#90caf9;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Myrtille sauvage</h3>
-            <p>Myrtilles des Fagnes, couleur intense, goût acidulé et légèrement boisé.</p>
-            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:400ms">
-          <div class="parfum-icon" style="--c1:#fbe9e7;--c2:#ffab91;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Mangue & Passion</h3>
-            <p>Mangue Alphonso et fruits de la passion, sorbet solaire, sans produit laitier.</p>
-            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:480ms">
-          <div class="parfum-icon" style="--c1:#f3e5f5;--c2:#ce93d8;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Lavande & Miel</h3>
-            <p>Lavande de Provence et miel de fleurs locales, floral et délicatement sucré.</p>
-            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
-        <div class="parfum-card reveal" style="--delay:560ms">
-          <div class="parfum-icon" style="--c1:#e0f2f1;--c2:#80cbc4;">
-            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
-          </div>
-          <div class="parfum-body">
-            <h3>Menthe fraîche</h3>
-            <p>Menthe du jardin, fraîcheur intense, vert naturel, sans colorant artificiel.</p>
-            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ENGAGEMENTS -->
-  <section class="engagements" id="engagements">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Notre philosophie</span>
-        <h2 class="section-title">Nos <em>engagements</em></h2>
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>Glaces artisanales</span><span>Ingr&eacute;dients naturels</span><span>Recettes familiales</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>Fait chaque matin</span>
+    <span>Glaces artisanales</span><span>Ingr&eacute;dients naturels</span><span>Recettes familiales</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>Fait chaque matin</span>
+  </div>
+</div>
+
+<!-- PARFUMS -->
+<section class="parfums" id="parfums">
+  <div class="container">
+    <div class="parfums-intro">
+      <div class="reveal"><div class="s-tag">Nos cr&eacute;ations</div><h2 class="s-title">Les parfums<br/>du <em>moment</em></h2></div>
+      <div class="reveal" style="--d:150ms"><p class="s-sub">Chaque parfum est imagin&eacute;, test&eacute;, ajust&eacute; pendant des semaines avant d'entrer dans notre vitrine. Certains sont l&agrave; depuis 1962. D'autres sont n&eacute;s la semaine derni&egrave;re.</p></div>
+    </div>
+    <div class="parfums-grid">
+      <div class="pcard reveal-sc" style="--d:0ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=85&fit=crop" alt="Fraise" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Fraise des bois</div><p class="pcard-desc">Fraises sauvages d'Ardenne. Acidul&eacute;es, vives, d'une fra&icirc;cheur absolue.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
       </div>
-      <div class="engagements-grid">
-
-        <div class="engagement-card reveal" style="--delay:0ms">
-          <div class="eng-icon" style="background:#e8f5e9;">
-            <svg viewBox="0 0 48 48" fill="none"><path d="M24 5C11 5 7 20 7 28c0 10 8 16 17 16s17-6 17-16C41 20 37 5 24 5z" fill="#c8e6c9" stroke="#81c784" stroke-width="1.5"/><path d="M24 44V20" stroke="#81c784" stroke-width="1.5" stroke-linecap="round"/><path d="M24 32Q16 26 13 17" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/><path d="M24 28Q32 22 35 15" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Ingrédients naturels</h3>
-          <p>Aucun arôme artificiel, aucun colorant. Uniquement des fruits, des herbes et des épices dans leur forme la plus pure.</p>
-        </div>
-
-        <div class="engagement-card reveal" style="--delay:120ms">
-          <div class="eng-icon" style="background:#fce4ec;">
-            <svg viewBox="0 0 48 48" fill="none"><path d="M8 22L24 8l16 14v20H8V22z" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.5" stroke-linejoin="round"/><rect x="18" y="30" width="12" height="12" rx="2" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.2"/></svg>
-          </div>
-          <h3>Production locale</h3>
-          <p>Fabriquées à Arlon, dans notre atelier familial. Nous travaillons avec des producteurs ardennais à moins de 100 km.</p>
-        </div>
-
-        <div class="engagement-card reveal" style="--delay:240ms">
-          <div class="eng-icon" style="background:#fff9c4;">
-            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6l3.5 11.5H40l-10 8 3.5 12L24 30l-9.5 7.5L18 25.5l-10-8h12.5L24 6z" fill="#fff176" stroke="#fdd835" stroke-width="1.5" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Sans additifs</h3>
-          <p>Zéro conservateur, zéro stabilisant industriel. Nos glaces se conservent uniquement par le froid — comme il se doit.</p>
-        </div>
-
+      <div class="pcard reveal-sc" style="--d:80ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600&q=85&fit=crop" alt="Pistache" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Pistache de Sicile</div><p class="pcard-desc">Pistaches de Bronte. Velout&eacute;e, intense, l&eacute;g&egrave;rement grill&eacute;e. La signature de la maison.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:160ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=85&fit=crop" alt="Vanille" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Vanille Bourbon</div><p class="pcard-desc">Gousses de Madagascar mac&eacute;r&eacute;es 48h. La douceur absolue, classique et irremplacable.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:240ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=600&q=85&fit=crop" alt="Chocolat" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Chocolat 70%</div><p class="pcard-desc">Cacao grand cru d'&Eacute;quateur. Fondant, profond, pour les esprits exigeants.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:320ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=600&q=85&fit=crop" alt="Myrtille" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Myrtille sauvage</div><p class="pcard-desc">Myrtilles des Hautes-Fagnes. Violette, acidul&eacute;e, l&eacute;g&egrave;rement bois&eacute;e. Sauvage et fi&egrave;re.</p><div class="pcard-price">3,60&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:400ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?w=600&q=85&fit=crop" alt="Mangue" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Mangue &amp; Passion</div><p class="pcard-desc">Mangue Alphonso et fruits de la passion. Solaire, exotique, sans produit laitier.</p><div class="pcard-price">3,60&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:480ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e?w=600&q=85&fit=crop" alt="Caramel" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Caramel beurre sal&eacute;</div><p class="pcard-desc">Beurre breton et fleur de sel de Gu&eacute;rande. Ambr&eacute;, profond, avec cette pointe qui change tout.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
+      </div>
+      <div class="pcard reveal-sc" style="--d:560ms">
+        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=85&fit=crop" alt="Citron" loading="lazy"/></div>
+        <div class="pcard-body"><div class="pcard-name">Citron de Menton</div><p class="pcard-desc">Sorbet vif et &eacute;lectrique. Peau et jus de citrons AOP. L'anti-torpeur parfait des &eacute;t&eacute;s ardennais.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- GALERIE -->
-  <section class="galerie" id="galerie">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Instants glacés</span>
-        <h2 class="section-title">Notre <em>galerie</em></h2>
-      </div>
-      <div class="galerie-grid">
-        <div class="galerie-item reveal" style="--delay:0ms"><div class="galerie-ph" style="--g1:#fce4ec;--g2:#f8bbd9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#f48fb1" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fce4ec" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Fraise & Rose</span></div></div>
-        <div class="galerie-item reveal" style="--delay:100ms"><div class="galerie-ph" style="--g1:#e8f5e9;--g2:#c8e6c9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#81c784" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e8f5e9" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Pistache</span></div></div>
-        <div class="galerie-item reveal" style="--delay:200ms"><div class="galerie-ph" style="--g1:#fff9c4;--g2:#fff176;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#fdd835" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fffde7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Vanille</span></div></div>
-        <div class="galerie-item reveal" style="--delay:300ms"><div class="galerie-ph" style="--g1:#fbe9e7;--g2:#ffccbc;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ff8a65" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fbe9e7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Mangue</span></div></div>
-        <div class="galerie-item reveal" style="--delay:400ms"><div class="galerie-ph" style="--g1:#e3f2fd;--g2:#bbdefb;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#64b5f6" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e3f2fd" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Myrtille</span></div></div>
-        <div class="galerie-item reveal" style="--delay:500ms"><div class="galerie-ph" style="--g1:#f3e5f5;--g2:#e1bee7;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ba68c8" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#f3e5f5" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Lavande</span></div></div>
-      </div>
+<!-- ENGAGEMENTS -->
+<section class="eng-sec">
+  <div class="container">
+    <div class="sec-center reveal"><div class="s-tag">Notre philosophie</div><h2 class="s-title">Des engagements<br/><em>sans compromis</em></h2></div>
+    <div class="eng-grid">
+      <div class="ecard reveal" style="--d:0ms"><div class="ecard-ic" style="background:#e8f5e9">&#127807;</div><h3>Ingr&eacute;dients naturels</h3><p>Aucun ar&ocirc;me artificiel. Aucun colorant. Aucun stabilisant industriel. Uniquement ce que la nature produit &mdash; fruit, cr&egrave;me, sucre, &eacute;pice.</p></div>
+      <div class="ecard reveal" style="--d:150ms"><div class="ecard-ic" style="background:#fce4ec">&#127968;</div><h3>Production locale</h3><p>Nos fruits viennent d'Ardenne et de Lorraine belge. Notre cr&egrave;me vient d'une ferme &agrave; 18 km. Nous connaissons nos producteurs par leur pr&eacute;nom.</p></div>
+      <div class="ecard reveal" style="--d:300ms"><div class="ecard-ic" style="background:#fff9c4">&#11088;</div><h3>Z&eacute;ro additif</h3><p>Nos glaces se conservent uniquement par le froid. Elles fondent vite et c'est fait expr&egrave;s &mdash; c'est le signe qu'elles sont vraies.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Venez nous voir</span>
-        <h2 class="section-title">Où nous <em>trouver</em></h2>
+<!-- GALERIE -->
+<section class="galerie" id="galerie">
+  <div class="container">
+    <div class="reveal"><div class="s-tag">Instants glac&eacute;s</div><h2 class="s-title">Notre <em>univers</em></h2></div>
+    <div class="gal-grid">
+      <div class="gitem reveal-sc" style="--d:0ms"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=800&q=85&fit=crop" alt="Atelier" loading="lazy"/><div class="gitem-ov"><span>L'atelier du matin</span></div></div>
+      <div class="gitem reveal-sc" style="--d:100ms"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=85&fit=crop" alt="Fraise" loading="lazy"/><div class="gitem-ov"><span>Fraise des bois</span></div></div>
+      <div class="gitem reveal-sc" style="--d:200ms"><img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=600&q=85&fit=crop" alt="Chocolat" loading="lazy"/><div class="gitem-ov"><span>Grand cru 70%</span></div></div>
+      <div class="gitem reveal-sc" style="--d:300ms"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=900&q=85&fit=crop" alt="Comptoir" loading="lazy"/><div class="gitem-ov"><span>La vitrine d'Arlon</span></div></div>
+      <div class="gitem reveal-sc" style="--d:400ms"><img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=600&q=85&fit=crop" alt="Myrtille" loading="lazy"/><div class="gitem-ov"><span>Cueillette en Fagnes</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HERITAGE -->
+<section class="heritage" id="heritage">
+  <div class="container">
+    <div class="hgrid">
+      <div class="htext reveal-l">
+        <div class="s-tag">L'h&eacute;ritage</div>
+        <h2 class="s-title">Trois g&eacute;n&eacute;rations<br/>d'une m&ecirc;me <em>obsession</em></h2>
+        <p class="hp">Henri Fontaine avait les mains larges, la voix douce et une th&eacute;orie&#8239;: une bonne glace, c'est 80% de mati&egrave;re premi&egrave;re et 20% de patience. Il r&eacute;p&eacute;tait &ccedil;a &agrave; son fils Michel pendant qu'ils d&eacute;cortiquaient ensemble des pistaches siciliennes sur la table de la cuisine, &agrave; l'heure o&ugrave; Arlon dormait encore.</p>
+        <p class="hp">Michel a repris l'atelier en 1989, agrandi la boutique, ajout&eacute; le comptoir en marbre belge qui tr&ocirc;ne encore aujourd'hui. Ses innovations&#8239;: le sorbet &agrave; la bi&egrave;re d'Orval (scandale et succ&egrave;s imm&eacute;diat), la gamme sans lactose bien avant que ce soit &agrave; la mode.</p>
+        <p class="hp">Lucie, sa fille, est la troisi&egrave;me g&eacute;n&eacute;ration. Elle a failli ne pas revenir &mdash; Paris l'appelait, les &eacute;toiles Michelin l'attendaient. Mais il y a eu ce matin d'ao&ucirc;t 2018, une chaleur de 38&deg;C &agrave; Arlon, et une queue de 40 personnes devant la boutique. Elle a su.</p>
+        <div class="hquote"><p>&#8220;On ne fabrique pas des glaces. On fabrique des souvenirs d'enfance.&#8221;</p><cite>— Henri Fontaine, fondateur, 1962</cite></div>
       </div>
-      <div class="contact-grid">
-
-        <div class="contact-infos reveal">
-          <div class="info-block">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            </div>
-            <div>
-              <h4>Adresse</h4>
-              <p>14 Rue des Faubourgs<br/>6700 Arlon, Belgique</p>
-            </div>
-          </div>
-          <div class="info-block">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-            </div>
-            <div>
-              <h4>Horaires</h4>
-              <p>Mar – Ven : 11h – 19h<br/>Sam – Dim : 10h – 20h<br/><em>Fermé le lundi</em></p>
-            </div>
-          </div>
-          <div class="info-block">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            </div>
-            <div>
-              <h4>Téléphone</h4>
-              <p>+32 63 12 34 56</p>
-              <a href="tel:+3263123456" class="btn-call">📞 Nous appeler</a>
-            </div>
-          </div>
+      <div class="reveal-r">
+        <div class="htl">
+          <div class="htl-item"><div class="htl-year">1962</div><div class="htl-content"><h4>La naissance</h4><p>Henri ouvre le premier atelier rue des Faubourgs, avec un turbineur en cuivre et trois parfums&#8239;: pistache, vanille, fraise.</p></div></div>
+          <div class="htl-item"><div class="htl-year">1978</div><div class="htl-content"><h4>L'expansion</h4><p>Premi&egrave;re r&eacute;compense nationale au Concours Belge de Glacerie. La pistache Fontaine devient une r&eacute;f&eacute;rence nationale.</p></div></div>
+          <div class="htl-item"><div class="htl-year">1989</div><div class="htl-content"><h4>La deuxi&egrave;me g&eacute;n&eacute;ration</h4><p>Michel reprend les r&ecirc;nes. Nouveau comptoir en marbre, agrandissement de l'atelier, cr&eacute;ation de la gamme sorbets.</p></div></div>
+          <div class="htl-item"><div class="htl-year">2018</div><div class="htl-content"><h4>Lucie revient</h4><p>Apr&egrave;s Lyon et Paris, Lucie Fontaine reprend l'atelier. Nouvelles recettes, sourcing renforc&eacute;, identit&eacute; premium affirm&eacute;e.</p></div></div>
+          <div class="htl-item"><div class="htl-year">2025</div><div class="htl-content"><h4>Aujourd'hui</h4><p>28 parfums, 3 g&eacute;n&eacute;rations de savoir-faire, et toujours cette queue de 40 personnes les beaux jours d'&eacute;t&eacute;.</p></div></div>
         </div>
-
-        <div class="contact-map reveal">
-          <div class="map-wrapper">
-            <iframe
-              title="Carte Glacerie d'Arlon"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000"
-              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">🍦 Glacerie d'Arlon</div>
-      <p class="footer-tagline">Artisans glaciers depuis 2008 · Arlon, Belgique</p>
-      <p class="footer-copy">© 2025 Glacerie d'Arlon — Tous droits réservés</p>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="sec-center reveal" style="margin-bottom:5rem"><div class="s-tag">Venez nous voir</div><h2 class="s-title">Trouvez-nous<br/>&agrave; <em>Arlon</em></h2></div>
+    <div class="contact-grid">
+      <div class="cinfo reveal-l">
+        <div class="cblock"><div class="cic">&#128205;</div><div><h4>Adresse</h4><p>14 Rue des Faubourgs<br/>6700 Arlon, Belgique</p></div></div>
+        <div class="cblock"><div class="cic">&#128336;</div><div><h4>Horaires</h4><p>Mardi &ndash; Vendredi&#8239;: 11h &ndash; 19h<br/>Samedi &ndash; Dimanche&#8239;: 10h &ndash; 20h<br/><em>Ferm&eacute; le lundi</em></p></div></div>
+        <div class="cblock"><div class="cic">&#128222;</div><div><h4>T&eacute;l&eacute;phone</h4><p>+32 63 12 34 56</p><a href="tel:+3263123456" class="btn-call">&#128222; Nous appeler</a></div></div>
+        <div class="cblock"><div class="cic">&#9993;&#65039;</div><div><h4>Email</h4><p>bonjour@glacerie-arlon.be</p></div></div>
+      </div>
+      <div class="cmap reveal-r">
+        <iframe title="Glacerie d'Arlon" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand"><a href="#" class="nav-logo">Glacerie <em>d'Arlon</em></a><p>Artisans glaciers depuis 1962. Trois g&eacute;n&eacute;rations d'une m&ecirc;me obsession pour les glaces pures, naturelles et faites avec amour &agrave; Arlon.</p></div>
+    <div class="ft-col"><h5>Navigation</h5><a href="#parfums">Nos parfums</a><a href="#histoire">Notre histoire</a><a href="#galerie">Galerie</a><a href="#contact">Contact</a></div>
+    <div class="ft-col"><h5>Informations</h5><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
+  </div>
+  <div class="ft-bot"><p>&copy; 2025 Glacerie d'Arlon &mdash; Tous droits r&eacute;serv&eacute;s</p><p>Fait avec &#10084;&#65039; &agrave; Arlon, Belgique</p></div>
+</footer>
+
+<script>
+'use strict';
+/* CURSOR */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animR(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
+document.querySelectorAll('a,button,.pcard,.gitem').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='56px';ring.style.height='56px';ring.style.opacity='.25'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.5'});
+});
+/* NAV */
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+function openMob(){document.getElementById('navMob').classList.add('open')}
+function closeMob(){document.getElementById('navMob').classList.remove('open')}
+/* REVEAL */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-sc').forEach(el=>obs.observe(el));
+/* PARALLAX HERO */
+const heroPar=document.getElementById('heroPar');
+const heroEl=document.getElementById('hero');
+window.addEventListener('scroll',()=>{const s=window.scrollY;if(s<heroEl.offsetHeight*1.5)heroPar.style.transform='translateY('+s*.3+'px) scale(1.02)'},{passive:true});
+/* GLACE ROTATION AU SCROLL */
+const iceSection=document.getElementById('iceScroll');
+const iceSvg=document.getElementById('iceSvg');
+const isteps=document.querySelectorAll('.istep');
+window.addEventListener('scroll',()=>{
+  if(!iceSection||!iceSvg)return;
+  const rect=iceSection.getBoundingClientRect();
+  const prog=Math.max(0,Math.min(1,-rect.top/(iceSection.offsetHeight-window.innerHeight)));
+  iceSvg.style.transform='rotate('+(prog*360)+'deg)';
+  const idx=Math.min(isteps.length-1,Math.floor(prog*isteps.length));
+  isteps.forEach((s,i)=>s.classList.toggle('on',i===idx));
+},{passive:true});
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(!t)return;e.preventDefault();
+    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-68,behavior:'smooth'});
+  });
+});
+/* HERO FADE IN */
+document.querySelectorAll('.hero-content > *').forEach((el,i)=>{
+  el.style.cssText='opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;transition-delay:'+(i*180+200)+'ms';
+  setTimeout(()=>{el.style.opacity='1';el.style.transform='translateY(0)'},50);
+});
+</script>
 </body>
 </html>
