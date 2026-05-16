@@ -3,588 +3,314 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Salon Lumière — Coiffeur Bruxelles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f5f0e8;
-      --dark: #1a1610;
-      --gold: #b8965a;
-      --gold-light: #d4b07a;
-      --muted: #7a7060;
-      --white: #fdfaf5;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      color: var(--dark);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(245, 240, 232, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(184,150,90,0.2);
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 600; letter-spacing: 0.05em;
-      color: var(--dark); text-decoration: none;
-    }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      text-decoration: none; font-size: 0.85rem; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
-      transition: color 0.25s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      background: var(--dark); color: var(--cream) !important;
-      padding: 0.55rem 1.4rem; border-radius: 2px;
-      transition: background 0.25s !important;
-    }
-    .nav-cta:hover { background: var(--gold) !important; color: var(--white) !important; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-      padding: 8rem 4rem 4rem;
-      gap: 4rem;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: -20%; right: -10%; width: 60%; height: 140%;
-      background: radial-gradient(ellipse at center, rgba(184,150,90,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold);
-      border: 1px solid var(--gold); padding: 0.35rem 0.9rem;
-      margin-bottom: 1.8rem; border-radius: 2px;
-    }
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 5vw, 5.5rem);
-      font-weight: 300; line-height: 1.05;
-      color: var(--dark); margin-bottom: 1.5rem;
-    }
-    .hero-title em { font-style: italic; color: var(--gold); }
-    .hero-subtitle {
-      font-size: 1.05rem; color: var(--muted); line-height: 1.7;
-      max-width: 460px; margin-bottom: 2.5rem; font-weight: 300;
-    }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--dark); color: var(--cream);
-      padding: 0.9rem 2.2rem; border: none; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-      font-weight: 500; letter-spacing: 0.05em; cursor: pointer;
-      text-decoration: none; display: inline-block;
-      transition: background 0.25s, transform 0.2s;
-    }
-    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent; color: var(--dark);
-      padding: 0.9rem 2.2rem; border: 1.5px solid var(--dark); border-radius: 2px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-      font-weight: 500; letter-spacing: 0.05em; cursor: pointer;
-      text-decoration: none; display: inline-block;
-      transition: all 0.25s;
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-    .hero-visual {
-      position: relative; display: flex; justify-content: center; align-items: center;
-    }
-    .hero-card {
-      width: 100%; max-width: 460px; aspect-ratio: 3/4;
-      background: linear-gradient(145deg, #2a2218 0%, #1a1610 60%, #2e2416 100%);
-      border-radius: 4px; position: relative; overflow: hidden;
-      box-shadow: 0 40px 80px rgba(26,22,16,0.35);
-    }
-    .hero-card-inner {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 2.5rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
-    }
-    .hero-card-label {
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold-light); margin-bottom: 0.5rem;
-    }
-    .hero-card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300; color: var(--white); line-height: 1.2;
-    }
-    /* Decorative pattern in the card */
-    .hero-card::before {
-      content: '';
-      position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-      width: 180px; height: 180px;
-      border: 1px solid rgba(184,150,90,0.3); border-radius: 50%;
-    }
-    .hero-card::after {
-      content: '';
-      position: absolute; top: calc(10% + 20px); left: 50%; transform: translateX(-50%);
-      width: 140px; height: 140px;
-      border: 1px solid rgba(184,150,90,0.2); border-radius: 50%;
-    }
-    .scissor-icon {
-      position: absolute; top: calc(10% + 45px); left: 50%; transform: translateX(-50%);
-      font-size: 3.5rem; opacity: 0.6;
-    }
-
-    /* ── STATS ── */
-    .stats {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; background: var(--dark);
-    }
-    .stat {
-      padding: 3rem 2.5rem; text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.08);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.5rem; font-weight: 300; color: var(--gold);
-      display: block; line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(245,240,232,0.5); margin-top: 0.5rem; display: block;
-    }
-
-    /* ── SERVICES ── */
-    .services { padding: 7rem 4rem; }
-    .section-header { text-align: center; margin-bottom: 4rem; }
-    .section-tag {
-      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 300;
-      color: var(--dark); line-height: 1.15;
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2px;
-    }
-    .service-card {
-      background: var(--white); padding: 3rem 2.5rem;
-      border: 1px solid rgba(184,150,90,0.12);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-      background: var(--gold); transform: scaleX(0); transform-origin: left;
-      transition: transform 0.35s;
-    }
-    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,22,16,0.1); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon { font-size: 2rem; margin-bottom: 1.2rem; display: block; }
-    .service-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 400; color: var(--dark); margin-bottom: 0.7rem;
-    }
-    .service-desc {
-      font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.5rem;
-    }
-    .service-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 600; color: var(--gold);
-    }
-    .service-price span { font-size: 0.85rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 300; }
-
-    /* ── ABOUT ── */
-    .about {
-      padding: 7rem 4rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
-      align-items: center; background: var(--dark);
-    }
-    .about-visual {
-      position: relative;
-    }
-    .about-img-frame {
-      width: 100%; aspect-ratio: 4/5;
-      background: linear-gradient(135deg, #2e2416 0%, #1a1610 100%);
-      border-radius: 4px; position: relative;
-      border: 1px solid rgba(184,150,90,0.2);
-    }
-    .about-img-frame::before {
-      content: 'J.L.';
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 8rem; font-weight: 300; color: rgba(184,150,90,0.15);
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    }
-    .about-accent {
-      position: absolute; bottom: -20px; right: -20px;
-      width: 60%; aspect-ratio: 1;
-      border: 2px solid rgba(184,150,90,0.3); border-radius: 4px;
-      z-index: -1;
-    }
-    .about-content { color: var(--cream); }
-    .about-content .section-tag { color: var(--gold-light); }
-    .about-content .section-title { color: var(--white); text-align: left; }
-    .about-text {
-      font-size: 1rem; color: rgba(245,240,232,0.65); line-height: 1.8;
-      margin: 1.5rem 0 2rem; font-weight: 300;
-    }
-    .about-signature {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem; font-style: italic; color: var(--gold);
-      margin-top: 1.5rem;
-    }
-
-    /* ── TESTIMONIALS ── */
-    .testimonials { padding: 7rem 4rem; background: var(--cream); }
-    .testimonials-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem; margin-top: 4rem;
-    }
-    .testimonial-card {
-      background: var(--white); padding: 2.5rem;
-      border: 1px solid rgba(184,150,90,0.12); border-radius: 4px;
-    }
-    .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 1.2rem; }
-    .testimonial-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; font-style: italic; font-weight: 300;
-      color: var(--dark); line-height: 1.6; margin-bottom: 1.5rem;
-    }
-    .testimonial-author { font-size: 0.85rem; font-weight: 500; color: var(--muted); }
-
-    /* ── CONTACT ── */
-    .contact {
-      padding: 7rem 4rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
-    }
-    .contact-info .section-title { text-align: left; margin-bottom: 2rem; }
-    .contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
-    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
-    .contact-item-icon {
-      width: 44px; height: 44px; background: var(--dark); border-radius: 2px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
-    .contact-item-text h4 { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
-    .contact-item-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
-
-    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-    .form-group input, .form-group textarea, .form-group select {
-      background: var(--white); border: 1px solid rgba(184,150,90,0.25);
-      border-radius: 2px; padding: 0.85rem 1rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark);
-      transition: border-color 0.2s; outline: none;
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-      border-color: var(--gold);
-    }
-    .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--dark); padding: 3rem 4rem;
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(184,150,90,0.15);
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 600; color: var(--cream);
-    }
-    .footer-logo span { color: var(--gold); }
-    .footer-copy { font-size: 0.82rem; color: rgba(245,240,232,0.35); }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { color: rgba(245,240,232,0.4); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* ── HAMBURGER / MOBILE NAV ── */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all 0.3s; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-
-      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 3rem; }
-      .hero-visual { order: -1; }
-      .hero-card { max-width: 340px; }
-
-      .stats { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 2rem; }
-      .stat:last-child { border-bottom: none; }
-
-      .services { padding: 5rem 1.5rem; }
-      .about { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 3rem; }
-      .about-accent { display: none; }
-      .testimonials { padding: 5rem 1.5rem; }
-      .contact { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 3rem; }
-      .form-row { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
-    }
-
-    /* ── SCROLL ANIMATIONS ── */
-    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-  </style>
+  <title>Glacerie d'Arlon — Glaces Artisanales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Salon <span>Lumière</span></a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#avis">Avis</a></li>
-    <li><a href="#contact" class="nav-cta">Réserver</a></li>
-  </ul>
-  <div class="hamburger" onclick="toggleMenu(this)">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-tag">✦ Bruxelles, depuis 2010</div>
-    <h1 class="hero-title">L'art de<br/>sublimer votre<br/><em>élégance</em></h1>
-    <p class="hero-subtitle">Un salon de coiffure où chaque coupe devient une signature. Expertise artisanale, produits premium, et un soin personnalisé pour révéler votre style.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
-      <a href="#services" class="btn-outline">Nos prestations</a>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">🍦 Glacerie d'Arlon</a>
+      <ul class="nav-links">
+        <li><a href="#parfums">Parfums</a></li>
+        <li><a href="#engagements">Engagements</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-card">
-      <div class="scissor-icon">✂</div>
-      <div class="hero-card-inner">
-        <div class="hero-card-label">Coupe signature</div>
-        <div class="hero-card-title">Votre style,<br/>notre expertise</div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#parfums" onclick="toggleNav()">Parfums</a>
+      <a href="#engagements" onclick="toggleNav()">Engagements</a>
+      <a href="#galerie" onclick="toggleNav()">Galerie</a>
+      <a href="#contact" onclick="toggleNav()">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg">
+      <svg class="hero-blob" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="bg1" cx="30%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#d4edda" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#fce4ec" stop-opacity="0.2"/>
+          </radialGradient>
+          <radialGradient id="bg2" cx="75%" cy="65%" r="45%">
+            <stop offset="0%" stop-color="#fce4ec" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#fff9c4" stop-opacity="0.1"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="270" cy="320" rx="320" ry="280" fill="url(#bg1)"/>
+        <ellipse cx="670" cy="420" rx="260" ry="220" fill="url(#bg2)"/>
+      </svg>
+      <!-- Grande illustration glace SVG -->
+      <div class="hero-ice-wrap" id="heroIce">
+        <svg class="hero-ice" viewBox="0 0 280 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cornet -->
+          <polygon points="140,430 58,190 222,190" fill="#f5c58a" stroke="#e0a84a" stroke-width="1.5"/>
+          <line x1="140" y1="430" x2="112" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
+          <line x1="140" y1="430" x2="168" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
+          <line x1="140" y1="430" x2="90" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
+          <line x1="140" y1="430" x2="190" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
+          <!-- Boule rose (gauche bas) -->
+          <circle cx="118" cy="192" r="52" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.2"/>
+          <circle cx="100" cy="176" r="14" fill="#fce4ec" opacity="0.55"/>
+          <circle cx="130" cy="182" r="6" fill="#fce4ec" opacity="0.35"/>
+          <!-- Boule pistache (droite bas) -->
+          <circle cx="168" cy="178" r="50" fill="#c8e6c9" stroke="#a5d6a7" stroke-width="1.2"/>
+          <circle cx="152" cy="163" r="13" fill="#e8f5e9" opacity="0.55"/>
+          <!-- Boule vanille (centre haut) -->
+          <circle cx="140" cy="138" r="54" fill="#fff9c4" stroke="#fff176" stroke-width="1.2"/>
+          <circle cx="122" cy="120" r="15" fill="#fffde7" opacity="0.65"/>
+          <circle cx="155" cy="128" r="7" fill="#fffde7" opacity="0.45"/>
+          <!-- Petite touche déco -->
+          <path d="M186 196 Q193 214 185 228" stroke="#f48fb1" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="100" cy="215" r="3.5" fill="#a5d6a7" opacity="0.5"/>
+          <circle cx="178" cy="148" r="3" fill="#fff176" opacity="0.6"/>
+        </svg>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- STATS -->
-<div class="stats">
-  <div class="stat fade-up">
-    <span class="stat-number">14+</span>
-    <span class="stat-label">Années d'expérience</span>
-  </div>
-  <div class="stat fade-up">
-    <span class="stat-number">2 800</span>
-    <span class="stat-label">Clients fidèles</span>
-  </div>
-  <div class="stat fade-up">
-    <span class="stat-number">4.9★</span>
-    <span class="stat-label">Note Google</span>
-  </div>
-</div>
+    <div class="hero-content reveal-hero">
+      <span class="hero-tag">✦ Arlon, Belgique</span>
+      <h1 class="hero-title">Glaces artisanales,<br/><em>fraîches et naturelles</em></h1>
+      <p class="hero-subtitle">Fabriquées chaque matin dans notre atelier,<br/>avec des fruits de saison et des ingrédients locaux.</p>
+      <a href="#parfums" class="btn-primary">Voir nos parfums</a>
+    </div>
 
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-header fade-up">
-    <div class="section-tag">✦ Nos prestations</div>
-    <h2 class="section-title">Des services pensés<br/>pour <em>votre bien-être</em></h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card fade-up">
-      <span class="service-icon">✂️</span>
-      <div class="service-name">Coupe & Coiffage</div>
-      <p class="service-desc">Consultation personnalisée, coupe précise aux ciseaux ou au rasoir, séchage et mise en forme selon votre morphologie.</p>
-      <div class="service-price">À partir de 35€ <span>/ séance</span></div>
+    <div class="scroll-hint">
+      <div class="scroll-dot"></div>
     </div>
-    <div class="service-card fade-up">
-      <span class="service-icon">🎨</span>
-      <div class="service-name">Coloration</div>
-      <p class="service-desc">Balayage, mèches, couleur pleine — des techniques modernes avec des produits respectueux de votre chevelure.</p>
-      <div class="service-price">À partir de 65€ <span>/ séance</span></div>
-    </div>
-    <div class="service-card fade-up">
-      <span class="service-icon">✨</span>
-      <div class="service-name">Soin & Traitement</div>
-      <p class="service-desc">Masques capillaires, soins kératine, traitements hydratants pour une chevelure saine et lumineuse.</p>
-      <div class="service-price">À partir de 45€ <span>/ séance</span></div>
-    </div>
-    <div class="service-card fade-up">
-      <span class="service-icon">💍</span>
-      <div class="service-name">Coiffure de Mariée</div>
-      <p class="service-desc">Essai inclus, chignon élaboré, tresses ou coiffure haute — un moment inoubliable pour votre plus beau jour.</p>
-      <div class="service-price">À partir de 120€ <span>/ séance</span></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-visual fade-up">
-    <div class="about-img-frame"></div>
-    <div class="about-accent"></div>
-  </div>
-  <div class="about-content fade-up">
-    <div class="section-tag">✦ Notre histoire</div>
-    <h2 class="section-title" style="color:var(--white);text-align:left;">Un savoir-faire<br/>transmis avec<br/><em>passion</em></h2>
-    <p class="about-text">Fondé en 2010 au cœur de Bruxelles, le Salon Lumière est né d'une passion profonde pour l'art capillaire. Chaque client est accueilli dans un espace chaleureux et élégant, où le temps s'arrête pour vous offrir le meilleur.</p>
-    <p class="about-text">Notre équipe de stylistes certifiés se forme continuellement aux dernières tendances tout en restant fidèle aux techniques artisanales qui font notre réputation.</p>
-    <a href="#contact" class="btn-primary">Rencontrons-nous</a>
-    <div class="about-signature">Jean-Louis G.</div>
-  </div>
-</section>
+  <!-- PARFUMS -->
+  <section class="parfums" id="parfums">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Nos créations</span>
+        <h2 class="section-title">Les <em>parfums</em> du moment</h2>
+        <p class="section-sub">Chaque parfum est une histoire — choisissez la vôtre.</p>
+      </div>
+      <div class="parfums-grid">
 
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="avis">
-  <div class="section-header fade-up">
-    <div class="section-tag">✦ Ils nous font confiance</div>
-    <h2 class="section-title">Ce que disent<br/>nos <em>clients</em></h2>
-  </div>
-  <div class="testimonials-grid">
-    <div class="testimonial-card fade-up">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"Je viens ici depuis 5 ans. Chaque fois je repars avec la sensation d'être une nouvelle personne. Jean-Louis a un vrai don pour comprendre ce qu'on veut."</p>
-      <div class="testimonial-author">Isabelle M. — Cliente fidèle</div>
-    </div>
-    <div class="testimonial-card fade-up">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"Ambiance luxueuse, accueil parfait et résultat impeccable. La coloration que j'ai eu est exactement celle que je souhaitais. Je recommande vivement."</p>
-      <div class="testimonial-author">Nathalie D. — Via Google</div>
-    </div>
-    <div class="testimonial-card fade-up">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"Pour mon mariage, ils m'ont accompagnée de l'essai jusqu'au jour J. Professionnalisme et bienveillance au rendez-vous. Merci infiniment."</p>
-      <div class="testimonial-author">Sarah V. — Mariée 2024</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-info fade-up">
-    <div class="section-tag">✦ Nous trouver</div>
-    <h2 class="section-title">Venez nous<br/><em>rendre visite</em></h2>
-    <div class="contact-items">
-      <div class="contact-item">
-        <div class="contact-item-icon">📍</div>
-        <div class="contact-item-text">
-          <h4>Adresse</h4>
-          <p>12 Rue du Commerce<br/>1000 Bruxelles, Belgique</p>
+        <div class="parfum-card reveal" style="--delay:0ms">
+          <div class="parfum-icon" style="--c1:#fce4ec;--c2:#f8bbd9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Fraise des bois</h3>
+            <p>Fraises sauvages d'Ardenne, légèrement acidulées, d'une fraîcheur absolue.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
         </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">📞</div>
-        <div class="contact-item-text">
-          <h4>Téléphone</h4>
-          <p>+32 2 123 45 67</p>
+
+        <div class="parfum-card reveal" style="--delay:80ms">
+          <div class="parfum-icon" style="--c1:#e8f5e9;--c2:#c8e6c9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Pistache d'Italie</h3>
+            <p>Pistaches de Sicile, texture veloutée, goût intense et légèrement grillé.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
         </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">🕐</div>
-        <div class="contact-item-text">
-          <h4>Horaires</h4>
-          <p>Mardi – Vendredi : 9h – 19h<br/>Samedi : 9h – 18h<br/>Fermé Dimanche & Lundi</p>
+
+        <div class="parfum-card reveal" style="--delay:160ms">
+          <div class="parfum-icon" style="--c1:#fffde7;--c2:#fff9c4;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Vanille Bourbon</h3>
+            <p>Gousses de Madagascar, crème entière, douceur irréprochable et classique.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
         </div>
+
+        <div class="parfum-card reveal" style="--delay:240ms">
+          <div class="parfum-icon" style="--c1:#efebe9;--c2:#d7ccc8;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Chocolat noir 70%</h3>
+            <p>Cacao grand cru d'Équateur, fondant et intense pour les vrais amateurs.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:320ms">
+          <div class="parfum-icon" style="--c1:#e3f2fd;--c2:#90caf9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Myrtille sauvage</h3>
+            <p>Myrtilles des Fagnes, couleur intense, goût acidulé et légèrement boisé.</p>
+            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:400ms">
+          <div class="parfum-icon" style="--c1:#fbe9e7;--c2:#ffab91;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Mangue & Passion</h3>
+            <p>Mangue Alphonso et fruits de la passion, sorbet solaire, sans produit laitier.</p>
+            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:480ms">
+          <div class="parfum-icon" style="--c1:#f3e5f5;--c2:#ce93d8;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Lavande & Miel</h3>
+            <p>Lavande de Provence et miel de fleurs locales, floral et délicatement sucré.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:560ms">
+          <div class="parfum-icon" style="--c1:#e0f2f1;--c2:#80cbc4;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Menthe fraîche</h3>
+            <p>Menthe du jardin, fraîcheur intense, vert naturel, sans colorant artificiel.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-  <div class="fade-up">
-    <div class="section-tag">✦ Réservation</div>
-    <h2 class="section-title" style="text-align:left;margin-bottom:1.5rem;">Prendre<br/><em>rendez-vous</em></h2>
-    <div class="contact-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Prénom</label>
-          <input type="text" placeholder="Marie" />
+  </section>
+
+  <!-- ENGAGEMENTS -->
+  <section class="engagements" id="engagements">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Notre philosophie</span>
+        <h2 class="section-title">Nos <em>engagements</em></h2>
+      </div>
+      <div class="engagements-grid">
+
+        <div class="engagement-card reveal" style="--delay:0ms">
+          <div class="eng-icon" style="background:#e8f5e9;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 5C11 5 7 20 7 28c0 10 8 16 17 16s17-6 17-16C41 20 37 5 24 5z" fill="#c8e6c9" stroke="#81c784" stroke-width="1.5"/><path d="M24 44V20" stroke="#81c784" stroke-width="1.5" stroke-linecap="round"/><path d="M24 32Q16 26 13 17" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/><path d="M24 28Q32 22 35 15" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Ingrédients naturels</h3>
+          <p>Aucun arôme artificiel, aucun colorant. Uniquement des fruits, des herbes et des épices dans leur forme la plus pure.</p>
         </div>
-        <div class="form-group">
-          <label>Nom</label>
-          <input type="text" placeholder="Dupont" />
+
+        <div class="engagement-card reveal" style="--delay:120ms">
+          <div class="eng-icon" style="background:#fce4ec;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M8 22L24 8l16 14v20H8V22z" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.5" stroke-linejoin="round"/><rect x="18" y="30" width="12" height="12" rx="2" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.2"/></svg>
+          </div>
+          <h3>Production locale</h3>
+          <p>Fabriquées à Arlon, dans notre atelier familial. Nous travaillons avec des producteurs ardennais à moins de 100 km.</p>
         </div>
+
+        <div class="engagement-card reveal" style="--delay:240ms">
+          <div class="eng-icon" style="background:#fff9c4;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6l3.5 11.5H40l-10 8 3.5 12L24 30l-9.5 7.5L18 25.5l-10-8h12.5L24 6z" fill="#fff176" stroke="#fdd835" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Sans additifs</h3>
+          <p>Zéro conservateur, zéro stabilisant industriel. Nos glaces se conservent uniquement par le froid — comme il se doit.</p>
+        </div>
+
       </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="marie@exemple.com" />
-      </div>
-      <div class="form-group">
-        <label>Téléphone</label>
-        <input type="tel" placeholder="+32 4xx xx xx xx" />
-      </div>
-      <div class="form-group">
-        <label>Service souhaité</label>
-        <select>
-          <option>Coupe & Coiffage</option>
-          <option>Coloration</option>
-          <option>Soin & Traitement</option>
-          <option>Coiffure de Mariée</option>
-          <option>Autre</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Message (optionnel)</label>
-        <textarea placeholder="Précisez vos souhaits ou questions..."></textarea>
-      </div>
-      <button class="btn-primary" onclick="handleSubmit(event)">Envoyer la demande →</button>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Salon <span>Lumière</span></div>
-  <div class="footer-copy">© 2025 Salon Lumière. Tous droits réservés.</div>
-  <div class="footer-links">
-    <a href="#">Instagram</a>
-    <a href="#">Facebook</a>
-    <a href="#">Mentions légales</a>
-  </div>
-</footer>
+  <!-- GALERIE -->
+  <section class="galerie" id="galerie">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Instants glacés</span>
+        <h2 class="section-title">Notre <em>galerie</em></h2>
+      </div>
+      <div class="galerie-grid">
+        <div class="galerie-item reveal" style="--delay:0ms"><div class="galerie-ph" style="--g1:#fce4ec;--g2:#f8bbd9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#f48fb1" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fce4ec" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Fraise & Rose</span></div></div>
+        <div class="galerie-item reveal" style="--delay:100ms"><div class="galerie-ph" style="--g1:#e8f5e9;--g2:#c8e6c9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#81c784" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e8f5e9" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Pistache</span></div></div>
+        <div class="galerie-item reveal" style="--delay:200ms"><div class="galerie-ph" style="--g1:#fff9c4;--g2:#fff176;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#fdd835" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fffde7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Vanille</span></div></div>
+        <div class="galerie-item reveal" style="--delay:300ms"><div class="galerie-ph" style="--g1:#fbe9e7;--g2:#ffccbc;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ff8a65" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fbe9e7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Mangue</span></div></div>
+        <div class="galerie-item reveal" style="--delay:400ms"><div class="galerie-ph" style="--g1:#e3f2fd;--g2:#bbdefb;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#64b5f6" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e3f2fd" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Myrtille</span></div></div>
+        <div class="galerie-item reveal" style="--delay:500ms"><div class="galerie-ph" style="--g1:#f3e5f5;--g2:#e1bee7;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ba68c8" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#f3e5f5" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Lavande</span></div></div>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 100);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Venez nous voir</span>
+        <h2 class="section-title">Où nous <em>trouver</em></h2>
+      </div>
+      <div class="contact-grid">
 
-  // Hamburger
-  function toggleMenu(btn) {
-    btn.classList.toggle('open');
-    // Simple mobile menu (for a real deploy, add a mobile nav panel)
-    alert('Menu mobile — à implémenter selon vos besoins.');
-  }
+        <div class="contact-infos reveal">
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </div>
+            <div>
+              <h4>Adresse</h4>
+              <p>14 Rue des Faubourgs<br/>6700 Arlon, Belgique</p>
+            </div>
+          </div>
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+            </div>
+            <div>
+              <h4>Horaires</h4>
+              <p>Mar – Ven : 11h – 19h<br/>Sam – Dim : 10h – 20h<br/><em>Fermé le lundi</em></p>
+            </div>
+          </div>
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <h4>Téléphone</h4>
+              <p>+32 63 12 34 56</p>
+              <a href="tel:+3263123456" class="btn-call">📞 Nous appeler</a>
+            </div>
+          </div>
+        </div>
 
-  // Form submit
-  function handleSubmit(e) {
-    e.preventDefault();
-    alert('Merci ! Votre demande a bien été envoyée. Nous vous contacterons très bientôt.');
-  }
-</script>
+        <div class="contact-map reveal">
+          <div class="map-wrapper">
+            <iframe
+              title="Carte Glacerie d'Arlon"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">🍦 Glacerie d'Arlon</div>
+      <p class="footer-tagline">Artisans glaciers depuis 2008 · Arlon, Belgique</p>
+      <p class="footer-copy">© 2025 Glacerie d'Arlon — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
