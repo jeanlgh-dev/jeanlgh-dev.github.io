@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glacerie d'Arlon — Glaces Artisanales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">🍦 Glacerie d'Arlon</a>
+      <ul class="nav-links">
+        <li><a href="#parfums">Parfums</a></li>
+        <li><a href="#engagements">Engagements</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#parfums" onclick="toggleNav()">Parfums</a>
+      <a href="#engagements" onclick="toggleNav()">Engagements</a>
+      <a href="#galerie" onclick="toggleNav()">Galerie</a>
+      <a href="#contact" onclick="toggleNav()">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg">
+      <svg class="hero-blob" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="bg1" cx="30%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#d4edda" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#fce4ec" stop-opacity="0.2"/>
+          </radialGradient>
+          <radialGradient id="bg2" cx="75%" cy="65%" r="45%">
+            <stop offset="0%" stop-color="#fce4ec" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#fff9c4" stop-opacity="0.1"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="270" cy="320" rx="320" ry="280" fill="url(#bg1)"/>
+        <ellipse cx="670" cy="420" rx="260" ry="220" fill="url(#bg2)"/>
+      </svg>
+      <!-- Grande illustration glace SVG -->
+      <div class="hero-ice-wrap" id="heroIce">
+        <svg class="hero-ice" viewBox="0 0 280 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cornet -->
+          <polygon points="140,430 58,190 222,190" fill="#f5c58a" stroke="#e0a84a" stroke-width="1.5"/>
+          <line x1="140" y1="430" x2="112" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
+          <line x1="140" y1="430" x2="168" y2="240" stroke="#e0a84a" stroke-width="1" opacity="0.45"/>
+          <line x1="140" y1="430" x2="90" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
+          <line x1="140" y1="430" x2="190" y2="300" stroke="#e0a84a" stroke-width="0.8" opacity="0.3"/>
+          <!-- Boule rose (gauche bas) -->
+          <circle cx="118" cy="192" r="52" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.2"/>
+          <circle cx="100" cy="176" r="14" fill="#fce4ec" opacity="0.55"/>
+          <circle cx="130" cy="182" r="6" fill="#fce4ec" opacity="0.35"/>
+          <!-- Boule pistache (droite bas) -->
+          <circle cx="168" cy="178" r="50" fill="#c8e6c9" stroke="#a5d6a7" stroke-width="1.2"/>
+          <circle cx="152" cy="163" r="13" fill="#e8f5e9" opacity="0.55"/>
+          <!-- Boule vanille (centre haut) -->
+          <circle cx="140" cy="138" r="54" fill="#fff9c4" stroke="#fff176" stroke-width="1.2"/>
+          <circle cx="122" cy="120" r="15" fill="#fffde7" opacity="0.65"/>
+          <circle cx="155" cy="128" r="7" fill="#fffde7" opacity="0.45"/>
+          <!-- Petite touche déco -->
+          <path d="M186 196 Q193 214 185 228" stroke="#f48fb1" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="100" cy="215" r="3.5" fill="#a5d6a7" opacity="0.5"/>
+          <circle cx="178" cy="148" r="3" fill="#fff176" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="hero-content reveal-hero">
+      <span class="hero-tag">✦ Arlon, Belgique</span>
+      <h1 class="hero-title">Glaces artisanales,<br/><em>fraîches et naturelles</em></h1>
+      <p class="hero-subtitle">Fabriquées chaque matin dans notre atelier,<br/>avec des fruits de saison et des ingrédients locaux.</p>
+      <a href="#parfums" class="btn-primary">Voir nos parfums</a>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- PARFUMS -->
+  <section class="parfums" id="parfums">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Nos créations</span>
+        <h2 class="section-title">Les <em>parfums</em> du moment</h2>
+        <p class="section-sub">Chaque parfum est une histoire — choisissez la vôtre.</p>
+      </div>
+      <div class="parfums-grid">
+
+        <div class="parfum-card reveal" style="--delay:0ms">
+          <div class="parfum-icon" style="--c1:#fce4ec;--c2:#f8bbd9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Fraise des bois</h3>
+            <p>Fraises sauvages d'Ardenne, légèrement acidulées, d'une fraîcheur absolue.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:80ms">
+          <div class="parfum-icon" style="--c1:#e8f5e9;--c2:#c8e6c9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Pistache d'Italie</h3>
+            <p>Pistaches de Sicile, texture veloutée, goût intense et légèrement grillé.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:160ms">
+          <div class="parfum-icon" style="--c1:#fffde7;--c2:#fff9c4;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Vanille Bourbon</h3>
+            <p>Gousses de Madagascar, crème entière, douceur irréprochable et classique.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:240ms">
+          <div class="parfum-icon" style="--c1:#efebe9;--c2:#d7ccc8;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Chocolat noir 70%</h3>
+            <p>Cacao grand cru d'Équateur, fondant et intense pour les vrais amateurs.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:320ms">
+          <div class="parfum-icon" style="--c1:#e3f2fd;--c2:#90caf9;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Myrtille sauvage</h3>
+            <p>Myrtilles des Fagnes, couleur intense, goût acidulé et légèrement boisé.</p>
+            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:400ms">
+          <div class="parfum-icon" style="--c1:#fbe9e7;--c2:#ffab91;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Mangue & Passion</h3>
+            <p>Mangue Alphonso et fruits de la passion, sorbet solaire, sans produit laitier.</p>
+            <div class="parfum-footer"><span class="prix">3,60 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:480ms">
+          <div class="parfum-icon" style="--c1:#f3e5f5;--c2:#ce93d8;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Lavande & Miel</h3>
+            <p>Lavande de Provence et miel de fleurs locales, floral et délicatement sucré.</p>
+            <div class="parfum-footer"><span class="prix">3,80 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+        <div class="parfum-card reveal" style="--delay:560ms">
+          <div class="parfum-icon" style="--c1:#e0f2f1;--c2:#80cbc4;">
+            <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20" fill="var(--c2)"/><circle cx="20" cy="20" r="7" fill="var(--c1)" opacity="0.7"/></svg>
+          </div>
+          <div class="parfum-body">
+            <h3>Menthe fraîche</h3>
+            <p>Menthe du jardin, fraîcheur intense, vert naturel, sans colorant artificiel.</p>
+            <div class="parfum-footer"><span class="prix">3,50 €</span><span class="par">/ boule</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENTS -->
+  <section class="engagements" id="engagements">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Notre philosophie</span>
+        <h2 class="section-title">Nos <em>engagements</em></h2>
+      </div>
+      <div class="engagements-grid">
+
+        <div class="engagement-card reveal" style="--delay:0ms">
+          <div class="eng-icon" style="background:#e8f5e9;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 5C11 5 7 20 7 28c0 10 8 16 17 16s17-6 17-16C41 20 37 5 24 5z" fill="#c8e6c9" stroke="#81c784" stroke-width="1.5"/><path d="M24 44V20" stroke="#81c784" stroke-width="1.5" stroke-linecap="round"/><path d="M24 32Q16 26 13 17" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/><path d="M24 28Q32 22 35 15" stroke="#81c784" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Ingrédients naturels</h3>
+          <p>Aucun arôme artificiel, aucun colorant. Uniquement des fruits, des herbes et des épices dans leur forme la plus pure.</p>
+        </div>
+
+        <div class="engagement-card reveal" style="--delay:120ms">
+          <div class="eng-icon" style="background:#fce4ec;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M8 22L24 8l16 14v20H8V22z" fill="#f8bbd9" stroke="#f48fb1" stroke-width="1.5" stroke-linejoin="round"/><rect x="18" y="30" width="12" height="12" rx="2" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.2"/></svg>
+          </div>
+          <h3>Production locale</h3>
+          <p>Fabriquées à Arlon, dans notre atelier familial. Nous travaillons avec des producteurs ardennais à moins de 100 km.</p>
+        </div>
+
+        <div class="engagement-card reveal" style="--delay:240ms">
+          <div class="eng-icon" style="background:#fff9c4;">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6l3.5 11.5H40l-10 8 3.5 12L24 30l-9.5 7.5L18 25.5l-10-8h12.5L24 6z" fill="#fff176" stroke="#fdd835" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Sans additifs</h3>
+          <p>Zéro conservateur, zéro stabilisant industriel. Nos glaces se conservent uniquement par le froid — comme il se doit.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="galerie" id="galerie">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Instants glacés</span>
+        <h2 class="section-title">Notre <em>galerie</em></h2>
+      </div>
+      <div class="galerie-grid">
+        <div class="galerie-item reveal" style="--delay:0ms"><div class="galerie-ph" style="--g1:#fce4ec;--g2:#f8bbd9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#f48fb1" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fce4ec" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Fraise & Rose</span></div></div>
+        <div class="galerie-item reveal" style="--delay:100ms"><div class="galerie-ph" style="--g1:#e8f5e9;--g2:#c8e6c9;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#81c784" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e8f5e9" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Pistache</span></div></div>
+        <div class="galerie-item reveal" style="--delay:200ms"><div class="galerie-ph" style="--g1:#fff9c4;--g2:#fff176;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#fdd835" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fffde7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Vanille</span></div></div>
+        <div class="galerie-item reveal" style="--delay:300ms"><div class="galerie-ph" style="--g1:#fbe9e7;--g2:#ffccbc;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ff8a65" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#fbe9e7" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Mangue</span></div></div>
+        <div class="galerie-item reveal" style="--delay:400ms"><div class="galerie-ph" style="--g1:#e3f2fd;--g2:#bbdefb;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#64b5f6" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#e3f2fd" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Myrtille</span></div></div>
+        <div class="galerie-item reveal" style="--delay:500ms"><div class="galerie-ph" style="--g1:#f3e5f5;--g2:#e1bee7;"><svg viewBox="0 0 180 230"><circle cx="90" cy="80" r="50" fill="#ba68c8" opacity="0.75"/><circle cx="72" cy="62" r="16" fill="#f3e5f5" opacity="0.5"/><polygon points="90,230 42,120 138,120" fill="#f5c58a"/></svg><span>Lavande</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Venez nous voir</span>
+        <h2 class="section-title">Où nous <em>trouver</em></h2>
+      </div>
+      <div class="contact-grid">
+
+        <div class="contact-infos reveal">
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </div>
+            <div>
+              <h4>Adresse</h4>
+              <p>14 Rue des Faubourgs<br/>6700 Arlon, Belgique</p>
+            </div>
+          </div>
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+            </div>
+            <div>
+              <h4>Horaires</h4>
+              <p>Mar – Ven : 11h – 19h<br/>Sam – Dim : 10h – 20h<br/><em>Fermé le lundi</em></p>
+            </div>
+          </div>
+          <div class="info-block">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <h4>Téléphone</h4>
+              <p>+32 63 12 34 56</p>
+              <a href="tel:+3263123456" class="btn-call">📞 Nous appeler</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-map reveal">
+          <div class="map-wrapper">
+            <iframe
+              title="Carte Glacerie d'Arlon"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">🍦 Glacerie d'Arlon</div>
+      <p class="footer-tagline">Artisans glaciers depuis 2008 · Arlon, Belgique</p>
+      <p class="footer-copy">© 2025 Glacerie d'Arlon — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
