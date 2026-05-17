@@ -1,499 +1,1029 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="html-root">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Glacerie d'Arlon — Artisans Glaciers depuis 1962</title>
-<meta name="description" content="Glaces artisanales premium a Arlon. Fabriquees chaque matin depuis trois generations, avec des ingredients locaux et naturels."/>
+<meta name="description" content="Glaces artisanales à Arlon depuis 1962. 8 parfums uniques, ingrédients naturels, trois générations de passion."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
+/* ═══════════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --ivory:#f7f3ec;--cream:#ede8df;--warm:#d4c9b5;
-  --dark:#1a1612;--brown:#3d2f1f;--gold:#c9a96e;--gold-l:#e8d5a8;
-  --rose:#d4a0a0;--pistache:#7a9e7e;--text:#2a2018;--muted:#7a6e5f;
-  --radius:28px;--font-d:'Cormorant',Georgia,serif;--font-b:'Jost',system-ui,sans-serif;
+  --red:      #c41e3a;
+  --red-dark: #9e1630;
+  --red-light:#f5e6ea;
+  --white:    #ffffff;
+  --offwhite: #f8f5f0;
+  --grey-l:   #f0ece6;
+  --grey:     #c8c0b8;
+  --dark:     #1a1612;
+  --text:     #2a2018;
+  --muted:    #8a7f74;
+  --radius:   0px;
+  --font-d:   'Playfair Display', Georgia, serif;
+  --font-b:   'Jost', system-ui, sans-serif;
+  --nav-h:    72px;
+  --menu-w:   460px;
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--font-b);background:var(--ivory);color:var(--text);
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:.5}
-#cursor{width:10px;height:10px;background:var(--gold);border-radius:50%;
-  position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);
-  transition:width .25s,height .25s;mix-blend-mode:multiply}
-#cursor-ring{width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;
-  position:fixed;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);
-  transition:width .25s,height .25s,opacity .25s;opacity:.5}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-b);background:var(--offwhite);color:var(--text);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;background:none;border:none;font-family:var(--font-b)}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.6rem 4rem;
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
-  transition:background .4s,padding .3s}
-nav.scrolled{background:rgba(247,243,236,.88);backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);padding:1rem 4rem;
-  border-bottom:1px solid rgba(201,169,110,.15)}
-.nav-logo{font-family:var(--font-d);font-size:1.5rem;font-weight:400;
-  color:var(--dark);text-decoration:none;letter-spacing:.04em}
-.nav-logo em{font-style:italic;color:var(--gold)}
-.nav-links{list-style:none;display:flex;gap:2.5rem}
-.nav-links a{text-decoration:none;font-size:.75rem;font-weight:400;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s}
-.nav-links a:hover{color:var(--gold)}
-.nav-cta{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
-  text-decoration:none;color:var(--dark);border:1px solid rgba(42,32,24,.3);
-  padding:.55rem 1.4rem;border-radius:40px;transition:all .25s}
-.nav-cta:hover{background:var(--dark);color:var(--ivory)}
-.nav-burger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
-.nav-burger span{display:block;width:22px;height:1.5px;background:var(--dark);transition:all .3s}
-.nav-mob{display:none;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;
-  background:var(--ivory);z-index:490;align-items:center;justify-content:center;gap:2rem}
-.nav-mob.open{display:flex}
-.nav-mob a{font-family:var(--font-d);font-size:2.8rem;font-weight:300;
-  color:var(--dark);text-decoration:none;transition:color .2s}
-.nav-mob a:hover{color:var(--gold)}
-.nav-mob-close{position:absolute;top:2rem;right:3rem;font-size:2rem;
-  cursor:none;background:none;border:none;color:var(--muted)}
+  padding:0 3rem;
+  transition:background .35s,box-shadow .35s;
+}
+#navbar.scrolled{
+  background:rgba(248,245,240,.95);
+  backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 rgba(0,0,0,.08);
+}
+.nav-burger{
+  display:flex;flex-direction:column;gap:6px;padding:8px;
+  transition:opacity .2s;
+}
+.nav-burger span{display:block;width:24px;height:1.5px;background:var(--white);
+  transition:background .3s,transform .3s}
+#navbar.scrolled .nav-burger span{background:var(--dark)}
+.nav-burger:hover{opacity:.7}
+.nav-logo{
+  font-family:var(--font-d);font-size:1.6rem;font-weight:700;
+  color:var(--white);letter-spacing:.06em;text-transform:uppercase;
+  transition:color .3s;
+}
+#navbar.scrolled .nav-logo{color:var(--red)}
+.nav-logo small{display:block;font-size:.55rem;font-weight:400;
+  letter-spacing:.2em;font-family:var(--font-b);margin-top:-.2rem;
+  font-style:italic;color:rgba(255,255,255,.7);transition:color .3s}
+#navbar.scrolled .nav-logo small{color:var(--muted)}
+.nav-lang{
+  font-size:.72rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.75);
+  padding:.4rem .8rem;border:1px solid rgba(255,255,255,.3);
+  border-radius:2px;transition:all .25s;
+}
+#navbar.scrolled .nav-lang{color:var(--muted);border-color:var(--grey)}
+.nav-lang:hover{background:var(--red);color:var(--white);border-color:var(--red)}
 
-/* HERO */
-.hero{position:relative;height:100vh;display:flex;align-items:center;overflow:hidden}
-.hero-photo{position:absolute;inset:0;
-  background:linear-gradient(to right,rgba(247,243,236,.93) 42%,rgba(247,243,236,.15) 100%),
+/* ═══════════════════════════════════════
+   MENU LATÉRAL (style Bachir)
+═══════════════════════════════════════ */
+#menu-overlay{
+  position:fixed;inset:0;z-index:1000;
+  pointer-events:none;
+}
+#menu-overlay.open{pointer-events:all}
+
+.menu-backdrop{
+  position:absolute;inset:0;
+  background:rgba(26,22,18,.5);
+  opacity:0;transition:opacity .4s ease;
+}
+#menu-overlay.open .menu-backdrop{opacity:1}
+
+.menu-panel{
+  position:absolute;top:0;left:0;bottom:0;
+  width:var(--menu-w);
+  background:var(--white);
+  transform:translateX(-100%);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  padding:3rem 3rem 2.5rem;
+  overflow-y:auto;
+}
+#menu-overlay.open .menu-panel{transform:translateX(0)}
+
+.menu-close{
+  position:absolute;top:2rem;right:2rem;
+  font-size:1.4rem;color:var(--muted);
+  padding:.5rem;transition:color .2s;
+}
+.menu-close:hover{color:var(--red)}
+
+.menu-logo{
+  font-family:var(--font-d);font-size:1.5rem;font-weight:700;
+  color:var(--red);letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:.2rem;
+}
+.menu-logo small{display:block;font-size:.55rem;font-weight:400;
+  letter-spacing:.18em;font-family:var(--font-b);color:var(--muted);font-style:italic}
+
+.menu-divider{width:40px;height:2px;background:var(--red);margin:1.8rem 0}
+
+.menu-nav{display:flex;flex-direction:column;gap:0;flex:1}
+.menu-link{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-d);font-size:1.45rem;font-weight:400;
+  color:var(--dark);padding:1rem 0;
+  border-bottom:1px solid var(--grey-l);
+  transition:color .2s;cursor:pointer;
+}
+.menu-link:last-child{border-bottom:none}
+.menu-link:hover{color:var(--red)}
+.menu-link .arrow{font-size:1rem;color:var(--grey);transition:transform .2s,color .2s}
+.menu-link:hover .arrow{transform:translateX(4px);color:var(--red)}
+
+.menu-foot{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--grey-l)}
+.menu-foot-label{font-size:.65rem;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.menu-lang-btns{display:flex;gap:1rem}
+.menu-lang-btn{
+  font-size:.85rem;font-weight:400;letter-spacing:.06em;
+  color:var(--muted);padding:.3rem 0;
+  border-bottom:1px solid transparent;transition:all .2s;background:none;border:none;
+  font-family:var(--font-b);cursor:pointer;
+}
+.menu-lang-btn.active{color:var(--red);border-bottom-color:var(--red)}
+.menu-lang-btn:hover{color:var(--red)}
+.lang-sep{color:var(--grey);align-self:center;font-size:.8rem}
+
+/* ═══════════════════════════════════════
+   PAGES OVERLAY (Histoire, Horaires, etc.)
+═══════════════════════════════════════ */
+.page-overlay{
+  position:fixed;inset:0;z-index:900;
+  background:var(--offwhite);
+  transform:translateX(100%);
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+}
+.page-overlay.open{transform:translateX(0)}
+
+.page-inner{
+  max-width:800px;margin:0 auto;
+  padding:8rem 3rem 5rem;
+}
+.page-back{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.75rem;font-weight:500;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:3rem;cursor:pointer;transition:color .2s;background:none;border:none;
+  font-family:var(--font-b);
+}
+.page-back:hover{color:var(--red)}
+.page-back::before{content:'←';font-size:1rem}
+.page-title{
+  font-family:var(--font-d);font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:400;color:var(--dark);margin-bottom:2.5rem;line-height:1.1;
+}
+.page-title em{font-style:italic;color:var(--red)}
+.page-body{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.9}
+.page-body p+p{margin-top:1.2rem}
+.page-body h3{
+  font-family:var(--font-d);font-size:1.5rem;font-weight:400;
+  color:var(--dark);margin:2.5rem 0 .8rem;
+}
+.page-body strong{color:var(--red);font-weight:500}
+
+/* Horaires table */
+.horaires-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.horaires-table tr{border-bottom:1px solid var(--grey-l)}
+.horaires-table td{padding:1rem .5rem;font-size:.95rem;font-weight:300;color:var(--muted)}
+.horaires-table td:first-child{font-weight:500;color:var(--dark);width:45%}
+.horaires-table tr.closed td{color:var(--grey)}
+
+/* Recrutement */
+.recru-block{
+  background:var(--white);border:1px solid var(--grey-l);
+  padding:2rem;margin-top:2rem;
+}
+.recru-block h4{font-family:var(--font-d);font-size:1.3rem;font-weight:400;
+  color:var(--dark);margin-bottom:.5rem}
+.recru-block p{font-size:.9rem;font-weight:300;color:var(--muted);line-height:1.7}
+.recru-block .btn-red{margin-top:1.2rem}
+
+/* Contact form */
+.cform{display:flex;flex-direction:column;gap:1.2rem;margin-top:2rem}
+.cform input,.cform textarea,.cform select{
+  width:100%;padding:1rem;
+  border:1px solid var(--grey-l);background:var(--white);
+  font-family:var(--font-b);font-size:.95rem;font-weight:300;color:var(--dark);
+  outline:none;transition:border-color .2s;
+}
+.cform input:focus,.cform textarea:focus{border-color:var(--red)}
+.cform textarea{min-height:120px;resize:vertical}
+
+/* Univers gallery */
+.univ-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.univ-grid img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.univ-grid .full{grid-column:span 2;aspect-ratio:16/7}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn-red{
+  display:inline-block;background:var(--red);color:var(--white);
+  font-size:.8rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:1rem 2.4rem;border:2px solid var(--red);
+  transition:background .25s,color .25s,transform .2s;
+  font-family:var(--font-b);cursor:pointer;
+}
+.btn-red:hover{background:transparent;color:var(--red);transform:translateY(-2px)}
+.btn-outline{
+  display:inline-block;background:transparent;color:var(--white);
+  font-size:.8rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:1rem 2.4rem;border:2px solid rgba(255,255,255,.6);
+  transition:all .25s;font-family:var(--font-b);cursor:pointer;
+}
+.btn-outline:hover{border-color:var(--white);background:var(--white);color:var(--red)}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{
+  position:relative;height:100vh;min-height:640px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-photo{
+  position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(to right,rgba(26,22,18,.72) 38%,rgba(26,22,18,.2) 100%),
     url('https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=1800&q=85&fit=crop') center/cover no-repeat;
-  will-change:transform}
-.hero-content{position:relative;z-index:2;padding:0 6rem;max-width:700px}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);background:rgba(201,169,110,.1);border:1px solid rgba(201,169,110,.3);
-  padding:.4rem 1rem;border-radius:30px;margin-bottom:2rem}
-.hero-title{font-family:var(--font-d);font-size:clamp(3.2rem,6vw,5.8rem);
-  font-weight:300;line-height:1.0;color:var(--dark);margin-bottom:1.8rem}
-.hero-title em{font-style:italic;color:var(--gold)}
-.hero-sub{font-size:1.05rem;font-weight:200;color:var(--muted);
-  line-height:1.75;margin-bottom:3rem;letter-spacing:.02em}
-.hero-actions{display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center}
-.btn-dark{display:inline-block;background:var(--dark);color:var(--ivory);
-  text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.12em;
-  text-transform:uppercase;padding:1rem 2.4rem;border-radius:40px;
-  transition:background .25s,transform .2s,box-shadow .25s}
-.btn-dark:hover{background:var(--gold);transform:translateY(-2px);
-  box-shadow:0 12px 40px rgba(201,169,110,.35)}
-.btn-ghost{display:inline-block;background:transparent;color:var(--text);
-  text-decoration:none;font-size:.75rem;font-weight:400;letter-spacing:.12em;
-  text-transform:uppercase;padding:1rem 2.4rem;border-radius:40px;
-  border:1px solid var(--warm);transition:all .25s}
-.btn-ghost:hover{border-color:var(--dark);color:var(--dark)}
-.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem}
-.hero-scroll span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--warm)}
-.scroll-line{width:1px;height:48px;
-  background:linear-gradient(to bottom,var(--gold),transparent);
+  will-change:transform;
+  transition:transform .1s linear;
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 5rem;max-width:680px;
+}
+.hero-eyebrow{
+  font-size:.72rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1.5px;background:var(--red)}
+.hero-title{
+  font-family:var(--font-d);
+  font-size:clamp(3rem,6.5vw,6rem);
+  font-weight:700;line-height:.95;text-transform:uppercase;
+  color:var(--white);margin-bottom:1.8rem;letter-spacing:.02em;
+}
+.hero-title em{display:block;font-style:italic;font-weight:400;
+  font-size:.65em;letter-spacing:.04em;color:rgba(255,255,255,.85)}
+.hero-sub{
+  font-size:1rem;font-weight:300;color:rgba(255,255,255,.7);
+  line-height:1.75;margin-bottom:2.8rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem;
+}
+.hero-scroll span{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.4)}
+.scroll-line{width:1px;height:44px;
+  background:linear-gradient(to bottom,var(--red),transparent);
   animation:sline 1.8s ease-in-out infinite}
 @keyframes sline{0%{opacity:1;transform:scaleY(1) translateY(0)}
-  100%{opacity:0;transform:scaleY(0.3) translateY(20px)}}
+  100%{opacity:0;transform:scaleY(.3) translateY(18px)}}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(40px);
-  transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
-  transition-delay:var(--d,0ms)}
-.reveal.in{opacity:1;transform:translateY(0)}
-.reveal-l{opacity:0;transform:translateX(-50px);
-  transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
-.reveal-l.in{opacity:1;transform:translateX(0)}
-.reveal-r{opacity:0;transform:translateX(50px);
-  transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
-.reveal-r.in{opacity:1;transform:translateX(0)}
-.reveal-sc{opacity:0;transform:scale(.93);
-  transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
-  transition-delay:var(--d,0ms)}
-.reveal-sc.in{opacity:1;transform:scale(1)}
+/* ═══════════════════════════════════════
+   STRIP CHIFFRES
+═══════════════════════════════════════ */
+.strip{background:var(--red);padding:0}
+.strip-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.strip-item{
+  padding:3.5rem 2rem;text-align:center;
+  border-right:1px solid rgba(255,255,255,.15);
+}
+.strip-item:last-child{border-right:none}
+.strip-num{
+  font-family:var(--font-d);font-size:3.5rem;font-weight:700;
+  color:var(--white);display:block;line-height:1;
+}
+.strip-label{
+  font-size:.68rem;font-weight:400;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.6);
+  margin-top:.5rem;display:block;
+}
 
-/* UTILS */
-.container{max-width:1180px;margin:0 auto;padding:0 4rem}
-.s-tag{display:inline-block;font-size:.66rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.s-title{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.6rem);
-  font-weight:300;line-height:1.1;color:var(--dark)}
-.s-title em{font-style:italic;color:var(--gold)}
-.s-sub{font-size:1rem;font-weight:200;color:var(--muted);line-height:1.8;margin-top:.8rem}
-.sec-center{text-align:center}
-section{position:relative;z-index:1}
+/* ═══════════════════════════════════════
+   HISTOIRE (accueil snippet)
+═══════════════════════════════════════ */
+.histoire-snap{padding:8rem 0;background:var(--white)}
+.histoire-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:7rem;
+  align-items:center;max-width:1180px;margin:0 auto;padding:0 4rem;
+}
+.histoire-img{position:relative}
+.histoire-img-main{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+}
+.histoire-img-badge{
+  position:absolute;bottom:-1.5rem;right:-1.5rem;
+  width:110px;height:110px;background:var(--red);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--white);
+}
+.histoire-img-badge span:first-child{
+  font-family:var(--font-d);font-size:2rem;font-weight:700;line-height:1;
+}
+.histoire-img-badge span:last-child{
+  font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;margin-top:.2rem;
+}
+.histoire-text .s-eyebrow{
+  font-size:.68rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.histoire-text .s-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--red)}
+.histoire-text h2{
+  font-family:var(--font-d);font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:400;color:var(--dark);line-height:1.15;margin-bottom:1.8rem;
+}
+.histoire-text h2 em{font-style:italic;color:var(--red)}
+.histoire-text p{font-size:.97rem;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:1rem}
+.histoire-text .sign{
+  font-family:var(--font-d);font-size:2rem;font-style:italic;
+  color:var(--red);margin-top:1.5rem;display:block;
+}
+.histoire-link{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.8rem;
+  font-size:.75rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:.2rem;
+  cursor:pointer;transition:gap .2s;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:var(--font-b);
+}
+.histoire-link:hover{gap:.9rem}
+.histoire-link::after{content:'→'}
 
-/* STRIP */
-.strip{padding:5rem 0;background:var(--dark);position:relative;overflow:hidden}
-.strip::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 30% 50%,rgba(201,169,110,.1) 0%,transparent 60%)}
-.strip-grid{display:grid;grid-template-columns:repeat(4,1fr);
-  border-left:1px solid rgba(255,255,255,.06)}
-.strip-item{padding:3rem 2rem;border-right:1px solid rgba(255,255,255,.06);text-align:center}
-.strip-num{font-family:var(--font-d);font-size:4rem;font-weight:300;
-  color:var(--gold);display:block;line-height:1}
-.strip-label{font-size:.7rem;font-weight:400;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(247,243,236,.4);margin-top:.5rem;display:block}
+/* ═══════════════════════════════════════
+   SECTION SCROLL — ENFANT + GLACE
+═══════════════════════════════════════ */
+.lick-section{
+  height:280vh;position:relative;
+  background:var(--offwhite);
+}
+.lick-sticky{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--offwhite);
+}
+.lick-stage{
+  position:relative;width:100%;max-width:1100px;
+  height:100vh;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;
+}
 
-/* STORY */
-.story{padding:10rem 0;background:var(--ivory)}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
-.story-visual{position:relative}
-.story-img{width:100%;aspect-ratio:3/4;border-radius:var(--radius);overflow:hidden}
-.story-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
-.story-img:hover img{transform:scale(1.04)}
-.story-img-2{position:absolute;bottom:-2.5rem;right:-2.5rem;width:52%;aspect-ratio:1;
-  border-radius:var(--radius);overflow:hidden;border:5px solid var(--ivory);
-  box-shadow:0 24px 50px rgba(26,22,18,.15)}
-.story-img-2 img{width:100%;height:100%;object-fit:cover}
-.story-year{position:absolute;top:2rem;left:-1.5rem;background:var(--gold);
-  color:var(--ivory);font-family:var(--font-d);font-size:1.1rem;font-weight:400;
-  padding:.55rem 1.2rem;border-radius:30px;box-shadow:0 8px 24px rgba(201,169,110,.4)}
-.story-text{margin-top:1.6rem;font-size:1rem;font-weight:200;color:var(--muted);line-height:1.9}
-.story-sign{font-family:var(--font-d);font-size:2.4rem;font-style:italic;
-  font-weight:300;color:var(--gold);margin-top:2rem}
+/* Texte fond */
+.lick-text-bg{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  pointer-events:none;
+  opacity:0;transition:opacity .4s;
+}
+.lick-text-bg.vis{opacity:1}
+.lick-text-bg .big-text{
+  font-family:var(--font-d);font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:700;color:var(--dark);text-align:center;
+  text-transform:uppercase;letter-spacing:.04em;line-height:1;
+}
+.lick-text-bg .big-text em{display:block;font-style:italic;font-weight:400;color:var(--red)}
+.lick-text-bg .sub-text{
+  font-size:.85rem;font-weight:300;color:var(--muted);
+  letter-spacing:.12em;text-transform:uppercase;margin-top:1rem;
+}
 
-/* ICE SCROLL */
-.ice-section{height:300vh;position:relative;background:var(--dark)}
-.ice-sticky{position:sticky;top:0;height:100vh;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-.ice-bg{position:absolute;inset:0;
-  background:radial-gradient(ellipse at center,rgba(201,169,110,.07) 0%,transparent 65%)}
-.ice-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;
-  gap:6rem;align-items:center;max-width:1100px;padding:0 4rem;width:100%}
-.ice-wrap{display:flex;align-items:center;justify-content:center}
-#iceSvg{width:clamp(240px,26vw,400px);
-  filter:drop-shadow(0 40px 80px rgba(201,169,110,.3));
-  transform-origin:50% 65%;will-change:transform}
-.ice-txt .s-tag{color:var(--gold-l)}
-.ice-txt .s-title{color:#f7f3ec}
-.ice-steps{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem}
-.istep{display:flex;align-items:flex-start;gap:1.2rem;opacity:.3;transition:opacity .4s}
-.istep.on{opacity:1}
-.istep-n{font-family:var(--font-d);font-size:1.8rem;font-weight:300;
-  color:var(--gold);min-width:2rem;line-height:1}
-.istep-t h4{font-size:.88rem;font-weight:400;color:#f7f3ec;margin-bottom:.25rem}
-.istep-t p{font-size:.8rem;font-weight:200;color:rgba(247,243,236,.45);line-height:1.65}
+/* SVG child + ice — côte à côte animé */
+.lick-child{
+  position:absolute;left:-120px;bottom:0;
+  width:clamp(200px,28vw,380px);
+  transform:translateX(-60vw);
+  transition:none;
+  will-change:transform;
+  z-index:3;
+}
+.lick-ice{
+  position:absolute;right:-120px;bottom:0;
+  width:clamp(160px,20vw,280px);
+  transform:translateX(60vw);
+  transition:none;
+  will-change:transform;
+  z-index:3;
+}
 
-/* MARQUEE */
-.marquee{padding:2.5rem 0;background:var(--gold);overflow:hidden;white-space:nowrap}
-.marquee-inner{display:inline-block;animation:marquee 18s linear infinite}
-.marquee-inner span{font-family:var(--font-d);font-size:1.6rem;font-weight:300;
-  font-style:italic;color:var(--dark);padding:0 2.5rem}
-.marquee-inner span::before{content:'\2736';margin-right:2.5rem;font-style:normal;font-size:1rem}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* ═══════════════════════════════════════
+   PARFUMS
+═══════════════════════════════════════ */
+.parfums{padding:8rem 0;background:var(--white)}
+.sec-header{
+  max-width:1180px;margin:0 auto;padding:0 4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  align-items:end;margin-bottom:4rem;
+}
+.sec-eyebrow{
+  font-size:.68rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.sec-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--red)}
+.sec-title{
+  font-family:var(--font-d);font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:400;color:var(--dark);line-height:1.15;
+}
+.sec-title em{font-style:italic;color:var(--red)}
+.sec-sub{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8}
 
-/* PARFUMS */
-.parfums{padding:10rem 0;background:var(--ivory)}
-.parfums-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;
-  align-items:end;margin-bottom:5rem}
-.parfums-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.pcard{border-radius:var(--radius);overflow:hidden;background:var(--cream);
-  border:1px solid rgba(201,169,110,.1);
-  transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;cursor:none}
-.pcard:hover{transform:translateY(-14px) scale(1.01);
-  box-shadow:0 32px 64px rgba(26,22,18,.12)}
+.parfums-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  max-width:1180px;margin:0 auto;padding:0 4rem;
+  gap:1px;background:var(--grey-l);
+}
+.pcard{
+  background:var(--white);
+  transition:background .3s;cursor:pointer;
+}
+.pcard:hover{background:var(--offwhite)}
 .pcard-img{width:100%;aspect-ratio:3/4;overflow:hidden}
-.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block}
-.pcard:hover .pcard-img img{transform:scale(1.08)}
-.pcard-body{padding:1.6rem 1.4rem 2rem}
-.pcard-name{font-family:var(--font-d);font-size:1.3rem;font-weight:400;
-  color:var(--dark);margin-bottom:.4rem}
-.pcard-desc{font-size:.8rem;font-weight:200;color:var(--muted);
-  line-height:1.65;margin-bottom:1rem}
-.pcard-price{font-family:var(--font-d);font-size:1.5rem;font-weight:300;color:var(--gold)}
-.pcard-price span{font-size:.72rem;color:var(--muted);font-family:var(--font-b)}
-
-/* ENGAGEMENTS */
-.eng-sec{padding:10rem 0;background:var(--cream)}
-.eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:5rem}
-.ecard{padding:3rem 2.5rem;border-radius:var(--radius);background:var(--ivory);
-  border:1px solid rgba(201,169,110,.1);
-  transition:transform .35s,box-shadow .35s;text-align:center}
-.ecard:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(26,22,18,.08)}
-.ecard-ic{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;margin:0 auto 1.8rem;font-size:2.2rem}
-.ecard h3{font-family:var(--font-d);font-size:1.5rem;font-weight:400;
-  color:var(--dark);margin-bottom:.8rem}
-.ecard p{font-size:.88rem;font-weight:200;color:var(--muted);line-height:1.8}
-
-/* GALERIE */
-.galerie{padding:10rem 0;background:var(--ivory)}
-.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);
-  grid-template-rows:auto;gap:1.2rem;margin-top:4rem}
-.gitem{border-radius:var(--radius);overflow:hidden;position:relative;cursor:none}
-.gitem:nth-child(1){grid-row:span 2}
-.gitem:nth-child(4){grid-column:span 2}
-.gitem img{width:100%;height:100%;min-height:280px;object-fit:cover;
+.pcard-img img{width:100%;height:100%;object-fit:cover;
   transition:transform .6s ease;display:block}
-.gitem:hover img{transform:scale(1.06)}
-.gitem-ov{position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(26,22,18,.6) 0%,transparent 50%);
-  opacity:0;transition:opacity .35s;display:flex;align-items:flex-end;padding:1.5rem}
-.gitem:hover .gitem-ov{opacity:1}
-.gitem-ov span{font-family:var(--font-d);font-size:1.2rem;font-weight:300;
-  font-style:italic;color:#f7f3ec}
+.pcard:hover .pcard-img img{transform:scale(1.06)}
+.pcard-body{padding:1.4rem 1.2rem 1.8rem}
+.pcard-num{font-size:.62rem;font-weight:500;letter-spacing:.18em;
+  color:var(--red);text-transform:uppercase;margin-bottom:.4rem}
+.pcard-name{font-family:var(--font-d);font-size:1.15rem;font-weight:400;
+  color:var(--dark);margin-bottom:.4rem}
+.pcard-desc{font-size:.78rem;font-weight:300;color:var(--muted);
+  line-height:1.65;margin-bottom:.9rem}
+.pcard-price{font-family:var(--font-d);font-size:1.3rem;font-weight:400;color:var(--red)}
+.pcard-price span{font-size:.7rem;color:var(--muted);font-family:var(--font-b)}
 
-/* HERITAGE */
-.heritage{padding:10rem 0;background:var(--dark);position:relative;overflow:hidden}
-.heritage::before{content:'';position:absolute;top:-20%;right:-5%;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(201,169,110,.07) 0%,transparent 60%)}
-.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
-.htext .s-tag{color:var(--gold-l)}
-.htext .s-title{color:#f7f3ec}
-.hp{font-size:1rem;font-weight:200;color:rgba(247,243,236,.5);
-  line-height:1.9;margin-top:1.5rem}
-.hp+.hp{margin-top:1rem}
-.hquote{margin-top:2.5rem;padding:2rem 2rem 2rem 2.5rem;
-  border-left:2px solid var(--gold)}
-.hquote p{font-family:var(--font-d);font-size:1.5rem;font-style:italic;
-  font-weight:300;color:#f7f3ec;line-height:1.5}
-.hquote cite{display:block;margin-top:.8rem;font-size:.72rem;font-weight:300;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-style:normal}
-.htl{display:flex;flex-direction:column}
-.htl-item{display:flex;gap:2rem;align-items:flex-start;
-  padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.htl-item:last-child{border-bottom:none}
-.htl-year{font-family:var(--font-d);font-size:1.6rem;font-weight:300;
-  color:var(--gold);min-width:5rem;line-height:1.1}
-.htl-content h4{font-size:.78rem;font-weight:500;letter-spacing:.1em;
-  text-transform:uppercase;color:rgba(247,243,236,.65);margin-bottom:.35rem}
-.htl-content p{font-size:.85rem;font-weight:200;
-  color:rgba(247,243,236,.32);line-height:1.65}
+/* Ligne 2 de parfums */
+.parfums-grid-2{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  max-width:1180px;margin:1px auto 0;padding:0 4rem;
+  gap:1px;background:var(--grey-l);
+}
 
-/* CONTACT */
-.contact{padding:10rem 0;background:var(--cream)}
-.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;align-items:start}
-.cinfo{display:flex;flex-direction:column;gap:2.5rem}
-.cblock{display:flex;gap:1.2rem;align-items:flex-start}
-.cic{width:48px;height:48px;background:var(--ivory);border-radius:14px;
-  border:1px solid rgba(201,169,110,.2);display:flex;align-items:center;
-  justify-content:center;flex-shrink:0;font-size:1.15rem}
-.cblock h4{font-size:.68rem;font-weight:500;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
-.cblock p{font-size:.95rem;font-weight:200;color:var(--muted);line-height:1.65}
-.cblock em{font-style:normal;font-size:.8rem;color:var(--warm)}
-.cmap{border-radius:var(--radius);overflow:hidden;
-  box-shadow:0 20px 60px rgba(26,22,18,.12)}
-.cmap iframe{display:block;width:100%;height:480px;border:0}
-.btn-call{display:inline-flex;align-items:center;gap:.5rem;margin-top:.9rem;
-  background:var(--dark);color:var(--ivory);text-decoration:none;
-  font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
-  padding:.75rem 1.6rem;border-radius:30px;transition:background .25s,transform .2s}
-.btn-call:hover{background:var(--gold);transform:translateY(-2px)}
+/* ═══════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════ */
+.marquee{padding:2rem 0;background:var(--red);overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-block;animation:mq 20s linear infinite}
+.marquee-inner span{
+  font-family:var(--font-d);font-size:1.4rem;font-weight:400;font-style:italic;
+  color:rgba(255,255,255,.9);padding:0 2rem;
+}
+.marquee-inner span::before{content:'✦';margin-right:2rem;font-style:normal;font-size:.9rem}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* FOOTER */
-footer{background:var(--dark);padding:5rem 4rem 3rem;
-  border-top:1px solid rgba(201,169,110,.1)}
+/* ═══════════════════════════════════════
+   ENGAGEMENTS
+═══════════════════════════════════════ */
+.engagements{padding:8rem 0;background:var(--offwhite)}
+.eng-wrap{max-width:1180px;margin:0 auto;padding:0 4rem}
+.eng-header{text-align:center;margin-bottom:4rem}
+.eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--grey-l)}
+.ecard{background:var(--white);padding:3rem 2.5rem;text-align:center;
+  transition:background .3s}
+.ecard:hover{background:var(--offwhite)}
+.ecard-icon{font-size:2.5rem;margin-bottom:1.5rem;display:block}
+.ecard h3{font-family:var(--font-d);font-size:1.35rem;font-weight:400;
+  color:var(--dark);margin-bottom:.8rem}
+.ecard p{font-size:.85rem;font-weight:300;color:var(--muted);line-height:1.8}
+.ecard-line{width:30px;height:2px;background:var(--red);margin:1.2rem auto 0}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--dark);padding:5rem 4rem 3rem}
 .ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;
-  margin-bottom:4rem;padding-bottom:4rem;
-  border-bottom:1px solid rgba(255,255,255,.06)}
-.ft-brand .nav-logo{display:block;margin-bottom:1rem;color:#f7f3ec}
-.ft-brand p{font-size:.85rem;font-weight:200;color:rgba(247,243,236,.3);
-  line-height:1.8;max-width:300px}
-.ft-col h5{font-size:.68rem;font-weight:500;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+  padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.ft-logo{font-family:var(--font-d);font-size:1.5rem;font-weight:700;
+  color:var(--red);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
+.ft-logo small{display:block;font-size:.52rem;font-weight:400;letter-spacing:.18em;
+  font-family:var(--font-b);color:rgba(255,255,255,.3);font-style:italic}
+.ft-desc{font-size:.85rem;font-weight:200;color:rgba(255,255,255,.3);
+  line-height:1.8;margin-top:1rem;max-width:280px}
+.ft-col h5{font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1.2rem}
 .ft-col a{display:block;font-size:.83rem;font-weight:200;
-  color:rgba(247,243,236,.35);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
-.ft-col a:hover{color:var(--gold)}
-.ft-bot{display:flex;align-items:center;justify-content:space-between}
-.ft-bot p{font-size:.72rem;color:rgba(247,243,236,.18)}
+  color:rgba(255,255,255,.35);margin-bottom:.55rem;transition:color .2s;cursor:pointer}
+.ft-col a:hover{color:var(--white)}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;
+  padding-top:2rem}
+.ft-bottom p{font-size:.72rem;color:rgba(255,255,255,.18)}
 
-/* RESPONSIVE */
+/* ═══════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════ */
+.rv{opacity:0;transform:translateY(36px);
+  transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+  transition-delay:var(--d,0ms)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-l{opacity:0;transform:translateX(-40px);
+  transition:opacity .85s cubic-bezier(.4,0,.2,1),transform .85s cubic-bezier(.4,0,.2,1)}
+.rv-l.in{opacity:1;transform:translateX(0)}
+.rv-r{opacity:0;transform:translateX(40px);
+  transition:opacity .85s cubic-bezier(.4,0,.2,1),transform .85s cubic-bezier(.4,0,.2,1)}
+.rv-r.in{opacity:1;transform:translateX(0)}
+.rv-sc{opacity:0;transform:scale(.94);
+  transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1);
+  transition-delay:var(--d,0ms)}
+.rv-sc.in{opacity:1;transform:scale(1)}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
 @media(max-width:1024px){
-  .container{padding:0 2.5rem}
-  nav,nav.scrolled{padding-left:2rem;padding-right:2rem}
-  .hero-content{padding:0 3rem}
-  .story-grid,.hgrid,.contact-grid{grid-template-columns:1fr;gap:3rem}
-  .story-img-2{width:42%}
-  .parfums-grid{grid-template-columns:repeat(2,1fr)}
-  .parfums-intro{grid-template-columns:1fr}
-  .ice-content{grid-template-columns:1fr;text-align:center}
+  .histoire-grid{grid-template-columns:1fr;gap:3rem;padding:0 2.5rem}
+  .histoire-img{display:none}
+  .parfums-grid,.parfums-grid-2{grid-template-columns:repeat(2,1fr);padding:0 2.5rem}
+  .sec-header{grid-template-columns:1fr;padding:0 2.5rem;gap:1.5rem}
+  .eng-wrap{padding:0 2.5rem}
   .strip-grid{grid-template-columns:repeat(2,1fr)}
-  .ft-top{grid-template-columns:1fr 1fr}
+  .ft-top{grid-template-columns:1fr 1fr;padding:0 0 3rem}
+  footer{padding:4rem 2.5rem 2.5rem}
+  .hero-content{padding:0 3rem}
+  :root{--menu-w:380px}
 }
 @media(max-width:768px){
-  .nav-links,.nav-cta{display:none}
-  .nav-burger{display:flex}
-  nav,nav.scrolled{padding:1.2rem 1.5rem}
   .hero-content{padding:0 1.5rem}
-  .container{padding:0 1.5rem}
-  .parfums-grid{grid-template-columns:1fr 1fr}
+  .parfums-grid,.parfums-grid-2{grid-template-columns:1fr 1fr;padding:0 1.5rem}
   .eng-grid{grid-template-columns:1fr}
-  .gal-grid{grid-template-columns:1fr 1fr}
-  .gitem:nth-child(1){grid-row:auto}
-  .gitem:nth-child(4){grid-column:auto}
   .strip-grid{grid-template-columns:1fr 1fr}
   .ft-top{grid-template-columns:1fr}
-  .ft-bot{flex-direction:column;gap:1rem;text-align:center}
-  body{cursor:auto}
-  #cursor,#cursor-ring{display:none}
+  footer{padding:3rem 1.5rem 2rem}
+  .page-inner{padding:6rem 1.5rem 3rem}
+  .univ-grid{grid-template-columns:1fr}
+  .univ-grid .full{grid-column:auto}
+  :root{--menu-w:100vw}
 }
 @media(max-width:480px){
-  .parfums-grid{grid-template-columns:1fr}
-  .gal-grid{grid-template-columns:1fr}
-  .ice-section{height:200vh}
+  .parfums-grid,.parfums-grid-2{grid-template-columns:1fr}
+  .lick-section{height:200vh}
 }
 </style>
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">Glacerie <em>d'Arlon</em></a>
-  <ul class="nav-links">
-    <li><a href="#parfums">Parfums</a></li>
-    <li><a href="#histoire">Histoire</a></li>
-    <li><a href="#galerie">Galerie</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Nous visiter</a>
-  <button class="nav-burger" onclick="openMob()" aria-label="Menu">
+  <button class="nav-burger" onclick="openMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
+  <a href="#" class="nav-logo">
+    Glacerie d'Arlon
+    <small>Artisans glaciers depuis 1962</small>
+  </a>
+  <button class="nav-lang" onclick="toggleLang()" id="langBtn">EN</button>
 </nav>
 
-<div class="nav-mob" id="navMob">
-  <button class="nav-mob-close" onclick="closeMob()">&#x2715;</button>
-  <a href="#parfums" onclick="closeMob()">Parfums</a>
-  <a href="#histoire" onclick="closeMob()">Histoire</a>
-  <a href="#galerie" onclick="closeMob()">Galerie</a>
-  <a href="#contact" onclick="closeMob()">Contact</a>
+<!-- MENU OVERLAY STYLE BACHIR -->
+<div id="menu-overlay">
+  <div class="menu-backdrop" onclick="closeMenu()"></div>
+  <div class="menu-panel">
+    <button class="menu-close" onclick="closeMenu()">&#x2715;</button>
+    <div class="menu-logo">
+      Glacerie d'Arlon
+      <small>Artisans glaciers depuis 1962</small>
+    </div>
+    <div class="menu-divider"></div>
+    <nav class="menu-nav">
+      <div class="menu-link" onclick="closeMenu();scrollToMain()">
+        <span data-fr="Page principale" data-en="Home">Page principale</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+      <div class="menu-link" onclick="openPage('page-histoire')">
+        <span data-fr="Notre histoire" data-en="Our story">Notre histoire</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+      <div class="menu-link" onclick="openPage('page-horaires')">
+        <span data-fr="Horaires" data-en="Opening hours">Horaires</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+      <div class="menu-link" onclick="openPage('page-univers')">
+        <span data-fr="Notre univers" data-en="Our world">Notre univers</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+      <div class="menu-link" onclick="openPage('page-contact')">
+        <span data-fr="Contact" data-en="Contact">Contact</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+      <div class="menu-link" onclick="openPage('page-recru')">
+        <span data-fr="Recrutement" data-en="Join us">Recrutement</span>
+        <span class="arrow">&#8594;</span>
+      </div>
+    </nav>
+    <div class="menu-foot">
+      <div class="menu-foot-label" data-fr="Changer de langue" data-en="Change language">Changer de langue</div>
+      <div class="menu-lang-btns">
+        <button class="menu-lang-btn active" onclick="setLang('fr')" id="btnFr">FR</button>
+        <span class="lang-sep">·</span>
+        <button class="menu-lang-btn" onclick="setLang('en')" id="btnEn">EN</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- PAGE : NOTRE HISTOIRE -->
+<div class="page-overlay" id="page-histoire">
+  <div class="page-inner">
+    <button class="page-back" onclick="closePage('page-histoire')">
+      <span data-fr="Retour" data-en="Back">Retour</span>
+    </button>
+    <h1 class="page-title" data-fr="Notre <em>histoire</em>" data-en="Our <em>story</em>">Notre <em>histoire</em></h1>
+    <div class="page-body">
+      <p data-fr="Tout a commencé en 1962, quand Henri Fontaine, de retour d'un voyage en Sicile, rapporta dans ses bagages une obsession : la glace artisanale. Émerveillé par les gelaterie de Palerme, il s'installa dans une petite boutique de la rue des Faubourgs à Arlon." data-en="It all started in 1962, when Henri Fontaine returned from a trip to Sicily with an obsession: artisanal ice cream. Amazed by the gelaterie of Palermo, he opened a small shop on rue des Faubourgs in Arlon.">
+        Tout a commencé en 1962, quand Henri Fontaine, de retour d'un voyage en Sicile, rapporta dans ses bagages une obsession : la glace artisanale. Émerveillé par les <em>gelaterie</em> de Palerme, il s'installa dans une petite boutique de la rue des Faubourgs à Arlon.
+      </p>
+      <p>Ses mains, gercées par le froid des marbres, pétrissaient chaque matin les crèmes avec une patience de moine. Les fraises venaient du jardin de sa belle-mère à Étalle. Les gousses de vanille arrivaient dans une boîte en bois depuis Madagascar — une folie, pour l'époque.</p>
+      <h3>La deuxième génération</h3>
+      <p>Michel, son fils, a repris l'atelier en 1989. Nouveau comptoir en marbre belge, agrandissement, création de la gamme sorbets. Sa grande fierté : le sorbet à la bière d'Orval, scandale et succès immédiat dans tout le pays.</p>
+      <h3>Lucie aujourd'hui</h3>
+      <p>Lucie Fontaine, petite-fille d'Henri, est revenue à Arlon en 2018 après des années à Lyon et Paris. Elle a étudié à l'École des Arts du Goût, travaillé chez Berthillon — et choisi de revenir. Parce qu'il y a des racines qu'on ne trahit pas.</p>
+      <p>Aujourd'hui, elle ouvre l'atelier chaque matin à 5h30. Elle goûte chaque bac avant ouverture. Si ce n'est pas parfait, ce n'est pas servi.</p>
+      <blockquote style="margin:2.5rem 0;padding:1.5rem 2rem;border-left:3px solid var(--red)">
+        <p style="font-family:var(--font-d);font-size:1.4rem;font-style:italic;color:var(--dark);line-height:1.5">"On ne fabrique pas des glaces. On fabrique des souvenirs d'enfance."</p>
+        <cite style="display:block;margin-top:.6rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-style:normal">— Henri Fontaine, fondateur, 1962</cite>
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE : HORAIRES -->
+<div class="page-overlay" id="page-horaires">
+  <div class="page-inner">
+    <button class="page-back" onclick="closePage('page-horaires')">Retour</button>
+    <h1 class="page-title">Horaires <em>&amp; infos</em></h1>
+    <div class="page-body">
+      <h3>Heures d'ouverture</h3>
+      <table class="horaires-table">
+        <tr><td>Mardi – Vendredi</td><td>11h00 – 19h00</td></tr>
+        <tr><td>Samedi</td><td>10h00 – 20h00</td></tr>
+        <tr><td>Dimanche</td><td>10h00 – 19h00</td></tr>
+        <tr class="closed"><td>Lundi</td><td>Fermé</td></tr>
+      </table>
+      <p style="margin-top:1.5rem;font-size:.85rem"><strong>Note :</strong> Ouverture saisonnière d'avril à octobre. En hiver, horaires réduits — appelez-nous pour confirmer.</p>
+      <h3>Nous trouver</h3>
+      <p><strong>14 Rue des Faubourgs, 6700 Arlon, Belgique</strong></p>
+      <p>À 5 minutes à pied du centre-ville. Parking gratuit rue de la Caserne.</p>
+      <div style="margin-top:2rem;border:1px solid var(--grey-l);overflow:hidden">
+        <iframe title="Carte" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000" width="100%" height="320" style="border:0;display:block" loading="lazy"></iframe>
+      </div>
+      <h3>Téléphone &amp; email</h3>
+      <p><strong>+32 63 12 34 56</strong></p>
+      <p>bonjour@glacerie-arlon.be</p>
+      <div style="margin-top:2rem">
+        <a href="tel:+3263123456" class="btn-red">📞 Nous appeler</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE : NOTRE UNIVERS -->
+<div class="page-overlay" id="page-univers">
+  <div class="page-inner">
+    <button class="page-back" onclick="closePage('page-univers')">Retour</button>
+    <h1 class="page-title">Notre <em>univers</em></h1>
+    <div class="page-body">
+      <p>Derrière chaque boule se cache un univers : un atelier qui s'éveille à l'aube, des fruits qui arrivent dans des caisses en bois, une turbineuse qui tourne depuis 1962.</p>
+      <div class="univ-grid">
+        <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=700&q=80&fit=crop" alt="Atelier" class="full"/>
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80&fit=crop" alt="Fraise"/>
+        <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=500&q=80&fit=crop" alt="Pistache"/>
+        <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=80&fit=crop" alt="Glaces"/>
+        <img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=500&q=80&fit=crop" alt="Chocolat"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE : CONTACT -->
+<div class="page-overlay" id="page-contact">
+  <div class="page-inner">
+    <button class="page-back" onclick="closePage('page-contact')">Retour</button>
+    <h1 class="page-title"><em>Contactez</em>-nous</h1>
+    <div class="page-body">
+      <p>Une question sur nos parfums, une commande spéciale, ou simplement l'envie de dire bonjour ? Nous lisons chaque message avec attention.</p>
+      <form class="cform" onsubmit="handleForm(event)">
+        <input type="text" placeholder="Votre prénom et nom" required/>
+        <input type="email" placeholder="Votre adresse email" required/>
+        <select>
+          <option>Demande générale</option>
+          <option>Commande spéciale</option>
+          <option>Partenariat / Presse</option>
+          <option>Autre</option>
+        </select>
+        <textarea placeholder="Votre message..."></textarea>
+        <button type="submit" class="btn-red" style="align-self:flex-start">Envoyer le message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE : RECRUTEMENT -->
+<div class="page-overlay" id="page-recru">
+  <div class="page-inner">
+    <button class="page-back" onclick="closePage('page-recru')">Retour</button>
+    <h1 class="page-title">Nous <em>rejoindre</em></h1>
+    <div class="page-body">
+      <p>Chez Glacerie d'Arlon, nous cherchons des personnes qui aiment ce qu'elles font, pas des CV parfaits. Si vous êtes passionné(e) par l'artisanat, la qualité et le goût — parlez-nous.</p>
+      <div class="recru-block">
+        <h4>Vendeur·euse en glacerie</h4>
+        <p>Temps partiel · Saison avril–octobre · Arlon<br/>Accueil des clients, vente, entretien du comptoir. Expérience en vente et passion pour les produits artisanaux souhaitées.</p>
+        <a href="mailto:jobs@glacerie-arlon.be" class="btn-red" style="display:inline-block;margin-top:1.2rem">Candidater</a>
+      </div>
+      <div class="recru-block">
+        <h4>Assistant·e de production</h4>
+        <p>Temps partiel · Mardi–vendredi dès 5h30 · Arlon<br/>Aide à la préparation des bases, turbinage, conditionnement. Expérience en cuisine ou pâtisserie un plus.</p>
+        <a href="mailto:jobs@glacerie-arlon.be" class="btn-red" style="display:inline-block;margin-top:1.2rem">Candidater</a>
+      </div>
+      <p style="margin-top:2rem;font-size:.85rem">Candidature spontanée bienvenue à <strong>jobs@glacerie-arlon.be</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero" id="main-top">
   <div class="hero-photo" id="heroPar"></div>
   <div class="hero-content">
-    <div class="hero-badge">&#x2736; Arlon &middot; Belgique &middot; Depuis 1962</div>
-    <h1 class="hero-title">L'art&nbsp;glac&eacute;,<br/>transmis de<br/><em>g&eacute;n&eacute;ration<br/>en g&eacute;n&eacute;ration</em></h1>
-    <p class="hero-sub">Chaque matin, dans notre atelier du centre d'Arlon,<br/>nous fa&ccedil;onnons des glaces artisanales avec des ingr&eacute;dients<br/>soigneusement s&eacute;lectionn&eacute;s aupr&egrave;s de producteurs locaux.</p>
+    <div class="hero-eyebrow">Arlon · Belgique · Depuis 1962</div>
+    <h1 class="hero-title">
+      Glacerie<br/>d'Arlon
+      <em>Glace artisanale</em>
+    </h1>
+    <p class="hero-sub">8 parfums uniques, fabriqués chaque matin<br/>dans notre atelier depuis trois générations.</p>
     <div class="hero-actions">
-      <a href="#parfums" class="btn-dark">D&eacute;couvrir nos parfums</a>
-      <a href="#histoire" class="btn-ghost">Notre histoire</a>
+      <a href="#parfums" class="btn-red">Nos parfums</a>
+      <button class="btn-outline" onclick="openPage('page-histoire')">Notre histoire</button>
     </div>
   </div>
   <div class="hero-scroll">
-    <span>D&eacute;filer</span>
+    <span>Défiler</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
 <!-- STRIP -->
 <div class="strip">
-  <div class="container">
-    <div class="strip-grid">
-      <div class="strip-item reveal" style="--d:0ms"><span class="strip-num">62</span><span class="strip-label">Ans d'artisanat</span></div>
-      <div class="strip-item reveal" style="--d:100ms"><span class="strip-num">3</span><span class="strip-label">G&eacute;n&eacute;rations</span></div>
-      <div class="strip-item reveal" style="--d:200ms"><span class="strip-num">28+</span><span class="strip-label">Parfums uniques</span></div>
-      <div class="strip-item reveal" style="--d:300ms"><span class="strip-num">100%</span><span class="strip-label">Ingr&eacute;dients naturels</span></div>
-    </div>
+  <div class="strip-grid">
+    <div class="strip-item rv" style="--d:0ms"><span class="strip-num">1962</span><span class="strip-label">Fondée à Arlon</span></div>
+    <div class="strip-item rv" style="--d:100ms"><span class="strip-num">3</span><span class="strip-label">Générations</span></div>
+    <div class="strip-item rv" style="--d:200ms"><span class="strip-num">8</span><span class="strip-label">Parfums artisanaux</span></div>
+    <div class="strip-item rv" style="--d:300ms"><span class="strip-num">100%</span><span class="strip-label">Naturel</span></div>
   </div>
 </div>
 
-<!-- HISTOIRE -->
-<section class="story" id="histoire">
-  <div class="container">
-    <div class="story-grid">
-      <div class="reveal-l">
-        <div class="story-year">1962</div>
-        <div class="story-img">
-          <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&q=85&fit=crop" alt="Atelier glacerie" loading="lazy"/>
-        </div>
-        <div class="story-img-2">
-          <img src="https://images.unsplash.com/photo-1587241321921-91a834d6d191?w=500&q=85&fit=crop" alt="Ingredients frais" loading="lazy"/>
-        </div>
+<!-- HISTOIRE SNAPSHOT -->
+<section class="histoire-snap">
+  <div class="histoire-grid">
+    <div class="histoire-img rv-l">
+      <img class="histoire-img-main" src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&q=85&fit=crop" alt="Atelier"/>
+      <div class="histoire-img-badge">
+        <span>62</span>
+        <span>ans</span>
       </div>
-      <div class="reveal-r">
-        <div class="s-tag">Notre histoire</div>
-        <h2 class="s-title">N&eacute;e d'une passion,<br/>nourrie par <em>l'amour</em></h2>
-        <p class="story-text">Tout a commenc&eacute; en 1962, quand Henri Fontaine, de retour d'un voyage en Sicile, rapporta dans ses bagages une obsession : la glace artisanale. &Eacute;merveill&eacute; par les <em>gelaterie</em> de Palerme, il s'installa dans une petite boutique de la rue des Faubourgs &agrave; Arlon, arm&eacute; d'un turbineur en cuivre et d'une recette secr&egrave;te de pistache.</p>
-        <p class="story-text">Ses mains, gerc&eacute;es par le froid des marbres, p&eacute;trissaient chaque matin les cr&egrave;mes avec une patience de moine. Les fraises venaient du jardin de sa belle-m&egrave;re &agrave; &Eacute;talle. Les gousses de vanille arrivaient dans une bo&icirc;te en bois depuis Madagascar &mdash; une folie, pour l'&eacute;poque.</p>
-        <p class="story-text">Aujourd'hui, c'est sa petite-fille Lucie qui ouvre l'atelier chaque matin &agrave; 5h30. Elle a &eacute;tudi&eacute; &agrave; l'&Eacute;cole des Arts du Go&ucirc;t &agrave; Lyon, travaill&eacute; chez Berthillon &agrave; Paris &mdash; et elle est revenue &agrave; Arlon. Parce qu'il y a des racines qu'on ne trahit pas.</p>
-        <div class="story-sign">Lucie Fontaine</div>
-      </div>
+    </div>
+    <div class="histoire-text rv-r">
+      <div class="s-eyebrow">Notre histoire</div>
+      <h2>Née d'une passion,<br/>nourrie par <em>l'amour</em></h2>
+      <p>En 1962, Henri Fontaine revient de Sicile avec une obsession : la glace artisanale. Il ouvre un atelier à Arlon, turbine en cuivre, trois parfums, et une foi absolue dans la qualité des ingrédients.</p>
+      <p>Trois générations plus tard, sa petite-fille Lucie ouvre l'atelier chaque matin à 5h30, avec la même exigence et la même passion.</p>
+      <span class="sign">Lucie Fontaine</span>
+      <button class="histoire-link" onclick="openPage('page-histoire')">Lire la suite</button>
     </div>
   </div>
 </section>
 
-<!-- GLACE QUI TOURNE -->
-<section class="ice-section" id="iceScroll">
-  <div class="ice-sticky">
-    <div class="ice-bg"></div>
-    <div class="ice-content">
-      <div class="ice-wrap">
-        <svg id="iceSvg" viewBox="0 0 320 520" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="g-rose" cx="38%" cy="35%" r="62%">
-              <stop offset="0%" stop-color="#fce4ec"/><stop offset="60%" stop-color="#f48fb1"/><stop offset="100%" stop-color="#e57399"/>
-            </radialGradient>
-            <radialGradient id="g-pist" cx="38%" cy="35%" r="62%">
-              <stop offset="0%" stop-color="#e8f5e9"/><stop offset="60%" stop-color="#81c784"/><stop offset="100%" stop-color="#5a9e5e"/>
-            </radialGradient>
-            <radialGradient id="g-van" cx="38%" cy="35%" r="62%">
-              <stop offset="0%" stop-color="#fffde7"/><stop offset="60%" stop-color="#fff176"/><stop offset="100%" stop-color="#f9d13e"/>
-            </radialGradient>
-            <radialGradient id="g-choc" cx="38%" cy="35%" r="62%">
-              <stop offset="0%" stop-color="#efebe9"/><stop offset="60%" stop-color="#a1887f"/><stop offset="100%" stop-color="#6d4c41"/>
-            </radialGradient>
-            <radialGradient id="g-myrt" cx="38%" cy="35%" r="62%">
-              <stop offset="0%" stop-color="#e8eaf6"/><stop offset="60%" stop-color="#7986cb"/><stop offset="100%" stop-color="#4a5699"/>
-            </radialGradient>
-            <linearGradient id="g-cornet" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#f5c58a"/><stop offset="50%" stop-color="#e8a855"/><stop offset="100%" stop-color="#c47e2a"/>
-            </linearGradient>
-            <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.22)"/></filter>
-          </defs>
-          <polygon points="160,510 55,220 265,220" fill="url(#g-cornet)"/>
-          <line x1="160" y1="510" x2="100" y2="280" stroke="#c47e2a" stroke-width="1.2" opacity=".5"/>
-          <line x1="160" y1="510" x2="130" y2="315" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
-          <line x1="160" y1="510" x2="160" y2="295" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
-          <line x1="160" y1="510" x2="190" y2="315" stroke="#c47e2a" stroke-width="1" opacity=".45"/>
-          <line x1="160" y1="510" x2="220" y2="280" stroke="#c47e2a" stroke-width="1.2" opacity=".5"/>
-          <line x1="75" y1="370" x2="248" y2="370" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
-          <line x1="62" y1="318" x2="260" y2="318" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
-          <line x1="55" y1="268" x2="267" y2="268" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
-          <circle cx="112" cy="226" r="58" fill="url(#g-choc)" filter="url(#shadow)"/>
-          <circle cx="93" cy="206" r="16" fill="#efebe9" opacity=".4"/>
-          <circle cx="212" cy="218" r="56" fill="url(#g-myrt)" filter="url(#shadow)"/>
-          <circle cx="196" cy="199" r="14" fill="#e8eaf6" opacity=".4"/>
-          <circle cx="124" cy="178" r="60" fill="url(#g-pist)" filter="url(#shadow)"/>
-          <circle cx="103" cy="156" r="18" fill="#e8f5e9" opacity=".45"/>
-          <circle cx="200" cy="170" r="58" fill="url(#g-rose)" filter="url(#shadow)"/>
-          <circle cx="181" cy="150" r="17" fill="#fce4ec" opacity=".5"/>
-          <circle cx="160" cy="118" r="66" fill="url(#g-van)" filter="url(#shadow)"/>
-          <circle cx="135" cy="94" r="22" fill="#fffde7" opacity=".55"/>
-          <circle cx="175" cy="105" r="10" fill="#fffde7" opacity=".4"/>
-          <path d="M215 195 Q224 218 216 234" stroke="#e57399" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".65"/>
-          <ellipse cx="148" cy="138" rx="5" ry="3" fill="#5a9e5e" opacity=".7" transform="rotate(-25 148 138)"/>
-          <ellipse cx="175" cy="128" rx="4" ry="2.5" fill="#5a9e5e" opacity=".6" transform="rotate(15 175 128)"/>
-          <ellipse cx="162" cy="100" rx="4" ry="2.5" fill="#5a9e5e" opacity=".5" transform="rotate(-10 162 100)"/>
-        </svg>
+<!-- ANIMATION SCROLL : ENFANT + GLACE -->
+<section class="lick-section" id="lickSection">
+  <div class="lick-sticky">
+    <div class="lick-stage" id="lickStage">
+
+      <!-- Texte de fond -->
+      <div class="lick-text-bg" id="lickText">
+        <div class="big-text">Le plaisir<br/><em>d'une glace</em></div>
+        <div class="sub-text">Depuis 1962 · Arlon · Belgique</div>
       </div>
-      <div class="ice-txt">
-        <div class="s-tag">Le savoir-faire</div>
-        <h2 class="s-title">Cinq boules,<br/><em>cinq histoires</em></h2>
-        <div class="ice-steps">
-          <div class="istep on" data-s="0">
-            <div class="istep-n">01</div>
-            <div class="istep-t"><h4>La s&eacute;lection des fruits</h4><p>Fraises d'&Eacute;talle, myrtilles des Fagnes, mangues Alphonso de Mumbai. Chaque parfum commence par une s&eacute;lection rigoureuse.</p></div>
-          </div>
-          <div class="istep" data-s="1">
-            <div class="istep-n">02</div>
-            <div class="istep-t"><h4>La pr&eacute;paration &agrave; l'atelier</h4><p>D&egrave;s 5h30, les bases sont pr&eacute;par&eacute;es &agrave; froid. Pas de raccourcis &mdash; chaque cr&egrave;me repose le temps qu'il faut.</p></div>
-          </div>
-          <div class="istep" data-s="2">
-            <div class="istep-n">03</div>
-            <div class="istep-t"><h4>Le turbinage artisanal</h4><p>Nos turbineurs travaillent &agrave; basse vitesse pour pr&eacute;server les ar&ocirc;mes et cr&eacute;er une texture velout&eacute;e unique.</p></div>
-          </div>
-          <div class="istep" data-s="3">
-            <div class="istep-n">04</div>
-            <div class="istep-t"><h4>La d&eacute;gustation, chaque jour</h4><p>Lucie go&ucirc;te chaque bac avant ouverture. Si ce n'est pas parfait, ce n'est pas servi. Simplicit&eacute; du principe, exigence du geste.</p></div>
-          </div>
-        </div>
+
+      <!-- SVG enfant (vient de la gauche) -->
+      <svg class="lick-child" id="lickChild" viewBox="0 0 280 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="skin1" cx="42%" cy="38%" r="58%">
+            <stop offset="0%" stop-color="#fde8d0"/><stop offset="100%" stop-color="#f0c49a"/>
+          </radialGradient>
+          <radialGradient id="hair1" cx="50%" cy="30%" r="55%">
+            <stop offset="0%" stop-color="#5c3d1e"/><stop offset="100%" stop-color="#3a2010"/>
+          </radialGradient>
+          <radialGradient id="shirt1" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#e8f0fe"/><stop offset="100%" stop-color="#b8c8f0"/>
+          </radialGradient>
+          <filter id="sf"><feGaussianBlur stdDeviation="1.5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+        </defs>
+
+        <!-- Corps / T-shirt -->
+        <ellipse cx="140" cy="420" rx="80" ry="110" fill="url(#shirt1)" opacity=".95"/>
+        <ellipse cx="140" cy="350" rx="65" ry="55" fill="url(#skin1)"/>
+
+        <!-- Bras gauche levé vers la droite -->
+        <path d="M190 340 Q240 310 260 280 Q270 260 250 255" stroke="#f0c49a" stroke-width="28" stroke-linecap="round" fill="none"/>
+        <path d="M190 340 Q240 310 260 280 Q270 260 250 255" stroke="#fde8d0" stroke-width="20" stroke-linecap="round" fill="none" opacity=".6"/>
+
+        <!-- Bras droit -->
+        <path d="M90 360 Q55 400 50 440" stroke="#f0c49a" stroke-width="26" stroke-linecap="round" fill="none"/>
+
+        <!-- Cou -->
+        <rect x="122" y="295" width="36" height="45" rx="18" fill="url(#skin1)"/>
+
+        <!-- Tête -->
+        <ellipse cx="140" cy="230" rx="72" ry="78" fill="url(#skin1)"/>
+
+        <!-- Cheveux -->
+        <ellipse cx="140" cy="170" rx="74" ry="55" fill="url(#hair1)"/>
+        <ellipse cx="80" cy="200" rx="24" ry="38" fill="url(#hair1)"/>
+        <ellipse cx="200" cy="200" rx="22" ry="36" fill="url(#hair1)"/>
+
+        <!-- Oreilles -->
+        <ellipse cx="68" cy="238" rx="14" ry="17" fill="#f0c49a"/>
+        <ellipse cx="212" cy="238" rx="14" ry="17" fill="#f0c49a"/>
+
+        <!-- Yeux — grands ouverts, joyeux -->
+        <ellipse cx="115" cy="228" rx="14" ry="16" fill="white"/>
+        <ellipse cx="165" cy="228" rx="14" ry="16" fill="white"/>
+        <ellipse cx="117" cy="230" rx="9" ry="10" fill="#3a2010"/>
+        <ellipse cx="167" cy="230" rx="9" ry="10" fill="#3a2010"/>
+        <ellipse cx="120" cy="227" rx="3.5" ry="3.5" fill="white" opacity=".8"/>
+        <ellipse cx="170" cy="227" rx="3.5" ry="3.5" fill="white" opacity=".8"/>
+        <!-- Sourcils arqués (surprise/bonheur) -->
+        <path d="M102 210 Q116 202 130 207" stroke="#5c3d1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M150 207 Q164 202 178 210" stroke="#5c3d1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Joues roses -->
+        <ellipse cx="90" cy="255" rx="16" ry="10" fill="#f4a0a0" opacity=".35"/>
+        <ellipse cx="190" cy="255" rx="16" ry="10" fill="#f4a0a0" opacity=".35"/>
+
+        <!-- Nez -->
+        <ellipse cx="140" cy="248" rx="6" ry="4" fill="#e8a870" opacity=".5"/>
+
+        <!-- Bouche grande ouverte -->
+        <path d="M110 268 Q140 298 170 268" fill="#c0404a" stroke="#a03040" stroke-width="1.5"/>
+        <ellipse cx="140" cy="280" rx="24" ry="14" fill="#8B2030"/>
+        <!-- Dents -->
+        <path d="M116 270 Q124 278 132 270" fill="white" opacity=".9"/>
+        <path d="M132 270 Q140 278 148 270" fill="white" opacity=".9"/>
+        <path d="M148 270 Q156 278 164 270" fill="white" opacity=".9"/>
+
+        <!-- Langue qui sort -->
+        <ellipse cx="140" cy="295" rx="20" ry="12" fill="#e05060"/>
+        <path d="M120 288 Q140 308 160 288" fill="#e05060"/>
+        <!-- Pointe de la langue vers la droite -->
+        <path d="M155 293 Q175 290 192 286 Q210 282 225 278" stroke="#e05060" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M155 293 Q175 290 192 286 Q210 282 225 278" stroke="#f08090" stroke-width="10" stroke-linecap="round" fill="none" opacity=".6"/>
+
+        <!-- Ombres douces -->
+        <ellipse cx="140" cy="500" rx="75" ry="12" fill="rgba(0,0,0,.08)"/>
+      </svg>
+
+      <!-- SVG glace (vient de la droite) -->
+      <svg class="lick-ice" id="lickIce" viewBox="0 0 220 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gv" cx="38%" cy="35%" r="62%">
+            <stop offset="0%" stop-color="#fffde7"/><stop offset="65%" stop-color="#fff176"/><stop offset="100%" stop-color="#f9d13e"/>
+          </radialGradient>
+          <radialGradient id="gp" cx="38%" cy="35%" r="62%">
+            <stop offset="0%" stop-color="#e8f5e9"/><stop offset="65%" stop-color="#81c784"/><stop offset="100%" stop-color="#5a9e5e"/>
+          </radialGradient>
+          <radialGradient id="gr" cx="38%" cy="35%" r="62%">
+            <stop offset="0%" stop-color="#fce4ec"/><stop offset="65%" stop-color="#f48fb1"/><stop offset="100%" stop-color="#e57399"/>
+          </radialGradient>
+          <linearGradient id="gc" x1="0%" y1="0%" x2="60%" y2="100%">
+            <stop offset="0%" stop-color="#f5c58a"/><stop offset="100%" stop-color="#c47e2a"/>
+          </linearGradient>
+          <filter id="ds"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="rgba(0,0,0,.2)"/></filter>
+        </defs>
+        <!-- Cornet -->
+        <polygon points="110,390 30,155 190,155" fill="url(#gc)" filter="url(#ds)"/>
+        <line x1="110" y1="390" x2="75" y2="210" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
+        <line x1="110" y1="390" x2="110" y2="200" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
+        <line x1="110" y1="390" x2="148" y2="210" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
+        <line x1="48" y1="270" x2="175" y2="270" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
+        <line x1="36" y1="220" x2="187" y2="220" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
+        <!-- Boule rose -->
+        <circle cx="88" cy="158" r="46" fill="url(#gr)" filter="url(#ds)"/>
+        <circle cx="74" cy="142" r="13" fill="#fce4ec" opacity=".45"/>
+        <!-- Boule pistache -->
+        <circle cx="138" cy="140" r="44" fill="url(#gp)" filter="url(#ds)"/>
+        <circle cx="125" cy="126" r="12" fill="#e8f5e9" opacity=".45"/>
+        <!-- Boule vanille (sommet) -->
+        <circle cx="110" cy="95" r="50" fill="url(#gv)" filter="url(#ds)"/>
+        <circle cx="92" cy="78" r="16" fill="#fffde7" opacity=".55"/>
+        <circle cx="126" cy="84" r="8" fill="#fffde7" opacity=".4"/>
+        <!-- Petite goutte -->
+        <path d="M150 148 Q158 168 152 180" stroke="#e57399" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <!-- Ombre sol -->
+        <ellipse cx="110" cy="395" rx="55" ry="8" fill="rgba(0,0,0,.1)"/>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+<!-- PARFUMS -->
+<section class="parfums" id="parfums">
+  <div class="sec-header">
+    <div class="rv">
+      <div class="sec-eyebrow">Nos créations</div>
+      <h2 class="sec-title">Les <em>8 parfums</em><br/>du moment</h2>
+    </div>
+    <div class="rv" style="--d:120ms">
+      <p class="sec-sub">Chaque parfum est imaginé, testé, ajusté pendant des semaines avant d'entrer dans notre vitrine. Certains sont là depuis 1962. D'autres sont nés la saison dernière.</p>
+    </div>
+  </div>
+
+  <!-- Ligne 1 : 4 parfums -->
+  <div class="parfums-grid">
+    <div class="pcard rv-sc" style="--d:0ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=85&fit=crop" alt="Fraise" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">01 — Parfum signature</div>
+        <div class="pcard-name">Fraise des bois</div>
+        <p class="pcard-desc">Fraises sauvages d'Ardenne. Acidulées, vives, d'une fraîcheur absolue.</p>
+        <div class="pcard-price">3,50 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:80ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=500&q=85&fit=crop" alt="Pistache" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">02 — Classique maison</div>
+        <div class="pcard-name">Pistache de Sicile</div>
+        <p class="pcard-desc">Pistaches de Bronte. Veloutée, intense, légèrement grillée. La signature depuis 1962.</p>
+        <div class="pcard-price">3,80 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:160ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=85&fit=crop" alt="Vanille" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">03 — L'indémodable</div>
+        <div class="pcard-name">Vanille Bourbon</div>
+        <p class="pcard-desc">Gousses de Madagascar macérées 48h. La douceur absolue, irremplaçable.</p>
+        <div class="pcard-price">3,50 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:240ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=500&q=85&fit=crop" alt="Chocolat" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">04 — Pour les exigeants</div>
+        <div class="pcard-name">Chocolat 70%</div>
+        <p class="pcard-desc">Cacao grand cru d'Équateur. Fondant et profond, pour les vrais amateurs.</p>
+        <div class="pcard-price">3,80 € <span>/ boule</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ligne 2 : 4 parfums -->
+  <div class="parfums-grid-2">
+    <div class="pcard rv-sc" style="--d:0ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=500&q=85&fit=crop" alt="Myrtille" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">05 — Sauvage</div>
+        <div class="pcard-name">Myrtille des Fagnes</div>
+        <p class="pcard-desc">Myrtilles des Hautes-Fagnes. Violette, acidulée, boisée. Sauvage et fière.</p>
+        <div class="pcard-price">3,60 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:80ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500&q=85&fit=crop" alt="Citron" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">06 — Sorbet</div>
+        <div class="pcard-name">Citron de Menton</div>
+        <p class="pcard-desc">Sorbet électrique, peau et jus de citrons AOP. L'anti-torpeur parfait des étés ardennais.</p>
+        <div class="pcard-price">3,50 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:160ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1587244537907-7b23b0729ac9?w=500&q=85&fit=crop" alt="Caramel" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">07 — Coup de cœur</div>
+        <div class="pcard-name">Caramel beurre salé</div>
+        <p class="pcard-desc">Beurre breton et fleur de sel de Guérande. Ambré, profond, irrésistible.</p>
+        <div class="pcard-price">3,80 € <span>/ boule</span></div>
+      </div>
+    </div>
+    <div class="pcard rv-sc" style="--d:240ms">
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=85&fit=crop" alt="Framboise" loading="lazy"/></div>
+      <div class="pcard-body">
+        <div class="pcard-num">08 — Sorbet</div>
+        <div class="pcard-name">Framboise &amp; Rose</div>
+        <p class="pcard-desc">Framboises de Lorraine et eau de rose. Floral, délicat, légèrement acidulé. Sans lactose.</p>
+        <div class="pcard-price">3,60 € <span>/ boule</span></div>
       </div>
     </div>
   </div>
@@ -502,119 +1032,36 @@ footer{background:var(--dark);padding:5rem 4rem 3rem;
 <!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-inner">
-    <span>Glaces artisanales</span><span>Ingr&eacute;dients naturels</span><span>Recettes familiales</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>Fait chaque matin</span>
-    <span>Glaces artisanales</span><span>Ingr&eacute;dients naturels</span><span>Recettes familiales</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>Fait chaque matin</span>
+    <span>Glaces artisanales</span><span>Ingrédients naturels</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>8 parfums uniques</span><span>Fait chaque matin</span>
+    <span>Glaces artisanales</span><span>Ingrédients naturels</span><span>Depuis 1962</span><span>Arlon, Belgique</span><span>8 parfums uniques</span><span>Fait chaque matin</span>
   </div>
 </div>
 
-<!-- PARFUMS -->
-<section class="parfums" id="parfums">
-  <div class="container">
-    <div class="parfums-intro">
-      <div class="reveal"><div class="s-tag">Nos cr&eacute;ations</div><h2 class="s-title">Les parfums<br/>du <em>moment</em></h2></div>
-      <div class="reveal" style="--d:150ms"><p class="s-sub">Chaque parfum est imagin&eacute;, test&eacute;, ajust&eacute; pendant des semaines avant d'entrer dans notre vitrine. Certains sont l&agrave; depuis 1962. D'autres sont n&eacute;s la semaine derni&egrave;re.</p></div>
-    </div>
-    <div class="parfums-grid">
-      <div class="pcard reveal-sc" style="--d:0ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=85&fit=crop" alt="Fraise" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Fraise des bois</div><p class="pcard-desc">Fraises sauvages d'Ardenne. Acidul&eacute;es, vives, d'une fra&icirc;cheur absolue.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:80ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600&q=85&fit=crop" alt="Pistache" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Pistache de Sicile</div><p class="pcard-desc">Pistaches de Bronte. Velout&eacute;e, intense, l&eacute;g&egrave;rement grill&eacute;e. La signature de la maison.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:160ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=85&fit=crop" alt="Vanille" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Vanille Bourbon</div><p class="pcard-desc">Gousses de Madagascar mac&eacute;r&eacute;es 48h. La douceur absolue, classique et irremplacable.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:240ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=600&q=85&fit=crop" alt="Chocolat" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Chocolat 70%</div><p class="pcard-desc">Cacao grand cru d'&Eacute;quateur. Fondant, profond, pour les esprits exigeants.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:320ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=600&q=85&fit=crop" alt="Myrtille" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Myrtille sauvage</div><p class="pcard-desc">Myrtilles des Hautes-Fagnes. Violette, acidul&eacute;e, l&eacute;g&egrave;rement bois&eacute;e. Sauvage et fi&egrave;re.</p><div class="pcard-price">3,60&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:400ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?w=600&q=85&fit=crop" alt="Mangue" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Mangue &amp; Passion</div><p class="pcard-desc">Mangue Alphonso et fruits de la passion. Solaire, exotique, sans produit laitier.</p><div class="pcard-price">3,60&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:480ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e?w=600&q=85&fit=crop" alt="Caramel" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Caramel beurre sal&eacute;</div><p class="pcard-desc">Beurre breton et fleur de sel de Gu&eacute;rande. Ambr&eacute;, profond, avec cette pointe qui change tout.</p><div class="pcard-price">3,80&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-      <div class="pcard reveal-sc" style="--d:560ms">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=85&fit=crop" alt="Citron" loading="lazy"/></div>
-        <div class="pcard-body"><div class="pcard-name">Citron de Menton</div><p class="pcard-desc">Sorbet vif et &eacute;lectrique. Peau et jus de citrons AOP. L'anti-torpeur parfait des &eacute;t&eacute;s ardennais.</p><div class="pcard-price">3,50&nbsp;&euro; <span>/ boule</span></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ENGAGEMENTS -->
-<section class="eng-sec">
-  <div class="container">
-    <div class="sec-center reveal"><div class="s-tag">Notre philosophie</div><h2 class="s-title">Des engagements<br/><em>sans compromis</em></h2></div>
+<section class="engagements">
+  <div class="eng-wrap">
+    <div class="eng-header rv">
+      <div class="sec-eyebrow" style="justify-content:center">Notre philosophie</div>
+      <h2 class="sec-title">Des engagements <em>sans compromis</em></h2>
+    </div>
     <div class="eng-grid">
-      <div class="ecard reveal" style="--d:0ms"><div class="ecard-ic" style="background:#e8f5e9">&#127807;</div><h3>Ingr&eacute;dients naturels</h3><p>Aucun ar&ocirc;me artificiel. Aucun colorant. Aucun stabilisant industriel. Uniquement ce que la nature produit &mdash; fruit, cr&egrave;me, sucre, &eacute;pice.</p></div>
-      <div class="ecard reveal" style="--d:150ms"><div class="ecard-ic" style="background:#fce4ec">&#127968;</div><h3>Production locale</h3><p>Nos fruits viennent d'Ardenne et de Lorraine belge. Notre cr&egrave;me vient d'une ferme &agrave; 18 km. Nous connaissons nos producteurs par leur pr&eacute;nom.</p></div>
-      <div class="ecard reveal" style="--d:300ms"><div class="ecard-ic" style="background:#fff9c4">&#11088;</div><h3>Z&eacute;ro additif</h3><p>Nos glaces se conservent uniquement par le froid. Elles fondent vite et c'est fait expr&egrave;s &mdash; c'est le signe qu'elles sont vraies.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- GALERIE -->
-<section class="galerie" id="galerie">
-  <div class="container">
-    <div class="reveal"><div class="s-tag">Instants glac&eacute;s</div><h2 class="s-title">Notre <em>univers</em></h2></div>
-    <div class="gal-grid">
-      <div class="gitem reveal-sc" style="--d:0ms"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=800&q=85&fit=crop" alt="Atelier" loading="lazy"/><div class="gitem-ov"><span>L'atelier du matin</span></div></div>
-      <div class="gitem reveal-sc" style="--d:100ms"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=85&fit=crop" alt="Fraise" loading="lazy"/><div class="gitem-ov"><span>Fraise des bois</span></div></div>
-      <div class="gitem reveal-sc" style="--d:200ms"><img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=600&q=85&fit=crop" alt="Chocolat" loading="lazy"/><div class="gitem-ov"><span>Grand cru 70%</span></div></div>
-      <div class="gitem reveal-sc" style="--d:300ms"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=900&q=85&fit=crop" alt="Comptoir" loading="lazy"/><div class="gitem-ov"><span>La vitrine d'Arlon</span></div></div>
-      <div class="gitem reveal-sc" style="--d:400ms"><img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=600&q=85&fit=crop" alt="Myrtille" loading="lazy"/><div class="gitem-ov"><span>Cueillette en Fagnes</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- HERITAGE -->
-<section class="heritage" id="heritage">
-  <div class="container">
-    <div class="hgrid">
-      <div class="htext reveal-l">
-        <div class="s-tag">L'h&eacute;ritage</div>
-        <h2 class="s-title">Trois g&eacute;n&eacute;rations<br/>d'une m&ecirc;me <em>obsession</em></h2>
-        <p class="hp">Henri Fontaine avait les mains larges, la voix douce et une th&eacute;orie&#8239;: une bonne glace, c'est 80% de mati&egrave;re premi&egrave;re et 20% de patience. Il r&eacute;p&eacute;tait &ccedil;a &agrave; son fils Michel pendant qu'ils d&eacute;cortiquaient ensemble des pistaches siciliennes sur la table de la cuisine, &agrave; l'heure o&ugrave; Arlon dormait encore.</p>
-        <p class="hp">Michel a repris l'atelier en 1989, agrandi la boutique, ajout&eacute; le comptoir en marbre belge qui tr&ocirc;ne encore aujourd'hui. Ses innovations&#8239;: le sorbet &agrave; la bi&egrave;re d'Orval (scandale et succ&egrave;s imm&eacute;diat), la gamme sans lactose bien avant que ce soit &agrave; la mode.</p>
-        <p class="hp">Lucie, sa fille, est la troisi&egrave;me g&eacute;n&eacute;ration. Elle a failli ne pas revenir &mdash; Paris l'appelait, les &eacute;toiles Michelin l'attendaient. Mais il y a eu ce matin d'ao&ucirc;t 2018, une chaleur de 38&deg;C &agrave; Arlon, et une queue de 40 personnes devant la boutique. Elle a su.</p>
-        <div class="hquote"><p>&#8220;On ne fabrique pas des glaces. On fabrique des souvenirs d'enfance.&#8221;</p><cite>— Henri Fontaine, fondateur, 1962</cite></div>
+      <div class="ecard rv" style="--d:0ms">
+        <span class="ecard-icon">🌿</span>
+        <h3>Ingrédients naturels</h3>
+        <p>Aucun arôme artificiel, aucun colorant, aucun stabilisant industriel. Uniquement ce que la nature produit — fruit, crème, sucre, épice.</p>
+        <div class="ecard-line"></div>
       </div>
-      <div class="reveal-r">
-        <div class="htl">
-          <div class="htl-item"><div class="htl-year">1962</div><div class="htl-content"><h4>La naissance</h4><p>Henri ouvre le premier atelier rue des Faubourgs, avec un turbineur en cuivre et trois parfums&#8239;: pistache, vanille, fraise.</p></div></div>
-          <div class="htl-item"><div class="htl-year">1978</div><div class="htl-content"><h4>L'expansion</h4><p>Premi&egrave;re r&eacute;compense nationale au Concours Belge de Glacerie. La pistache Fontaine devient une r&eacute;f&eacute;rence nationale.</p></div></div>
-          <div class="htl-item"><div class="htl-year">1989</div><div class="htl-content"><h4>La deuxi&egrave;me g&eacute;n&eacute;ration</h4><p>Michel reprend les r&ecirc;nes. Nouveau comptoir en marbre, agrandissement de l'atelier, cr&eacute;ation de la gamme sorbets.</p></div></div>
-          <div class="htl-item"><div class="htl-year">2018</div><div class="htl-content"><h4>Lucie revient</h4><p>Apr&egrave;s Lyon et Paris, Lucie Fontaine reprend l'atelier. Nouvelles recettes, sourcing renforc&eacute;, identit&eacute; premium affirm&eacute;e.</p></div></div>
-          <div class="htl-item"><div class="htl-year">2025</div><div class="htl-content"><h4>Aujourd'hui</h4><p>28 parfums, 3 g&eacute;n&eacute;rations de savoir-faire, et toujours cette queue de 40 personnes les beaux jours d'&eacute;t&eacute;.</p></div></div>
-        </div>
+      <div class="ecard rv" style="--d:150ms">
+        <span class="ecard-icon">🏡</span>
+        <h3>Production locale</h3>
+        <p>Nos fruits viennent d'Ardenne et de Lorraine belge. Notre crème vient d'une ferme à 18 km. Nous connaissons nos producteurs par leur prénom.</p>
+        <div class="ecard-line"></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="sec-center reveal" style="margin-bottom:5rem"><div class="s-tag">Venez nous voir</div><h2 class="s-title">Trouvez-nous<br/>&agrave; <em>Arlon</em></h2></div>
-    <div class="contact-grid">
-      <div class="cinfo reveal-l">
-        <div class="cblock"><div class="cic">&#128205;</div><div><h4>Adresse</h4><p>14 Rue des Faubourgs<br/>6700 Arlon, Belgique</p></div></div>
-        <div class="cblock"><div class="cic">&#128336;</div><div><h4>Horaires</h4><p>Mardi &ndash; Vendredi&#8239;: 11h &ndash; 19h<br/>Samedi &ndash; Dimanche&#8239;: 10h &ndash; 20h<br/><em>Ferm&eacute; le lundi</em></p></div></div>
-        <div class="cblock"><div class="cic">&#128222;</div><div><h4>T&eacute;l&eacute;phone</h4><p>+32 63 12 34 56</p><a href="tel:+3263123456" class="btn-call">&#128222; Nous appeler</a></div></div>
-        <div class="cblock"><div class="cic">&#9993;&#65039;</div><div><h4>Email</h4><p>bonjour@glacerie-arlon.be</p></div></div>
-      </div>
-      <div class="cmap reveal-r">
-        <iframe title="Glacerie d'Arlon" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20560!2d5.8175!3d49.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c05b6e99abc123%3A0xabc123!2sArlon%2C+Belgique!5e0!3m2!1sfr!2sbe!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="ecard rv" style="--d:300ms">
+        <span class="ecard-icon">⭐</span>
+        <h3>Zéro additif</h3>
+        <p>Nos glaces se conservent uniquement par le froid. Elles fondent vite — et c'est fait exprès. C'est le signe qu'elles sont vraies.</p>
+        <div class="ecard-line"></div>
       </div>
     </div>
   </div>
@@ -623,61 +1070,162 @@ footer{background:var(--dark);padding:5rem 4rem 3rem;
 <!-- FOOTER -->
 <footer>
   <div class="ft-top">
-    <div class="ft-brand"><a href="#" class="nav-logo">Glacerie <em>d'Arlon</em></a><p>Artisans glaciers depuis 1962. Trois g&eacute;n&eacute;rations d'une m&ecirc;me obsession pour les glaces pures, naturelles et faites avec amour &agrave; Arlon.</p></div>
-    <div class="ft-col"><h5>Navigation</h5><a href="#parfums">Nos parfums</a><a href="#histoire">Notre histoire</a><a href="#galerie">Galerie</a><a href="#contact">Contact</a></div>
-    <div class="ft-col"><h5>Informations</h5><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
+    <div>
+      <div class="ft-logo">Glacerie d'Arlon<small>Artisans glaciers depuis 1962</small></div>
+      <p class="ft-desc">Trois générations d'une même obsession pour les glaces pures, naturelles et faites avec amour à Arlon, en Belgique.</p>
+    </div>
+    <div class="ft-col">
+      <h5>Navigation</h5>
+      <a onclick="openPage('page-histoire')">Notre histoire</a>
+      <a onclick="openPage('page-horaires')">Horaires</a>
+      <a onclick="openPage('page-univers')">Notre univers</a>
+      <a onclick="openPage('page-contact')">Contact</a>
+      <a onclick="openPage('page-recru')">Recrutement</a>
+    </div>
+    <div class="ft-col">
+      <h5>Informations</h5>
+      <a href="#">Mentions légales</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
   </div>
-  <div class="ft-bot"><p>&copy; 2025 Glacerie d'Arlon &mdash; Tous droits r&eacute;serv&eacute;s</p><p>Fait avec &#10084;&#65039; &agrave; Arlon, Belgique</p></div>
+  <div class="ft-bottom">
+    <p>© 2025 Glacerie d'Arlon — Tous droits réservés</p>
+    <p>Fait avec ❤️ à Arlon, Belgique</p>
+  </div>
 </footer>
 
 <script>
 'use strict';
-/* CURSOR */
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function animR(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
-document.querySelectorAll('a,button,.pcard,.gitem').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='56px';ring.style.height='56px';ring.style.opacity='.25'});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.5'});
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── MENU ── */
+const menuOverlay = document.getElementById('menu-overlay');
+function openMenu() { menuOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeMenu() { menuOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+function scrollToMain() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+/* ── PAGES ── */
+let openPages = [];
+function openPage(id) {
+  closeMenu();
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('open'); openPages.push(id); document.body.style.overflow = 'hidden'; }
+  }, 300);
+}
+function closePage(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.remove('open'); openPages = openPages.filter(p => p !== id); }
+  if (openPages.length === 0) document.body.style.overflow = '';
+}
+// Close pages with Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (openPages.length > 0) { closePage(openPages[openPages.length - 1]); }
+    else closeMenu();
+  }
 });
-/* NAV */
-const nav=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
-function openMob(){document.getElementById('navMob').classList.add('open')}
-function closeMob(){document.getElementById('navMob').classList.remove('open')}
-/* REVEAL */
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-sc').forEach(el=>obs.observe(el));
-/* PARALLAX HERO */
-const heroPar=document.getElementById('heroPar');
-const heroEl=document.getElementById('hero');
-window.addEventListener('scroll',()=>{const s=window.scrollY;if(s<heroEl.offsetHeight*1.5)heroPar.style.transform='translateY('+s*.3+'px) scale(1.02)'},{passive:true});
-/* GLACE ROTATION AU SCROLL */
-const iceSection=document.getElementById('iceScroll');
-const iceSvg=document.getElementById('iceSvg');
-const isteps=document.querySelectorAll('.istep');
-window.addEventListener('scroll',()=>{
-  if(!iceSection||!iceSvg)return;
-  const rect=iceSection.getBoundingClientRect();
-  const prog=Math.max(0,Math.min(1,-rect.top/(iceSection.offsetHeight-window.innerHeight)));
-  iceSvg.style.transform='rotate('+(prog*360)+'deg)';
-  const idx=Math.min(isteps.length-1,Math.floor(prog*isteps.length));
-  isteps.forEach((s,i)=>s.classList.toggle('on',i===idx));
-},{passive:true});
-/* SMOOTH SCROLL */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(!t)return;e.preventDefault();
-    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-68,behavior:'smooth'});
+
+/* ── LANGUE ── */
+let lang = 'fr';
+function setLang(l) {
+  lang = l;
+  document.getElementById('langBtn').textContent = l === 'fr' ? 'EN' : 'FR';
+  document.getElementById('btnFr').classList.toggle('active', l === 'fr');
+  document.getElementById('btnEn').classList.toggle('active', l === 'en');
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const txt = el.getAttribute('data-' + l);
+    if (txt) el.innerHTML = txt;
+  });
+}
+function toggleLang() { setLang(lang === 'fr' ? 'en' : 'fr'); }
+
+/* ── REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-sc').forEach(el => obs.observe(el));
+
+/* ── PARALLAX HERO ── */
+const heroPar = document.getElementById('heroPar');
+const heroEl = document.querySelector('.hero');
+window.addEventListener('scroll', () => {
+  if (window.scrollY < heroEl.offsetHeight * 1.4 && heroPar)
+    heroPar.style.transform = 'translateY(' + window.scrollY * 0.28 + 'px) scale(1.02)';
+}, { passive: true });
+
+/* ── ANIMATION SCROLL : ENFANT + GLACE ── */
+const lickSection = document.getElementById('lickSection');
+const lickChild = document.getElementById('lickChild');
+const lickIce = document.getElementById('lickIce');
+const lickText = document.getElementById('lickText');
+
+window.addEventListener('scroll', () => {
+  if (!lickSection) return;
+  const rect = lickSection.getBoundingClientRect();
+  const sH = lickSection.offsetHeight;
+  const vH = window.innerHeight;
+  const prog = Math.max(0, Math.min(1, -rect.top / (sH - vH)));
+
+  // Phase 1 (0→0.45) : les deux entrent vers le centre
+  // Phase 2 (0.45→0.55) : ils se rejoignent, l'enfant lèche la glace
+  // Phase 3 (0.55→1) : ils restent ensemble, texte s'estompe
+
+  let childX, iceX, textOp;
+
+  if (prog < 0.45) {
+    // Entrée depuis les côtés
+    const p = prog / 0.45; // 0→1
+    const ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    childX = (1 - ease) * -55; // vw depuis la gauche
+    iceX   = (1 - ease) * 55;  // vw depuis la droite
+    textOp = 0;
+  } else if (prog < 0.6) {
+    // Convergence
+    const p = (prog - 0.45) / 0.15;
+    childX = -55 * 0 + p * 0; // déjà en place
+    iceX   = 0;
+    childX = 0;
+    textOp = p;
+  } else {
+    childX = 0; iceX = 0;
+    textOp = 1;
+  }
+
+  if (lickChild) lickChild.style.transform = 'translateX(' + childX + 'vw)';
+  if (lickIce)   lickIce.style.transform   = 'translateX(' + iceX + 'vw)';
+  if (lickText)  lickText.style.opacity    = textOp;
+  if (lickText && textOp > 0.05) lickText.classList.add('vis'); else lickText && lickText.classList.remove('vis');
+}, { passive: true });
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return; e.preventDefault();
+    window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
   });
 });
-/* HERO FADE IN */
-document.querySelectorAll('.hero-content > *').forEach((el,i)=>{
-  el.style.cssText='opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;transition-delay:'+(i*180+200)+'ms';
-  setTimeout(()=>{el.style.opacity='1';el.style.transform='translateY(0)'},50);
+
+/* ── HERO FADE IN ── */
+document.querySelectorAll('.hero-content > *').forEach((el, i) => {
+  el.style.cssText = 'opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;transition-delay:' + (i * 160 + 200) + 'ms';
+  setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 50);
 });
+
+/* ── FORM ── */
+function handleForm(e) {
+  e.preventDefault();
+  alert('Merci pour votre message ! Nous vous répondrons sous 48h.');
+  e.target.reset();
+}
 </script>
 </body>
 </html>
