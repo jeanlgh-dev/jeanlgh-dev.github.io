@@ -712,18 +712,25 @@ footer{background:var(--dark);padding:5rem 4rem 3rem}
     <h1 class="page-title"><em>Contactez</em>-nous</h1>
     <div class="page-body">
       <p>Une question sur nos parfums, une commande spéciale, ou simplement l'envie de dire bonjour ? Nous lisons chaque message avec attention.</p>
-      <form class="cform" action="https://formspree.io/f/mwvzkgak" method="POST">
-        <input type="text" placeholder="Votre prénom et nom" required/>
-        <input type="email" placeholder="Votre adresse email" required/>
-        <select>
-          <option>Demande générale</option>
-          <option>Commande spéciale</option>
-          <option>Partenariat / Presse</option>
-          <option>Autre</option>
-        </select>
-        <textarea placeholder="Votre message..."></textarea>
-        <button type="submit" class="btn-red" style="align-self:flex-start">Envoyer le message</button>
-      </form>
+      <form class="cform" action="https://formspree.io/f/mvwzkgaK" method="POST">
+  <input type="text" name="nom" placeholder="Votre prénom et nom" required />
+
+  <input type="email" name="email" placeholder="Votre adresse email" required />
+
+  <select name="type">
+    <option>Demande générale</option>
+    <option>Commande spéciale</option>
+    <option>Partenariat / Presse</option>
+    <option>Autre</option>
+  </select>
+
+  <textarea name="message" placeholder="Votre message..."></textarea>
+
+  <button type="submit" class="btn-red" style="align-self:flex-start">
+    Envoyer le message
+  </button>
+</form>
+
     </div>
   </div>
 </div>
