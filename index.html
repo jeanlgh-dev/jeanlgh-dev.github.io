@@ -362,60 +362,61 @@ button{cursor:pointer;background:none;border:none;font-family:var(--font-b)}
 .histoire-link::after{content:'→'}
 
 /* ═══════════════════════════════════════
-   SECTION SCROLL — ENFANT + GLACE
+   SECTION TROPICAL MOODBOARD
 ═══════════════════════════════════════ */
-.lick-section{
+.tropical-section{
   height:280vh;position:relative;
-  background:var(--offwhite);
 }
-.lick-sticky{
+.tropical-sticky{
   position:sticky;top:0;height:100vh;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  background:var(--offwhite);
+  /* fond dégradé pastel tropical */
+  background:linear-gradient(135deg,#fff9f0 0%,#fff0e8 30%,#fde8f5 60%,#e8f5fd 100%);
 }
-.lick-stage{
-  position:relative;width:100%;max-width:1100px;
+/* grain texture sur le fond */
+.tropical-sticky::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.6;
+}
+.tropical-stage{
+  position:relative;width:100%;max-width:1200px;
   height:100vh;margin:0 auto;
-  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
 }
-
-/* Texte fond */
-.lick-text-bg{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  pointer-events:none;
-  opacity:0;transition:opacity .4s;
+/* Titre central */
+.trop-title{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;z-index:2;pointer-events:none;
+  opacity:0;transition:opacity .6s;
 }
-.lick-text-bg.vis{opacity:1}
-.lick-text-bg .big-text{
-  font-family:var(--font-d);font-size:clamp(3rem,6vw,5.5rem);
-  font-weight:700;color:var(--dark);text-align:center;
-  text-transform:uppercase;letter-spacing:.04em;line-height:1;
+.trop-title.vis{opacity:1}
+.trop-title h2{
+  font-family:var(--font-d);font-size:clamp(2.5rem,5vw,5rem);
+  font-weight:700;color:var(--dark);text-transform:uppercase;
+  letter-spacing:.04em;line-height:1;
 }
-.lick-text-bg .big-text em{display:block;font-style:italic;font-weight:400;color:var(--red)}
-.lick-text-bg .sub-text{
-  font-size:.85rem;font-weight:300;color:var(--muted);
-  letter-spacing:.12em;text-transform:uppercase;margin-top:1rem;
+.trop-title h2 em{font-style:italic;color:var(--red);font-weight:400}
+.trop-title p{
+  margin-top:.8rem;font-size:.78rem;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
 }
-
-/* SVG child + ice — côte à côte animé */
-.lick-child{
-  position:absolute;left:-120px;bottom:0;
-  width:clamp(200px,28vw,380px);
-  transform:translateX(-60vw);
+/* Éléments cutout — positionnés absolument, animés au scroll */
+.trop-el{
+  position:absolute;will-change:transform;z-index:3;
   transition:none;
-  will-change:transform;
-  z-index:3;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.12));
 }
-.lick-ice{
-  position:absolute;right:-120px;bottom:0;
-  width:clamp(160px,20vw,280px);
-  transform:translateX(60vw);
-  transition:none;
-  will-change:transform;
-  z-index:3;
-}
+/* Chaque élément part d'une position hors-écran définie en JS */
+#tSun   { width:clamp(100px,14vw,200px); top:8%;  left:50%; transform:translateX(-50%) translateY(-120vh); }
+#tPalm  { width:clamp(80px,10vw,150px);  top:5%;  left:4%;  transform:translateX(-60vw); }
+#tPalm2 { width:clamp(80px,10vw,150px);  top:5%;  right:4%; transform:translateX(60vw);  transform-origin:top right; }
+#tTrans { width:clamp(90px,12vw,170px);  bottom:12%; left:8%;  transform:translateX(-60vw); }
+#tParas { width:clamp(90px,12vw,160px);  bottom:10%; right:10%; transform:translateX(60vw); }
+#tCockt { width:clamp(70px,9vw,130px);   top:22%; right:6%;  transform:translateX(60vw); }
+#tBouee { width:clamp(80px,11vw,150px);  top:18%; left:6%;   transform:translateX(-60vw); }
+#tWave  { width:100%; bottom:0; left:0;  transform:translateY(100%); z-index:1; opacity:.5; }
 
 /* ═══════════════════════════════════════
    PARFUMS
@@ -803,133 +804,152 @@ footer{background:var(--dark);padding:5rem 4rem 3rem}
   </div>
 </section>
 
-<!-- ANIMATION SCROLL : ENFANT + GLACE -->
-<section class="lick-section" id="lickSection">
-  <div class="lick-sticky">
-    <div class="lick-stage" id="lickStage">
+<!-- TROPICAL PASTEL MOODBOARD — scroll animé -->
+<section class="tropical-section" id="tropSection">
+  <div class="tropical-sticky">
+    <div class="tropical-stage" id="tropStage">
 
-      <!-- Texte de fond -->
-      <div class="lick-text-bg" id="lickText">
-        <div class="big-text">Le plaisir<br/><em>d'une glace</em></div>
-        <div class="sub-text">Depuis 1962 · Arlon · Belgique</div>
+      <!-- Titre central qui apparaît -->
+      <div class="trop-title" id="tropTitle">
+        <h2>L'été dans<br/><em>chaque boule</em></h2>
+        <p>Depuis 1962 · Arlon · Belgique</p>
       </div>
 
-      <!-- SVG enfant (vient de la gauche) -->
-      <svg class="lick-child" id="lickChild" viewBox="0 0 280 520" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="skin1" cx="42%" cy="38%" r="58%">
-            <stop offset="0%" stop-color="#fde8d0"/><stop offset="100%" stop-color="#f0c49a"/>
-          </radialGradient>
-          <radialGradient id="hair1" cx="50%" cy="30%" r="55%">
-            <stop offset="0%" stop-color="#5c3d1e"/><stop offset="100%" stop-color="#3a2010"/>
-          </radialGradient>
-          <radialGradient id="shirt1" cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#e8f0fe"/><stop offset="100%" stop-color="#b8c8f0"/>
-          </radialGradient>
-          <filter id="sf"><feGaussianBlur stdDeviation="1.5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
-        </defs>
-
-        <!-- Corps / T-shirt -->
-        <ellipse cx="140" cy="420" rx="80" ry="110" fill="url(#shirt1)" opacity=".95"/>
-        <ellipse cx="140" cy="350" rx="65" ry="55" fill="url(#skin1)"/>
-
-        <!-- Bras gauche levé vers la droite -->
-        <path d="M190 340 Q240 310 260 280 Q270 260 250 255" stroke="#f0c49a" stroke-width="28" stroke-linecap="round" fill="none"/>
-        <path d="M190 340 Q240 310 260 280 Q270 260 250 255" stroke="#fde8d0" stroke-width="20" stroke-linecap="round" fill="none" opacity=".6"/>
-
-        <!-- Bras droit -->
-        <path d="M90 360 Q55 400 50 440" stroke="#f0c49a" stroke-width="26" stroke-linecap="round" fill="none"/>
-
-        <!-- Cou -->
-        <rect x="122" y="295" width="36" height="45" rx="18" fill="url(#skin1)"/>
-
-        <!-- Tête -->
-        <ellipse cx="140" cy="230" rx="72" ry="78" fill="url(#skin1)"/>
-
-        <!-- Cheveux -->
-        <ellipse cx="140" cy="170" rx="74" ry="55" fill="url(#hair1)"/>
-        <ellipse cx="80" cy="200" rx="24" ry="38" fill="url(#hair1)"/>
-        <ellipse cx="200" cy="200" rx="22" ry="36" fill="url(#hair1)"/>
-
-        <!-- Oreilles -->
-        <ellipse cx="68" cy="238" rx="14" ry="17" fill="#f0c49a"/>
-        <ellipse cx="212" cy="238" rx="14" ry="17" fill="#f0c49a"/>
-
-        <!-- Yeux — grands ouverts, joyeux -->
-        <ellipse cx="115" cy="228" rx="14" ry="16" fill="white"/>
-        <ellipse cx="165" cy="228" rx="14" ry="16" fill="white"/>
-        <ellipse cx="117" cy="230" rx="9" ry="10" fill="#3a2010"/>
-        <ellipse cx="167" cy="230" rx="9" ry="10" fill="#3a2010"/>
-        <ellipse cx="120" cy="227" rx="3.5" ry="3.5" fill="white" opacity=".8"/>
-        <ellipse cx="170" cy="227" rx="3.5" ry="3.5" fill="white" opacity=".8"/>
-        <!-- Sourcils arqués (surprise/bonheur) -->
-        <path d="M102 210 Q116 202 130 207" stroke="#5c3d1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M150 207 Q164 202 178 210" stroke="#5c3d1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-        <!-- Joues roses -->
-        <ellipse cx="90" cy="255" rx="16" ry="10" fill="#f4a0a0" opacity=".35"/>
-        <ellipse cx="190" cy="255" rx="16" ry="10" fill="#f4a0a0" opacity=".35"/>
-
-        <!-- Nez -->
-        <ellipse cx="140" cy="248" rx="6" ry="4" fill="#e8a870" opacity=".5"/>
-
-        <!-- Bouche grande ouverte -->
-        <path d="M110 268 Q140 298 170 268" fill="#c0404a" stroke="#a03040" stroke-width="1.5"/>
-        <ellipse cx="140" cy="280" rx="24" ry="14" fill="#8B2030"/>
-        <!-- Dents -->
-        <path d="M116 270 Q124 278 132 270" fill="white" opacity=".9"/>
-        <path d="M132 270 Q140 278 148 270" fill="white" opacity=".9"/>
-        <path d="M148 270 Q156 278 164 270" fill="white" opacity=".9"/>
-
-        <!-- Langue qui sort -->
-        <ellipse cx="140" cy="295" rx="20" ry="12" fill="#e05060"/>
-        <path d="M120 288 Q140 308 160 288" fill="#e05060"/>
-        <!-- Pointe de la langue vers la droite -->
-        <path d="M155 293 Q175 290 192 286 Q210 282 225 278" stroke="#e05060" stroke-width="16" stroke-linecap="round" fill="none"/>
-        <path d="M155 293 Q175 290 192 286 Q210 282 225 278" stroke="#f08090" stroke-width="10" stroke-linecap="round" fill="none" opacity=".6"/>
-
-        <!-- Ombres douces -->
-        <ellipse cx="140" cy="500" rx="75" ry="12" fill="rgba(0,0,0,.08)"/>
+      <!-- ☀️ Soleil cutout -->
+      <svg id="tSun" class="trop-el" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE066"/><stop offset="100%" stop-color="#FFB800"/></radialGradient></defs>
+        <!-- Rayons -->
+        <g stroke="#FFB800" stroke-width="6" stroke-linecap="round" opacity=".8">
+          <line x1="100" y1="8"  x2="100" y2="28"/>
+          <line x1="100" y1="172" x2="100" y2="192"/>
+          <line x1="8"  y1="100" x2="28"  y2="100"/>
+          <line x1="172" y1="100" x2="192" y2="100"/>
+          <line x1="30"  y1="30"  x2="44"  y2="44"/>
+          <line x1="156" y1="156" x2="170" y2="170"/>
+          <line x1="170" y1="30"  x2="156" y2="44"/>
+          <line x1="44"  y1="156" x2="30"  y2="170"/>
+        </g>
+        <circle cx="100" cy="100" r="55" fill="url(#sg)"/>
+        <!-- Face soleil stylisée -->
+        <circle cx="84" cy="92" r="7" fill="#c47800" opacity=".7"/>
+        <circle cx="116" cy="92" r="7" fill="#c47800" opacity=".7"/>
+        <path d="M82 116 Q100 130 118 116" stroke="#c47800" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+        <!-- Lunettes de soleil rétro -->
+        <rect x="70" y="84" width="22" height="16" rx="8" fill="#c41e3a" opacity=".85"/>
+        <rect x="108" y="84" width="22" height="16" rx="8" fill="#c41e3a" opacity=".85"/>
+        <line x1="92" y1="92" x2="108" y2="92" stroke="#c41e3a" stroke-width="3"/>
       </svg>
 
-      <!-- SVG glace (vient de la droite) -->
-      <svg class="lick-ice" id="lickIce" viewBox="0 0 220 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- 🌴 Palmier gauche -->
+      <svg id="tPalm" class="trop-el" viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="trunkG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8B6340"/><stop offset="100%" stop-color="#c4954a"/></linearGradient></defs>
+        <!-- Tronc courbé -->
+        <path d="M65 280 Q60 200 70 120 Q75 80 80 50" stroke="url(#trunkG)" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <!-- Palmes -->
+        <ellipse cx="55"  cy="42" rx="42" ry="11" fill="#4caf50" transform="rotate(-25 55 42)" opacity=".9"/>
+        <ellipse cx="95"  cy="38" rx="38" ry="10" fill="#66bb6a" transform="rotate(20 95 38)" opacity=".85"/>
+        <ellipse cx="72"  cy="28" rx="35" ry="9"  fill="#43a047" transform="rotate(-5 72 28)" opacity=".9"/>
+        <ellipse cx="42"  cy="62" rx="30" ry="8"  fill="#81c784" transform="rotate(-45 42 62)" opacity=".75"/>
+        <!-- Noix de coco -->
+        <circle cx="80" cy="52" r="7" fill="#5d4037"/>
+        <circle cx="70" cy="58" r="6" fill="#4e342e"/>
+      </svg>
+
+      <!-- 🌴 Palmier droit (miroir) -->
+      <svg id="tPalm2" class="trop-el" viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M55 280 Q60 200 50 120 Q45 80 40 50" stroke="#8B6340" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <ellipse cx="65"  cy="42" rx="42" ry="11" fill="#4caf50" transform="rotate(25 65 42)" opacity=".9"/>
+        <ellipse cx="25"  cy="38" rx="38" ry="10" fill="#66bb6a" transform="rotate(-20 25 38)" opacity=".85"/>
+        <ellipse cx="48"  cy="28" rx="35" ry="9"  fill="#43a047" transform="rotate(5 48 28)" opacity=".9"/>
+        <ellipse cx="78"  cy="62" rx="30" ry="8"  fill="#81c784" transform="rotate(45 78 62)" opacity=".75"/>
+        <circle cx="40" cy="52" r="7" fill="#5d4037"/>
+        <circle cx="50" cy="58" r="6" fill="#4e342e"/>
+      </svg>
+
+      <!-- 🏖️ Transat + parasol gauche -->
+      <svg id="tTrans" class="trop-el" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Parasol -->
+        <path d="M80 20 L20 80 L80 80 Z" fill="#FFB800" opacity=".9"/>
+        <path d="M80 20 L80 80 L140 80 Z" fill="#c41e3a" opacity=".9"/>
+        <line x1="80" y1="20" x2="80" y2="110" stroke="#8B6340" stroke-width="4"/>
+        <!-- Transat -->
+        <rect x="20" y="90" width="140" height="20" rx="5" fill="#e8d5a8"/>
+        <rect x="20" y="90" width="40"  height="35" rx="5" fill="#d4c090"/>
+        <!-- Personnage silhouette -->
+        <ellipse cx="55" cy="88" rx="14" ry="14" fill="#f0c49a"/>
+        <rect x="30" y="102" width="90" height="12" rx="4" fill="#f0c49a"/>
+        <!-- Lunettes -->
+        <rect x="47" y="83" width="10" height="7" rx="3" fill="#c41e3a" opacity=".8"/>
+        <rect x="58" y="83" width="10" height="7" rx="3" fill="#c41e3a" opacity=".8"/>
+        <line x1="57" y1="86" x2="58" y2="86" stroke="#c41e3a" stroke-width="2"/>
+        <!-- Pieds -->
+        <ellipse cx="110" cy="116" rx="10" ry="6" fill="#f0c49a"/>
+        <ellipse cx="126" cy="118" rx="9"  ry="5" fill="#e8b87a"/>
+      </svg>
+
+      <!-- ☂️ Parasol de plage droit -->
+      <svg id="tParas" class="trop-el" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="parG" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="50%" stop-color="#ffd93d"/><stop offset="100%" stop-color="#6bcb77"/></radialGradient></defs>
+        <!-- Demi-cercle parasol -->
+        <path d="M20 80 Q80 10 140 80 Z" fill="url(#parG)" opacity=".95"/>
+        <!-- Rayures décoratives -->
+        <path d="M80 80 L80 10"        stroke="white" stroke-width="2" opacity=".4"/>
+        <path d="M80 80 L35 18"        stroke="white" stroke-width="2" opacity=".4"/>
+        <path d="M80 80 L125 18"       stroke="white" stroke-width="2" opacity=".4"/>
+        <!-- Mât -->
+        <line x1="80" y1="80" x2="80" y2="200" stroke="#8B6340" stroke-width="5" stroke-linecap="round"/>
+        <!-- Pointe dans le sable -->
+        <ellipse cx="80" cy="198" rx="12" ry="5" fill="#d4b88a" opacity=".6"/>
+      </svg>
+
+      <!-- 🍹 Cocktail -->
+      <svg id="tCockt" class="trop-el" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Verre -->
+        <path d="M25 20 L45 120 L75 120 L95 20 Z" fill="rgba(255,255,255,.6)" stroke="rgba(255,255,255,.8)" stroke-width="2"/>
+        <!-- Contenu rose -->
+        <path d="M32 55 L46 120 L74 120 L88 55 Z" fill="#ff6b9d" opacity=".85"/>
+        <!-- Glaçons -->
+        <rect x="40" y="65" width="15" height="12" rx="3" fill="rgba(255,255,255,.7)"/>
+        <rect x="58" y="70" width="14" height="11" rx="3" fill="rgba(255,255,255,.6)"/>
+        <!-- Pied du verre -->
+        <line x1="60" y1="120" x2="60" y2="155" stroke="#aaa" stroke-width="4"/>
+        <ellipse cx="60" cy="155" rx="22" ry="6" fill="#ccc"/>
+        <!-- Paille -->
+        <line x1="72" y1="30" x2="88" y2="140" stroke="#c41e3a" stroke-width="4" stroke-linecap="round"/>
+        <!-- Petite ombrelle -->
+        <path d="M72 30 Q60 18 48 30 Q60 42 72 30 Z" fill="#FFB800"/>
+        <path d="M72 30 Q84 18 72 6 Q60 18 72 30 Z" fill="#c41e3a"/>
+        <line x1="60" y1="6" x2="60" y2="40" stroke="#5d4037" stroke-width="2"/>
+        <!-- Rondelle citron -->
+        <ellipse cx="38" cy="38" rx="12" ry="12" fill="#FFE066" opacity=".9"/>
+        <ellipse cx="38" cy="38" rx="8" ry="8" fill="#FFB800" opacity=".7"/>
+        <line x1="38" y1="26" x2="38" y2="50" stroke="#f5c518" stroke-width="1.5" opacity=".6"/>
+        <line x1="26" y1="38" x2="50" y2="38" stroke="#f5c518" stroke-width="1.5" opacity=".6"/>
+      </svg>
+
+      <!-- 🩺 Bouée rétro -->
+      <svg id="tBouee" class="trop-el" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <radialGradient id="gv" cx="38%" cy="35%" r="62%">
-            <stop offset="0%" stop-color="#fffde7"/><stop offset="65%" stop-color="#fff176"/><stop offset="100%" stop-color="#f9d13e"/>
-          </radialGradient>
-          <radialGradient id="gp" cx="38%" cy="35%" r="62%">
-            <stop offset="0%" stop-color="#e8f5e9"/><stop offset="65%" stop-color="#81c784"/><stop offset="100%" stop-color="#5a9e5e"/>
-          </radialGradient>
-          <radialGradient id="gr" cx="38%" cy="35%" r="62%">
-            <stop offset="0%" stop-color="#fce4ec"/><stop offset="65%" stop-color="#f48fb1"/><stop offset="100%" stop-color="#e57399"/>
-          </radialGradient>
-          <linearGradient id="gc" x1="0%" y1="0%" x2="60%" y2="100%">
-            <stop offset="0%" stop-color="#f5c58a"/><stop offset="100%" stop-color="#c47e2a"/>
-          </linearGradient>
-          <filter id="ds"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="rgba(0,0,0,.2)"/></filter>
+          <clipPath id="bcp"><circle cx="80" cy="80" r="65"/></clipPath>
         </defs>
-        <!-- Cornet -->
-        <polygon points="110,390 30,155 190,155" fill="url(#gc)" filter="url(#ds)"/>
-        <line x1="110" y1="390" x2="75" y2="210" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
-        <line x1="110" y1="390" x2="110" y2="200" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
-        <line x1="110" y1="390" x2="148" y2="210" stroke="#c47e2a" stroke-width="1" opacity=".4"/>
-        <line x1="48" y1="270" x2="175" y2="270" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
-        <line x1="36" y1="220" x2="187" y2="220" stroke="#c47e2a" stroke-width="1" opacity=".3"/>
-        <!-- Boule rose -->
-        <circle cx="88" cy="158" r="46" fill="url(#gr)" filter="url(#ds)"/>
-        <circle cx="74" cy="142" r="13" fill="#fce4ec" opacity=".45"/>
-        <!-- Boule pistache -->
-        <circle cx="138" cy="140" r="44" fill="url(#gp)" filter="url(#ds)"/>
-        <circle cx="125" cy="126" r="12" fill="#e8f5e9" opacity=".45"/>
-        <!-- Boule vanille (sommet) -->
-        <circle cx="110" cy="95" r="50" fill="url(#gv)" filter="url(#ds)"/>
-        <circle cx="92" cy="78" r="16" fill="#fffde7" opacity=".55"/>
-        <circle cx="126" cy="84" r="8" fill="#fffde7" opacity=".4"/>
-        <!-- Petite goutte -->
-        <path d="M150 148 Q158 168 152 180" stroke="#e57399" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
-        <!-- Ombre sol -->
-        <ellipse cx="110" cy="395" rx="55" ry="8" fill="rgba(0,0,0,.1)"/>
+        <!-- Bouée -->
+        <circle cx="80" cy="80" r="65" fill="white" opacity=".1"/>
+        <!-- Bandes rétro -->
+        <path d="M80 15 A65 65 0 0 1 145 80 L80 80 Z" fill="#c41e3a"/>
+        <path d="M145 80 A65 65 0 0 1 80 145 L80 80 Z" fill="white"/>
+        <path d="M80 145 A65 65 0 0 1 15 80 L80 80 Z" fill="#c41e3a"/>
+        <path d="M15 80 A65 65 0 0 1 80 15 L80 80 Z" fill="white"/>
+        <circle cx="80" cy="80" r="65" fill="none" stroke="#c41e3a" stroke-width="3" opacity=".6"/>
+        <!-- Trou central -->
+        <circle cx="80" cy="80" r="30" fill="#fff9f0"/>
+        <!-- Corde -->
+        <circle cx="80" cy="80" r="65" fill="none" stroke="#e8d5a8" stroke-width="2" stroke-dasharray="8 12" opacity=".8"/>
+      </svg>
+
+      <!-- Vague basse (SVG décoratif) -->
+      <svg id="tWave" class="trop-el" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 60 Q180 20 360 60 Q540 100 720 60 Q900 20 1080 60 Q1260 100 1440 60 L1440 120 L0 120 Z" fill="#a8d8ea" opacity=".35"/>
+        <path d="M0 80 Q200 40 400 80 Q600 120 800 80 Q1000 40 1200 80 Q1350 110 1440 80 L1440 120 L0 120 Z" fill="#87ceeb" opacity=".25"/>
       </svg>
 
     </div>
@@ -1161,48 +1181,41 @@ window.addEventListener('scroll', () => {
     heroPar.style.transform = 'translateY(' + window.scrollY * 0.28 + 'px) scale(1.02)';
 }, { passive: true });
 
-/* ── ANIMATION SCROLL : ENFANT + GLACE ── */
-const lickSection = document.getElementById('lickSection');
-const lickChild = document.getElementById('lickChild');
-const lickIce = document.getElementById('lickIce');
-const lickText = document.getElementById('lickText');
+/* ── TROPICAL MOODBOARD SCROLL ── */
+const tropSection = document.getElementById('tropSection');
+const tropTitle   = document.getElementById('tropTitle');
+const tropEls = [
+  { el: document.getElementById('tSun'),   fx: 0,    fy: -1.1 },
+  { el: document.getElementById('tPalm'),  fx: -1.1, fy: 0    },
+  { el: document.getElementById('tPalm2'), fx: 1.1,  fy: 0    },
+  { el: document.getElementById('tTrans'), fx: -1.1, fy: 0    },
+  { el: document.getElementById('tParas'), fx: 1.1,  fy: 0    },
+  { el: document.getElementById('tCockt'), fx: 1.1,  fy: 0    },
+  { el: document.getElementById('tBouee'), fx: -1.1, fy: 0    },
+  { el: document.getElementById('tWave'),  fx: 0,    fy: 1    },
+];
+function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
 
 window.addEventListener('scroll', () => {
-  if (!lickSection) return;
-  const rect = lickSection.getBoundingClientRect();
-  const sH = lickSection.offsetHeight;
+  if (!tropSection) return;
+  const rect = tropSection.getBoundingClientRect();
+  const sH = tropSection.offsetHeight;
   const vH = window.innerHeight;
   const prog = Math.max(0, Math.min(1, -rect.top / (sH - vH)));
+  const arriveP = easeOutCubic(Math.min(1, prog / 0.5));
+  const titleP  = Math.max(0, Math.min(1, (prog - 0.4) / 0.25));
 
-  // Phase 1 (0→0.45) : les deux entrent vers le centre
-  // Phase 2 (0.45→0.55) : ils se rejoignent, l'enfant lèche la glace
-  // Phase 3 (0.55→1) : ils restent ensemble, texte s'estompe
+  tropEls.forEach(({ el, fx, fy }) => {
+    if (!el) return;
+    el.style.transform = 'translate(' + (fx*(1-arriveP)*100) + 'vw,' + (fy*(1-arriveP)*100) + 'vh)';
+    el.style.opacity = String(arriveP);
+  });
 
-  let childX, iceX, textOp;
-
-  if (prog < 0.45) {
-    // Entrée depuis les côtés
-    const p = prog / 0.45; // 0→1
-    const ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
-    childX = (1 - ease) * -55; // vw depuis la gauche
-    iceX   = (1 - ease) * 55;  // vw depuis la droite
-    textOp = 0;
-  } else if (prog < 0.6) {
-    // Convergence
-    const p = (prog - 0.45) / 0.15;
-    childX = -55 * 0 + p * 0; // déjà en place
-    iceX   = 0;
-    childX = 0;
-    textOp = p;
-  } else {
-    childX = 0; iceX = 0;
-    textOp = 1;
+  if (tropTitle) {
+    tropTitle.style.opacity = String(titleP);
+    tropTitle.style.transform = 'translate(-50%,calc(-50% + ' + ((1-titleP)*20) + 'px))';
+    tropTitle.classList.toggle('vis', titleP > 0.05);
   }
-
-  if (lickChild) lickChild.style.transform = 'translateX(' + childX + 'vw)';
-  if (lickIce)   lickIce.style.transform   = 'translateX(' + iceX + 'vw)';
-  if (lickText)  lickText.style.opacity    = textOp;
-  if (lickText && textOp > 0.05) lickText.classList.add('vis'); else lickText && lickText.classList.remove('vis');
 }, { passive: true });
 
 /* ── SMOOTH SCROLL ── */
@@ -1223,7 +1236,7 @@ document.querySelectorAll('.hero-content > *').forEach((el, i) => {
 /* ── FORM ── */
 function handleForm(e) {
   e.preventDefault();
-  alert('Merci pour votre message ! Nous vous répondrons sous 48h.');
+  alert('Merci pour votre message !\nNous vous répondrons sous 48h par email.');
   e.target.reset();
 }
 </script>
